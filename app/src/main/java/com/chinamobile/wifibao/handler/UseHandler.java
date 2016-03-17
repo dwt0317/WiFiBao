@@ -16,9 +16,19 @@ import cn.bmob.v3.listener.FindListener;
  * Created by dwt on 2016/3/17.
  */
 public class UseHandler {
+    private static UseHandler instance;
     private ArrayList<WiFi> wifiList=new ArrayList<WiFi>();;
     private ArrayList<_User> userList = new ArrayList<_User>();
     private Context mContext;
+
+    public static synchronized UseHandler getInstance(Context context)
+    {
+        if (instance == null)
+        {
+            instance = new UseHandler(context);
+        }
+        return instance;
+    }
 
     private UseHandler(Context context)
     {
