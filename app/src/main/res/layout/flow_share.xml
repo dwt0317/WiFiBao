@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10px">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="分享流量"
+            android:textSize="22dip"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="140dip"
+            android:paddingRight="50dip"
+            android:paddingTop="10dip"
+            android:background="#1892eb"
+            />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/home"
+            android:background="#1892eb"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/clockwise"
+            android:background="#1892eb"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv1"
+        android:layout_marginTop="200dp"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="已分享流量："
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv2"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="已接入人数："
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv3"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="已获得收益："
+        android:textSize="15sp" />
+
+
+
+
+    <Button
+        android:id="@+id/share_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#f72411"
+        android:height="30dip"
+        android:width="90dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dip"
+        android:text="停止分享"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+
+        />
+</LinearLayout>
