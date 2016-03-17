@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10px">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="结算"
+            android:textSize="22dip"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="140dip"
+            android:paddingRight="50dip"
+            android:paddingTop="10dip"
+            android:background="#1892eb"
+            />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/home"
+            android:background="#1892eb"
+            />
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/share"
+            android:layout_marginTop="10dp"
+            android:background="#1892eb"
+            />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv1"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:layout_marginTop="25dp"
+        android:text="已分享流量："
+        android:textSize="15dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv2"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="已获得收益："
+        android:textSize="15dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv3"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="剩余套餐："
+        android:textSize="15dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv4"
+        android:paddingLeft="90sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:text="账户余额："
+        android:textSize="15dp" />
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/balance"
+        android:background="#FFFFFF"
+        />
+
+
+
+</LinearLayout>
