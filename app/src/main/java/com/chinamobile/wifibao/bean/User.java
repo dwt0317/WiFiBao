@@ -7,24 +7,14 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 /**
  * Created by dwt on 2016/3/16.
  */
-public class _User extends BmobUser{
-    private String mobilePhoneNumber;
+public class User extends BmobUser{
     private Double remainedFlow;
-    private Double useFlow;
+    private Double flowShared;
+    private Double flowUsed;
     private Double balance;
     private String portrait;
     private BmobGeoPoint location;
 
-
-    @Override
-    public String getMobilePhoneNumber() {
-        return mobilePhoneNumber;
-    }
-
-    @Override
-    public void setMobilePhoneNumber(String mobilePhoneNumber) {
-        this.mobilePhoneNumber = mobilePhoneNumber;
-    }
 
     public Double getRemainedFlow() {
         return remainedFlow;
@@ -34,13 +24,6 @@ public class _User extends BmobUser{
         this.remainedFlow = remainedFlow;
     }
 
-    public Double getUseFlow() {
-        return useFlow;
-    }
-
-    public void setUseFlow(Double useFlow) {
-        this.useFlow = useFlow;
-    }
 
     public Double getBalance() {
         return balance;
@@ -66,4 +49,19 @@ public class _User extends BmobUser{
         this.location = location;
     }
 
+    public Double getFlowShared() {
+        return flowShared;
+    }
+
+    public void setFlowShared(Double flowShared) {
+        this.flowShared = flowShared;
+    }
+
+    public Double getFlowUsed() {
+        return flowUsed;
+    }
+
+    public void setFlowUsed(Double flowUsed) {
+        this.flowUsed = flowUsed;
+    }
 }
