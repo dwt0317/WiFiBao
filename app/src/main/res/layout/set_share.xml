@@ -19,7 +19,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:src="@mipmap/signal"
         android:background="#FFFFFF"
         />
@@ -46,46 +46,99 @@
             android:layout_gravity="center"/>
 
     </RadioGroup>
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textview1"
-        android:text="热点名称："
-        android:textSize="15dp"
-        android:layout_marginTop="30sp"
-        android:paddingLeft="90sp"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp"/>
+        android:padding="10px">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview1"
+            android:text="热点名称："
+            android:textSize="15dp"
+            android:layout_marginTop="20sp"
+            android:paddingLeft="90sp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview11"
+            android:layout_toEndOf="@+id/textview1"
+            android:layout_toRightOf="@+id/textview1"
+            android:text="123"
+            android:editable="true"
+            android:textSize="15dp"
+            android:layout_marginTop="20sp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview2"
+            android:paddingLeft="90sp"
+            android:layout_below="@+id/textview1"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
+            android:text="密码设置："
+            android:textSize="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview21"
+            android:layout_toRightOf="@+id/textview2"
+            android:layout_below="@+id/textview11"
+            android:editable="true"
+            android:text="456"
+            android:textSize="15dp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview2"
-        android:paddingLeft="90sp"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp"
-        android:text="密码设置："
-        android:textSize="15dp" />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview3"
-        android:paddingLeft="90sp"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp"
-        android:text="最大分享流量："
-        android:textSize="15dp" />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview4"
-        android:paddingLeft="90sp"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp"
-        android:text="最多接入人数："
-        android:textSize="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview3"
+            android:paddingLeft="90sp"
+            android:layout_below="@+id/textview2"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
+            android:text="最大分享流量："
+            android:textSize="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview31"
+            android:layout_toRightOf="@+id/textview3"
+            android:layout_below="@+id/textview21"
+            android:editable="true"
+            android:text="789"
+            android:textSize="15dp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"/>
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview4"
+            android:paddingLeft="90sp"
+            android:layout_below="@+id/textview3"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
+            android:text="最多接入人数："
+            android:textSize="15dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview41"
+            android:layout_toRightOf="@+id/textview4"
+            android:layout_below="@+id/textview31"
+            android:editable="true"
+            android:text="1011"
+            android:textSize="15dp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"/>
+    </RelativeLayout>
 
 
     <Button
