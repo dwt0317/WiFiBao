@@ -8,6 +8,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 public class WiFi extends BmobObject{
     private String SSID;
+    private String BSSID;
     private String password;
     private Integer maxConnect;
     private Integer curConnect;
@@ -87,5 +88,14 @@ public class WiFi extends BmobObject{
 
     public void setUserId(BmobRelation userId) {
         this.userId = userId;
+    }
+
+
+    public String getBSSID() {
+        return BSSID;
+    }
+
+    public void setBSSID(String BSSID) {
+        this.BSSID = BSSID;
     }
 }
