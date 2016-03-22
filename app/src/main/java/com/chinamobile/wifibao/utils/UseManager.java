@@ -1,4 +1,4 @@
-package com.chinamobile.wifibao.handler;
+package com.chinamobile.wifibao.utils;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
@@ -22,23 +22,23 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * Created by dwt on 2016/3/17.
  */
-public class UseHandler {
-    private static UseHandler instance;
+public class UseManager {
+    private static UseManager instance;
     private ArrayList<WiFi> wifiList = new ArrayList<WiFi>();      //可用的热点宝wifi
     private ArrayList<User> ownerList = new ArrayList<User>();    //可用的热点宝wifi的拥有者
     private ArrayList<WiFi> dbNearbyWiFi = new ArrayList<WiFi>();    //在数据库查询到的附近的wifi
     private Context mContext;
 
-    public static synchronized UseHandler getInstance(Context context)
+    public static synchronized UseManager getInstance(Context context)
     {
         if (instance == null)
         {
-            instance = new UseHandler(context);
+            instance = new UseManager(context);
         }
         return instance;
     }
 
-    private UseHandler(Context context)
+    private UseManager(Context context)
     {
         this.mContext = context;
     }

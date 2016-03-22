@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
+import com.chinamobile.wifibao.utils.UseManager;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobGeoPoint;
@@ -30,9 +31,12 @@ public class TestActivity2 extends AppCompatActivity {
 //            }
 //        });
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
-        writeToDatabase();
-        Toast.makeText(this,"1111111",Toast.LENGTH_LONG);
+//        writeToDatabase();
+        Toast.makeText(TestActivity2.this,"1111111",Toast.LENGTH_LONG);
+        UseManager uh = UseManager.getInstance(this);
+        uh.testConnect();
     }
+
 
     public  void writeToDatabase(){
         WiFi wifi = new WiFi();
