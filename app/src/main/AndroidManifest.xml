@@ -41,9 +41,9 @@
         </activity>
 
         <!--activities for share wifi ap.DON'T REMOVE -->
-        <activity android:name=".activity.Share">
+        <activity android:name=".activity.ShareActivity">
         </activity>
-        <activity android:name=".activity.SharelHot">
+        <activity android:name=".activity.CloseApActivity">
         </activity>
     </application>
     <!--DON'T REMOVE Authorization-->
