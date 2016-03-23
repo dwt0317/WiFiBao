@@ -25,17 +25,18 @@ public class CloseApActivity extends Activity{
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.sharehot);
+        //setContentView(R.layout.close_share);
+        setContentView(R.layout.flow_share);
 
         mContext = this;
         //close wifi ap
-        Button bt1 = (Button)findViewById(R.id.button1);
+        Button bt1 = (Button)findViewById(R.id.share_stop);
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                 wifiAp.closeWifiAp(mContext);
-                //统计分享的流量
+                /*//统计分享的流量
                 RunningProcess rp = new RunningProcess();
                 int uid = rp.getUidOfProcess(mContext, "system");
                 Log.i("cdd:",String.valueOf(uid));
@@ -45,11 +46,11 @@ public class CloseApActivity extends Activity{
                 String sR = df.format(uidTxKBytes_d);
                 //显示使用流量
                 final TextView show=(TextView)findViewById(R.id.total);
-                show.setText(sR+"KB");
+                show.setText(sR+"KB");*/
 
             }
         });
-        //show connected ips
+        /*//show connected ips
         Button bt2 = (Button)findViewById(R.id.button2);
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +74,7 @@ public class CloseApActivity extends Activity{
                 rp.showActivityProcesses(mContext);
 
             }
-        });
+        });*/
     }
 
 }

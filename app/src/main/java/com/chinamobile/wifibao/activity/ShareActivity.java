@@ -27,16 +27,16 @@ public class ShareActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share);
+        setContentView(R.layout.set_share);
         mContext = this;
         //open wifi ap
-        Button bt = (Button)findViewById(R.id.button);
+        Button bt = (Button)findViewById(R.id.share_submit);
         bt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String hotname=((EditText)findViewById(R.id.hotnametext)).getText().toString().trim();
-                String password=((EditText)findViewById(R.id.passsettext)).getText().toString().trim();
-                if(hotname.isEmpty() || password.isEmpty()){
+                String name=((EditText)findViewById(R.id.apnametext)).getText().toString().trim();
+                String password=((EditText)findViewById(R.id.passwordtext)).getText().toString().trim();
+                if(name.isEmpty() || password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"wifi名称或者密码不能为空！",Toast.LENGTH_LONG).show();
                 }
                 else if(password.length() < 8 ){
@@ -44,7 +44,7 @@ public class ShareActivity extends Activity {
                 }
                 else {
                     WifiApAdmin wifiAp = new WifiApAdmin(mContext);
-                    wifiAp.startWifiAp(hotname, password);
+                    wifiAp.startWifiAp(name, password);
                     //跳转到开启ap成功的页面，下个页面可以关闭ap（sharehot页面有很多测试功能）
                     Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                     startActivity(intent);
