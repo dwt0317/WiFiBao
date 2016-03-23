@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by cdd on 2016/3/16.
  */
-public class SharelHot extends Activity{
+public class CloseApActivity extends Activity{
     private Context mContext = null;
     @Override
     public void onCreate(Bundle saveInstanceState){

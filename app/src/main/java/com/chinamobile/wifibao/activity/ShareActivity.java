@@ -5,12 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +16,7 @@ import com.chinamobile.wifibao.utils.WifiApAdmin;
 
 import java.lang.reflect.Method;
 
-public class Share extends Activity {
+public class ShareActivity extends Activity {
     private Context mContext = null;
 
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
@@ -50,7 +46,7 @@ public class Share extends Activity {
                     WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                     wifiAp.startWifiAp(hotname, password);
                     //跳转到开启ap成功的页面，下个页面可以关闭ap（sharehot页面有很多测试功能）
-                    Intent intent = new Intent(Share.this, SharelHot.class);
+                    Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                     startActivity(intent);
                 }
             }
@@ -62,7 +58,7 @@ public class Share extends Activity {
             Method method = WifiManager.class.getMethod(name);
             boolean result = (boolean) method.invoke(wifiManager);
             if (result) {
-                Intent intent = new Intent(Share.this, SharelHot.class);
+                Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                 startActivity(intent);
             }
         } catch (Exception e) {
