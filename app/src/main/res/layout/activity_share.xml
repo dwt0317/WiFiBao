@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.cdd.wifibao.Share">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="热  点  名  称"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:id="@+id/hotname"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="200dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="密  码  设  置"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:id="@+id/passset"
+        android:layout_below="@id/hotname"
+        android:layout_marginLeft="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="最大分享流量"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:id="@+id/maxshare"
+        android:layout_below="@id/passset"
+        android:layout_marginLeft="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="最多接入人数"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:id="@+id/maxpeople"
+        android:layout_below="@id/maxshare"
+        android:layout_marginLeft="40dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="创建热点"
+        android:id="@+id/button"
+        android:background="#33ccFF"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/maxpeople" />
+
+    <EditText
+        android:id="@+id/hotnametext"
+        android:text="hotspot"
+        android:textSize="14sp"
+        android:selectAllOnFocus="false"
+
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="200dp" />
+
+    <EditText
+        android:id="@+id/passsettext"
+        android:password="true"
+        android:text="12345678"
+        android:textSize="14sp"
+        android:selectAllOnFocus="false"
+
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="145dp"
+
+        android:layout_below="@id/hotnametext" />
+
+    <EditText
+        android:id="@+id/maxsharetext"
+        android:textSize="14sp"
+        android:selectAllOnFocus="true"
+
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="145dp"
+
+        android:layout_below="@id/passsettext"/>
+
+    <EditText
+        android:id="@+id/maxpeopletext"
+        android:textSize="14sp"
+        android:selectAllOnFocus="true"
+
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="145dp"
+
+        android:layout_below="@id/maxsharetext"/>
+
+    <ImageView
+        android:id="@+id/imagewifi"
+        android:src="@mipmap/wifi"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
