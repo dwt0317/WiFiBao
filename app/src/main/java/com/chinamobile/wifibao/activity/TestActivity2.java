@@ -1,5 +1,8 @@
 package com.chinamobile.wifibao.activity;
 
+import android.content.Context;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +11,9 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.UseManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobGeoPoint;
@@ -32,10 +38,23 @@ public class TestActivity2 extends AppCompatActivity {
 //        });
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
 //        writeToDatabase();
-        Toast.makeText(TestActivity2.this,"1111111",Toast.LENGTH_LONG);
-        UseManager uh = UseManager.getInstance(this);
-        uh.testConnect();
+//        Toast.makeText(TestActivity2.this,"1111111",Toast.LENGTH_LONG);
+//        UseManager uh = UseManager.getInstance(this);
+//        uh.testConnect();
+        scanNearbyWiFi();
     }
+
+
+    public void scanNearbyWiFi(){
+        String wserviceName = Context.WIFI_SERVICE;
+        WifiManager wm = (WifiManager) this.getSystemService(wserviceName);
+        List<ScanResult> results = wm.getScanResults();
+        ArrayList<String> scanIDList= new ArrayList<String>();
+        for(ScanResult result:results){
+            Log.i("wifi:",result.SSID+" "+result.BSSID);
+        }
+    }
+
 
 
     public  void writeToDatabase(){
