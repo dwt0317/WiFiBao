@@ -20,8 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"
+            android:name=".activity.WifiListActivity"
+            android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +33,11 @@
             android:name=".activity.TestActivity2"
             android:label="@string/title_activity_test2"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <!--activities for share wifi ap.DON'T REMOVE -->

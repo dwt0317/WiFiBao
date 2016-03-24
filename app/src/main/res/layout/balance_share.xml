@@ -5,136 +5,178 @@
     android:layout_height="match_parent">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10px">
+        android:padding="0px">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="结算"
             android:textSize="22dip"
+            android:gravity="center"
             android:textColor="#FFFFFF"
-            android:paddingLeft="140dip"
-            android:paddingRight="50dip"
             android:paddingTop="10dip"
             android:background="#1892eb"
-            />
+            android:layout_alignBottom="@+id/imageView8" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="left"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/home"
+            android:src="@drawable/home"
             android:background="#1892eb"
-            />
+            android:id="@+id/imageView8" />
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="45dp"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/share"
-            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/refresh"
             android:background="#1892eb"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10px">
+        android:paddingLeft="35dp"
+        android:paddingTop="20px">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/cellular"
+            android:id="@+id/iv1"
+            android:layout_marginLeft="39dp"
+            android:layout_marginStart="39dp"
+            android:layout_alignTop="@+id/textview5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/apname"
+            android:id="@+id/textview5"
             android:text="已分享流量："
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:layout_marginTop="20sp"
-            android:paddingLeft="90sp"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"/>
+            android:layout_marginLeft="80sp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/apnametext"
-            android:layout_toEndOf="@+id/apname"
-            android:layout_toRightOf="@+id/apname"
+            android:id="@+id/textview51"
+            android:layout_toEndOf="@+id/textview5"
+            android:layout_toRightOf="@+id/textview5"
             android:text="123"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:layout_marginTop="20sp"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"/>
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/dollar"
+            android:id="@+id/iv2"
+            android:layout_alignTop="@+id/textview6"
+            android:layout_alignLeft="@+id/iv1"
+            android:layout_alignStart="@+id/iv1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/password"
-            android:paddingLeft="90sp"
-            android:layout_below="@+id/apname"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"
+            android:id="@+id/textview6"
+            android:layout_marginLeft="80sp"
+            android:layout_below="@+id/textview5"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
             android:text="已获得收益："
-            android:textSize="15dp" />
+            android:textSize="20dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/passwordtext"
-            android:layout_toRightOf="@+id/password"
-            android:layout_below="@+id/apnametext"
+            android:id="@+id/textview61"
+            android:layout_toRightOf="@+id/textview6"
+            android:layout_below="@+id/textview51"
             android:text="456"
-            android:textSize="15dp"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"/>
+            android:textSize="20dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/dollar"
+            android:id="@+id/iv3"
+            android:layout_alignTop="@+id/textview8"
+            android:layout_alignLeft="@+id/iv4"
+            android:layout_alignStart="@+id/iv4" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maxshare"
-            android:paddingLeft="90sp"
-            android:layout_below="@+id/password"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"
-            android:text="剩余套餐："
-            android:textSize="15dp" />
+            android:id="@+id/textview7"
+            android:layout_marginLeft="80sp"
+            android:layout_below="@+id/textview6"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            android:text="剩 余 套 餐 ："
+            android:textSize="20dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maxsharetext"
-            android:layout_toRightOf="@+id/maxshare"
-            android:layout_below="@+id/passwordtext"
+            android:id="@+id/textview71"
+            android:layout_toRightOf="@+id/textview7"
+            android:layout_below="@+id/textview61"
             android:text="789"
-            android:textSize="15dp"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"/>
+            android:textSize="20dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
 
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/dollar"
+            android:id="@+id/iv4"
+            android:layout_below="@+id/textview6"
+            android:layout_alignLeft="@+id/iv2"
+            android:layout_alignStart="@+id/iv2" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maxaccess"
-            android:paddingLeft="90sp"
-            android:layout_below="@+id/maxshare"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"
-            android:text="账户余额："
-            android:textSize="15dp" />
+            android:id="@+id/textview8"
+            android:layout_marginLeft="80sp"
+            android:layout_below="@+id/textview7"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            android:text="账 户 余 额 ："
+            android:textSize="20dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maxaccesstext"
-            android:layout_toRightOf="@+id/maxaccess"
-            android:layout_below="@+id/maxsharetext"
+            android:id="@+id/textview81"
+            android:layout_toRightOf="@+id/textview8"
+            android:layout_below="@+id/textview71"
             android:text="1011"
-            android:textSize="15dp"
-            android:paddingTop="5sp"
-            android:paddingBottom="5sp"/>
+            android:textSize="20dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
     </RelativeLayout>
 
 
     <ImageView
         android:layout_width="380dp"
-        android:layout_height="280dp"
+        android:layout_height="260dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:src="@mipmap/balance"
+        android:src="@drawable/balance"
         android:background="#FFFFFF"
         />
 
