@@ -29,10 +29,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.chinamobile.wifibao.bean.WiFi;
+import java.util.Iterator;
 
-public class MainActivity extends Activity {
+public class WifiListActivity extends Activity {
 
-    private int[] icon = {R.drawable.potrait};//图标
+    private int[] icon = {R.mipmap.potrait};//图标
 //    private String[] title = {"WiFi 1", "WiFi 2"};//wifi名字
 //    private String[] subtitle = {"已使用流量:2054 MB", "已使用流量:478 MB"};//wifi具体信息
 //    private String[] score = {"9.3", "8.1"};//wifi评分
@@ -41,7 +43,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.wifi_list);
         setViewComponent();
     }
     private void setViewComponent() {
@@ -53,13 +55,15 @@ public class MainActivity extends Activity {
         //2016/3/23
         //wifiList是一个 ArrayList<WiFi>的实例
         ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
-        Iterator iter = wifList.iterator();
+        //wifilist需要从数据库获取或者从手机本地读取，这里只是建立对象，没有实际数据
+        ArrayList<WiFi> wifiList = new ArrayList<WiFi>();
+        Iterator iter = wifiList.iterator();
         int size=wifiList.size();
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("Image", icon[0]);
             map.put("Title", wifiList.get(i).getSSID());
-            map.put("Subtitle", "当前接入人数：" + (String)wifiList.get(i).getcurConnect());
+            map.put("Subtitle", "当前接入人数：" + wifiList.get(i).getCurConnect().toString());
             map.put("Score", wifiList.get(i).getScore());
             Item.add(map);
         }
@@ -82,7 +86,7 @@ public class MainActivity extends Activity {
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -101,6 +105,6 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }
