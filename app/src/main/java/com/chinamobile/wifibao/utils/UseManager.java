@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
+import android.os.Handler;
 
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.bean.User;
@@ -28,31 +30,41 @@ public class UseManager {
     private ArrayList<User> ownerList = new ArrayList<User>();    //可用的热点宝wifi的拥有者
     private ArrayList<WiFi> dbNearbyWiFi = new ArrayList<WiFi>();    //在数据库查询到的附近的wifi
     private Context mContext;
+    private Handler uiHandler;
 
-    public static synchronized UseManager getInstance(Context context)
+
+
+    public static synchronized UseManager getInstance(Context context,Handler handler)
     {
         if (instance == null)
         {
-            instance = new UseManager(context);
+            instance = new UseManager(context,handler);
         }
         return instance;
     }
 
-    private UseManager(Context context)
+    private UseManager(Context context,Handler handler)
     {
         this.mContext = context;
+        this.uiHandler=handler;
     }
 
 
-    public ArrayList<WiFi> getAvailableWiFi(){
+//    public ArrayList<WiFi> getAvailableWiFi(){
+//        double[] userLoc = {12.0,33.0};
+//        readDBNearbyWiFi(userLoc);
+//
+//        return wifiList;
+//
+//    }
+
+    public void getAvailableWiFi(){
         double[] userLoc = {12.0,33.0};
         readDBNearbyWiFi(userLoc);
-        compareWiFiList();
-        return wifiList;
     }
 
     public ArrayList<User> getOwnerList(){
-        for(WiFi wifi:wifiList){
+        for(WiFi wifi: getWifiList()){
             BmobUser user = new BmobUser();
             BmobQuery<User> query = new BmobQuery<User>();
             query.addWhereRelatedTo("userId", new BmobPointer(user) );    // 查询当前wifi的用户
@@ -68,25 +80,33 @@ public class UseManager {
                 }
             });
         }
+
         return ownerList;
     }
 
     private void readDBNearbyWiFi(double[] userLoc){
         BmobGeoPoint userPoint = new BmobGeoPoint(userLoc[0], userLoc[1]);
         BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
-        bmobQuery.addWhereNear("location", userPoint);
+//        bmobQuery.addWhereNear("location", userPoint);
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
         bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
             @Override
             public void onSuccess(List<WiFi> object) {
-                // TODO Auto-generated method stub
-                System.out.println("查询成功：共" + object.size() + "条数据。");
-                dbNearbyWiFi =new ArrayList<WiFi>(object);
+                dbNearbyWiFi = new ArrayList<WiFi>(object);
+                for (WiFi wifi : object) {
+                    //获得playerName的信息
+                    Log.i("wifi", wifi.getSSID());
+                    Log.i("wifi", dbNearbyWiFi.get(0).getBSSID());
+                }
+                compareWiFiList();
+                Message msg = new Message();
+                msg.what = 1;
+                uiHandler.sendMessage(msg);
             }
+
             @Override
             public void onError(int code, String msg) {
-                // TODO Auto-generated method stub
-                System.out.println("查询失败：" + msg);
+                Log.i("wifi", "read wifi fail");
             }
         });
     }
@@ -98,11 +118,12 @@ public class UseManager {
         ArrayList<String> scanIDList= new ArrayList<String>();
         for(ScanResult result:results){
             scanIDList.add(result.BSSID);
+            Log.i("wifi-mac",result.BSSID);
         }
 
         for(WiFi wifi: dbNearbyWiFi){
             if(scanIDList.contains(wifi.getBSSID())){
-                wifiList.add(wifi);
+                getWifiList().add(wifi);
             }
         }
     }
@@ -110,7 +131,7 @@ public class UseManager {
     public boolean connectWiFi(String BSSID){
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         WiFi connect=null;
-        for(WiFi wifi:wifiList){
+        for(WiFi wifi: getWifiList()){
             if(wifi.getBSSID().equals(BSSID))
                 connect = wifi;
         }
@@ -152,8 +173,6 @@ public class UseManager {
             }
         }
 
-
-
         int netId = wifiManager.addNetwork(conf);
         wifiManager.disconnect();
         wifiManager.enableNetwork(netId, true);
@@ -183,8 +202,7 @@ public class UseManager {
         }
 
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
-        for (WifiConfiguration existingConfig : existingConfigs)
-        {
+        for (WifiConfiguration existingConfig : existingConfigs) {
             if (existingConfig.SSID.equals("\""+networkSSID+"\"")){
                 wifiManager.removeNetwork(existingConfig.networkId);
             }
@@ -196,4 +214,7 @@ public class UseManager {
         wifiManager.reconnect();
     }
 
+    public ArrayList<WiFi> getWifiList() {
+        return wifiList;
+    }
 }
