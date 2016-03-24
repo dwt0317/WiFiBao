@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,15 +22,11 @@
             android:name=".activity.WifiListActivity"
             android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.TestActivity2"
-            android:label="@string/title_activity_test2"
+            android:label="TestActivity2"
             android:theme="@style/AppTheme.NoActionBar" >
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +37,15 @@
 
         <!--activities for share wifi ap.DON'T REMOVE -->
         <activity android:name=".activity.ShareActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.CloseApActivity">
+        </activity>
+        <activity android:name=".activity.BalanceShareActivity">
         </activity>
     </application>
     <!--DON'T REMOVE Authorization-->

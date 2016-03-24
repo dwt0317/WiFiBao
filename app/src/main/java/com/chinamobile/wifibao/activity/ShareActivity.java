@@ -18,7 +18,6 @@ import java.lang.reflect.Method;
 
 public class ShareActivity extends Activity {
     private Context mContext = null;
-
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
     private static final String METHOD_SET_WIFI_AP_ENABLED = "setWifiApEnabled";
     private static final String METHOD_GET_WIFI_AP_CONFIG = "getWifiApConfiguration";
@@ -45,12 +44,17 @@ public class ShareActivity extends Activity {
                 else {
                     WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                     wifiAp.startWifiAp(name, password);
-                    //跳转到开启ap成功的页面，下个页面可以关闭ap（sharehot页面有很多测试功能）
+                    Toast.makeText(mContext,"努力开启中...",Toast.LENGTH_LONG).show();
+                    //跳转到开启ap成功的页面，下个页面可以关闭ap
                     Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                     startActivity(intent);
                 }
             }
         });
+        isWiFiEnabled();
+    }
+
+    private void isWiFiEnabled() {
         //wifi ap is open, go to next Activity.
         WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         try {
@@ -64,7 +68,6 @@ public class ShareActivity extends Activity {
         } catch (Exception e) {
             Log.e("cdd:", "SecurityException", e);
         }
-
     }
 
 }
