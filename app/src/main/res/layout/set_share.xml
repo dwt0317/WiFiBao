@@ -21,7 +21,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/signal"
+        android:src="@drawable/signal"
         android:background="#FFFFFF"
         />
 
