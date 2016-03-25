@@ -32,8 +32,8 @@ public class WifiListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wifi_list);
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        setContentView(R.layout.wifi_list);
         setViewComponent();
     }
     private void setViewComponent() {
@@ -51,8 +51,8 @@ public class WifiListActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                   wifiList = UseManager.getInstance(WifiListActivity.this,this).getWifiList();
-                   updateWiFiListView();
+                    wifiList = UseManager.getInstance(WifiListActivity.this,this).getWifiList();
+                    updateWiFiListView();
                 }else{
                     Toast.makeText(WifiListActivity.this,  "Please wait..", Toast.LENGTH_LONG).show();
                 }
