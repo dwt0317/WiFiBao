@@ -34,19 +34,18 @@ public class UseManager {
 
 
 
-    public static synchronized UseManager getInstance(Context context,Handler handler)
+    public static synchronized UseManager getInstance(Context context)
     {
         if (instance == null)
         {
-            instance = new UseManager(context,handler);
+            instance = new UseManager(context);
         }
         return instance;
     }
 
-    private UseManager(Context context,Handler handler)
+    private UseManager(Context context)
     {
         this.mContext = context;
-        this.uiHandler=handler;
     }
 
 
@@ -101,7 +100,7 @@ public class UseManager {
                 compareWiFiList();
                 Message msg = new Message();
                 msg.what = 1;
-                uiHandler.sendMessage(msg);
+                getUiHandler().sendMessage(msg);
             }
 
             @Override
@@ -216,5 +215,13 @@ public class UseManager {
 
     public ArrayList<WiFi> getWifiList() {
         return wifiList;
+    }
+
+    public Handler getUiHandler() {
+        return uiHandler;
+    }
+
+    public void setUiHandler(Handler uiHandler) {
+        this.uiHandler = uiHandler;
     }
 }
