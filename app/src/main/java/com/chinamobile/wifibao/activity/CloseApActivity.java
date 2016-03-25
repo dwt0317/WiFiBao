@@ -2,6 +2,7 @@ package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.TrafficStats;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,12 +31,12 @@ public class CloseApActivity extends Activity{
 
         mContext = this;
         //close wifi ap
-        Button bt1 = (Button)findViewById(R.id.share_stop);
-        bt1.setOnClickListener(new View.OnClickListener() {
+        Button stopBt = (Button)findViewById(R.id.share_stop);
+        stopBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WifiApAdmin wifiAp = new WifiApAdmin(mContext);
-                wifiAp.closeWifiAp(mContext);
+                //WifiApAdmin wifiAp = new WifiApAdmin(mContext);
+                WifiApAdmin.closeWifiAp(mContext);
                 /*//统计分享的流量
                 RunningProcess rp = new RunningProcess();
                 int uid = rp.getUidOfProcess(mContext, "system");
@@ -47,6 +48,8 @@ public class CloseApActivity extends Activity{
                 //显示使用流量
                 final TextView show=(TextView)findViewById(R.id.total);
                 show.setText(sR+"KB");*/
+                Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
+                startActivity(intent);
 
             }
         });

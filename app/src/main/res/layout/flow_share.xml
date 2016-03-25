@@ -83,7 +83,7 @@
             android:id="@+id/tv11"
             android:layout_toEndOf="@+id/tv1"
             android:layout_toRightOf="@+id/tv1"
-            android:text="123"
+            android:text="12M"
             android:textSize="20dp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
@@ -114,7 +114,7 @@
             android:id="@+id/tv21"
             android:layout_toRightOf="@+id/tv2"
             android:layout_below="@+id/tv11"
-            android:text="456"
+            android:text="6"
             android:textSize="20dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>

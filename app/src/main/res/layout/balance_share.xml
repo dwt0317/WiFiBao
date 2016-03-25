@@ -71,7 +71,7 @@
             android:id="@+id/textview51"
             android:layout_toEndOf="@+id/textview5"
             android:layout_toRightOf="@+id/textview5"
-            android:text="123"
+            android:text="12M"
             android:textSize="20dp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
@@ -133,7 +133,7 @@
             android:id="@+id/textview71"
             android:layout_toRightOf="@+id/textview7"
             android:layout_below="@+id/textview61"
-            android:text="789"
+            android:text="789M"
             android:textSize="20dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>

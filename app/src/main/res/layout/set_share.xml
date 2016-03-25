@@ -5,31 +5,30 @@
     android:layout_height="match_parent">
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="分享设置"
-    android:textSize="22dip"
-    android:layout_alignParentLeft="true"
-    android:layout_centerVertical="true"
-    android:gravity="center"
-    android:textColor="#FFFFFF"
-    android:paddingTop="10dip"
-    android:background="#1892eb"
-    />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享设置"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:paddingTop="10dip"
+        android:background="#1892eb"/>
+
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
         android:background="#FFFFFF"
-        android:src="@drawable/signal"
-        />
+        android:src="@drawable/signal"/>
+
     <RadioGroup
         android:id="@+id/share"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="90sp"
         android:paddingTop="15dp">
+
         <RadioButton
             android:drawableLeft="@drawable/wlan"
             android:id="@+id/wifi"
@@ -39,6 +38,7 @@
             android:textSize="25sp"
             android:layout_gravity="center"
             android:checked="false" />
+
         <RadioButton
             android:drawableLeft="@drawable/cellular"
             android:id="@+id/cellular"
@@ -46,10 +46,11 @@
             android:layout_height="wrap_content"
             android:text="   流量分享"
             android:textSize="25sp"
-            android:layout_gravity="center"/>
-
+            android:layout_gravity="center"
+            android:checked="true" />
     </RadioGroup>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -68,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/apname"
-            android:text="热  点  名  称 :"
+            android:text="热 点 名 称 :"
             android:textSize="20dp"
             android:layout_marginTop="15sp"
             android:layout_marginLeft="90sp"
@@ -78,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/apnametext"
-            android:text="123"
+            android:text="hello"
             android:textSize="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -104,15 +105,14 @@
             android:layout_below="@+id/apname"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="密  码  设  置 : "
+            android:text="密 码 设 置 : "
             android:textSize="20sp" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/passwordtext"
             android:layout_toRightOf="@+id/password"
-            android:editable="true"
-            android:text="456"
+            android:text="12345678"
             android:textSize="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/maxsharetext"
             android:layout_toRightOf="@+id/maxshare"
-            android:text="789"
+            android:text="78M"
             android:textSize="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -179,7 +179,7 @@
             android:id="@+id/maxaccesstext"
             android:layout_toRightOf="@+id/maxaccess"
             android:layout_below="@+id/maxsharetext"
-            android:text="1011"
+            android:text="8"
             android:textSize="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
