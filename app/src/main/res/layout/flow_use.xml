@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0px">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="正在使用"
+            android:textSize="22dip"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="140dip"
+            android:paddingRight="50dip"
+            android:paddingTop="10dip"
+            android:background="#1892eb"
+            android:layout_alignBottom="@+id/homeView" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/home"
+            android:background="#1892eb"
+            android:id="@+id/homeView" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/refresh"
+            android:background="#1892eb"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="#FFFFFF"
+        android:src="@mipmap/wifi"
+        />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="25dp"
+        android:paddingTop="20px">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/cellular"
+            android:id="@+id/flowiconView"
+            android:layout_marginLeft="41dp"
+            android:layout_marginStart="41dp"
+            android:layout_alignTop="@+id/flowuseView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/flowuseView"
+            android:text="已使用流量："
+            android:textSize="16dp"
+            android:layout_marginTop="20sp"
+            android:layout_marginLeft="90sp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/flowuseText"
+            android:layout_toEndOf="@+id/flowuseView"
+            android:layout_toRightOf="@+id/flowuseView"
+            android:text="120  MB"
+            android:textSize="16dp"
+            android:layout_marginTop="20sp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
+
+        <ImageView
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/time"
+            android:id="@+id/timeiconView"
+            android:layout_alignTop="@+id/timeuseView"
+            android:layout_alignLeft="@+id/flowiconView"
+            android:layout_alignStart="@+id/flowiconView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeuseView"
+            android:layout_marginLeft="90sp"
+            android:layout_below="@+id/flowuseView"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            android:text="已使用时间："
+            android:textSize="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeuseText"
+            android:layout_toRightOf="@+id/timeuseView"
+            android:layout_below="@+id/flowuseText"
+            android:text="05:32"
+            android:textSize="16dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/dollar"
+            android:id="@+id/moneyiconView"
+            android:layout_below="@+id/timeuseView"
+            android:layout_alignLeft="@+id/timeiconView"
+            android:layout_alignStart="@+id/timeiconView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moneyuseView"
+            android:layout_marginLeft="90sp"
+            android:layout_below="@+id/timeuseView"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            android:text="消 费 金 额："
+            android:textSize="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moneyuseText"
+            android:layout_toRightOf="@+id/moneyuseView"
+            android:layout_below="@+id/timeuseText"
+            android:text="8.9 流量币"
+            android:textSize="16dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/use_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#f72411"
+        android:height="30dip"
+        android:width="90dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dip"
+        android:text="断开连接"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+</LinearLayout>
