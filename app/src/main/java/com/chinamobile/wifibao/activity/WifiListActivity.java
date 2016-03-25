@@ -51,7 +51,7 @@ public class WifiListActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                    wifiList = UseManager.getInstance(WifiListActivity.this,this).getWifiList();
+                    wifiList = UseManager.getInstance(WifiListActivity.this).getWifiList();
                     updateWiFiListView();
                 }else{
                     Toast.makeText(WifiListActivity.this,  "Please wait..", Toast.LENGTH_LONG).show();
@@ -59,7 +59,8 @@ public class WifiListActivity extends Activity {
             }
         };
 
-        UseManager.getInstance(this,uiHandler).getAvailableWiFi();
+        UseManager.getInstance(this).setUiHandler(uiHandler);
+        UseManager.getInstance(this).getAvailableWiFi();
 
     }
 
