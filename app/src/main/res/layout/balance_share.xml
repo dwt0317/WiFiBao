@@ -42,7 +42,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="35dp"
-        android:paddingTop="20px">
+        android:paddingTop="30dp"
+        android:background="#FFFFFF">
 
         <ImageView
             android:layout_width="30dp"
@@ -168,18 +169,14 @@
             android:textSize="20dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
+
+        <ImageView
+            android:layout_width="700dp"
+            android:layout_height="260dp"
+            android:src="@drawable/balance"
+            android:background="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
-
-
-    <ImageView
-        android:layout_width="380dp"
-        android:layout_height="260dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/balance"
-        android:background="#FFFFFF"
-        />
-
-
 
 </LinearLayout>
