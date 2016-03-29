@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.bean;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -17,7 +18,7 @@ public class WiFi extends BmobObject{
     private Boolean state;
     private String WiFitype;
     private Double upperLimit;
-    private BmobRelation userId;
+    private BmobUser user;
     private BmobGeoPoint location;
 
     public String getSSID() {
@@ -84,13 +85,6 @@ public class WiFi extends BmobObject{
         this.upperLimit = upperLimit;
     }
 
-    public BmobRelation getUserId() {
-        return userId;
-    }
-
-    public void setUserId(BmobRelation userId) {
-        this.userId = userId;
-    }
 
 
     public String getBSSID() {
@@ -107,5 +101,13 @@ public class WiFi extends BmobObject{
 
     public void setLocation(BmobGeoPoint location) {
         this.location = location;
+    }
+
+    public BmobUser getUser() {
+        return user;
+    }
+
+    public void setUser(BmobUser user) {
+        this.user = user;
     }
 }
