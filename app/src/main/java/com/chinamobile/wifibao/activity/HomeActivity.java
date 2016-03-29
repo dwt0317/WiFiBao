@@ -19,8 +19,8 @@ public class HomeActivity extends Activity{
         setContentView(R.layout.home);
 
         //gridview填充数据
-        int[] icon = {R.drawable.homeActivity_useflow,R.drawable.homeActivity_shareflow,R.drawable.homeActivity_userinfo,R.drawable.homeActivity_wallet,
-                R.drawable.homeActivity_viewused,R.drawable.homeActivity_viewshared,R.drawable.homeActivity_recharge,R.drawable.homeActivity_bill};
+        int[] icon = {R.drawable.home_useflow,R.drawable.home_shareflow,R.drawable.home_userinfo,R.drawable.home_wallet,
+                R.drawable.home_viewused,R.drawable.home_viewshared,R.drawable.home_recharge,R.drawable.home_bill};
         String[] iconName = {"使用流量" ,"分享流量","个人信息","我的钱包","查看使用","查看分享","充值","我的账单"};
 
         GridView gridview = (GridView) findViewById(R.id.gridview1);
@@ -48,7 +48,7 @@ public class HomeActivity extends Activity{
         });
 
         //设置页面数据填充
-        int settingicon[] = {R.drawable.homeActivity_userinfo,R.drawable.homeActivity_wallet,R.drawable.homeActivity_recharge,R.drawable.homeActivity_bill};
+        int settingicon[] = {R.drawable.home_userinfo,R.drawable.home_wallet,R.drawable.home_recharge,R.drawable.home_bill};
         String settingtext[] = {"个人信息","我的钱包","充值","我的账单"};
 
         final View setting_content= this.getLayoutInflater().inflate(R.layout.setting, null);

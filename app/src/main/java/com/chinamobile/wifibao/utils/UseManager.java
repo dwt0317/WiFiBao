@@ -6,20 +6,25 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 import android.os.Handler;
 
+import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.bean.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by dwt on 2016/3/17.
@@ -31,6 +36,9 @@ public class UseManager {
     private ArrayList<WiFi> dbNearbyWiFi = new ArrayList<WiFi>();    //在数据库查询到的附近的wifi
     private Context mContext;
     private Handler uiHandler;
+
+    private UseRecord useRecord = new UseRecord();
+
 
 
 
@@ -63,7 +71,7 @@ public class UseManager {
         for(WiFi wifi: getWifiList()){
             BmobUser user = new BmobUser();
             BmobQuery<User> query = new BmobQuery<User>();
-            query.addWhereRelatedTo("userId", new BmobPointer(user) );    // 查询当前wifi的用户
+            query.addWhereRelatedTo("user", new BmobPointer(user) );    // 查询当前wifi的用户
             query.findObjects(mContext, new FindListener<User>() {
                 @Override
                 public void onSuccess(List<User> object) {
@@ -72,7 +80,6 @@ public class UseManager {
                     msg.what = 1;
                     getUiHandler().sendMessage(msg);
                 }
-
                 @Override
                 public void onError(int code, String msg) {
 //                    toast("查询失败:"+msg);
@@ -90,11 +97,6 @@ public class UseManager {
             @Override
             public void onSuccess(List<WiFi> object) {
                 dbNearbyWiFi = new ArrayList<WiFi>(object);
-                for (WiFi wifi : object) {
-                    //获得playerName的信息
-                    Log.i("wifi", wifi.getSSID());
-                    Log.i("wifi", dbNearbyWiFi.get(0).getBSSID());
-                }
                 compareWiFiList();
                 Message msg = new Message();
                 msg.what = 1;
@@ -125,12 +127,13 @@ public class UseManager {
         }
     }
 
-    public boolean connectWiFi(String BSSID){
+    public boolean connectWiFi(WiFi wifi){
+        String BSSID = wifi.getBSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         WiFi connect=null;
-        for(WiFi wifi: getWifiList()){
-            if(wifi.getBSSID().equals(BSSID))
-                connect = wifi;
+        for(WiFi wifiItem: getWifiList()){
+            if(wifiItem.getBSSID().equals(BSSID))
+                connect = wifiItem;
         }
         if(connect==null){
             Log.e("UseWiFi", "No such WiFi found!");
@@ -154,17 +157,26 @@ public class UseManager {
                 wifiManager.removeNetwork(existingConfig.networkId);
             }
         }
+        try{
+            int netId = wifiManager.addNetwork(conf);
+            wifiManager.disconnect();
+            wifiManager.enableNetwork(netId, true);
+            wifiManager.reconnect();
+            BmobDate startTime = new BmobDate(new Date());
+            useRecord.setStartTime(startTime);
 
-        int netId = wifiManager.addNetwork(conf);
-        wifiManager.disconnect();
-        wifiManager.enableNetwork(netId, true);
-        wifiManager.reconnect();
-        return true;
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public void disconnectWiFi(String BSSID){
+    public void disconnectWiFi(WiFi wifi){
+        String BSSID = wifi.getBSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         wifiManager.disconnect();
+        updateUseRecord(wifi);
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs)
@@ -182,7 +194,9 @@ public class UseManager {
         {
             wifiManager.setWifiEnabled(true);
             while(!wifiManager.isWifiEnabled()){
-                Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(mContext, "正在打开WLAN...", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
                 try {
                     Thread.currentThread();
                     Thread.sleep(1500);
@@ -192,6 +206,24 @@ public class UseManager {
                 }
             }
         }
+    }
+
+    //待测试
+    private void updateUseRecord(WiFi wifi){
+        BmobDate endTime = new BmobDate(new Date());
+        useRecord.setEndTime(endTime);
+        useRecord.setWiFi(wifi);
+        useRecord.save(mContext, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                Log.i("bmob","add use record done!");
+            }
+
+            @Override
+            public void onFailure(int code, String arg0) {
+                Log.e("bmob", "add use record fail!");
+            }
+        });
     }
 
     public void testConnect(){

@@ -85,6 +85,9 @@ public class TrafficMonitor {
         uiHandler.postDelayed(mRunnable,2000);
     }
 
+    public void disableTrafficMonitor(){
+        uiHandler.removeCallbacks(mRunnable);
+    }
     public Handler getUiHandler() {
         return uiHandler;
     }
