@@ -7,7 +7,7 @@ import cn.bmob.v3.datatype.BmobRelation;
 /**
  * Created by dwt on 2016/3/16.
  */
-public class UseRecord {
+public class UseRecord extends BmobObject{
     private BmobObject WiFi;
     private Double cost;
     private BmobDate startTime;
