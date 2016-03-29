@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -41,9 +42,9 @@
 
     <ImageView
         android:layout_width="350dp"
-        android:layout_height="160dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="0dp"
         android:background="#FFFFFF"
         android:src="@drawable/wave"
         />
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:paddingLeft="25dp"
-        android:paddingTop="20px">
+        android:paddingTop="40px">
 
         <ImageView
             android:layout_width="30dp"
@@ -163,7 +164,7 @@
         android:height="30dip"
         android:width="90dip"
         android:layout_gravity="center"
-        android:layout_marginTop="60dip"
+        android:layout_marginTop="100dip"
         android:text="停止分享"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />

@@ -66,14 +66,14 @@
             android:id="@+id/flowiconView"
             android:layout_marginLeft="41dp"
             android:layout_marginStart="41dp"
-            android:layout_alignTop="@+id/flowuseView"
+            android:layout_alignTop="@+id/flowusedView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/flowuseView"
+            android:id="@+id/flowusedView"
             android:text="本次消费流量："
             android:textSize="15dp"
             android:layout_marginTop="20sp"
@@ -84,9 +84,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/flowuseText"
-            android:layout_toEndOf="@+id/flowuseView"
-            android:layout_toRightOf="@+id/flowuseView"
+            android:id="@+id/flowusedText"
+            android:layout_toEndOf="@+id/flowusedView"
+            android:layout_toRightOf="@+id/flowusedView"
             android:text="123  MB"
             android:textSize="15dp"
             android:layout_marginTop="20sp"
@@ -99,7 +99,7 @@
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/moneyiconView1"
-            android:layout_below="@+id/flowuseView"
+            android:layout_below="@+id/flowusedView"
             android:layout_alignLeft="@+id/flowiconView"
             android:layout_alignStart="@+id/flowiconView" />
 
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/costView"
             android:paddingLeft="90sp"
-            android:layout_below="@+id/flowuseView"
+            android:layout_below="@+id/flowusedView"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"
             android:text="本次消费金额："
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/costText"
             android:layout_toRightOf="@+id/costView"
-            android:layout_below="@+id/flowuseText"
+            android:layout_below="@+id/flowusedText"
             android:text="456  流量币"
             android:textSize="15dp"
             android:paddingTop="10sp"

@@ -1,5 +1,6 @@
 package com.chinamobile.wifibao.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,7 @@ public class WifiListActivity extends Activity {
 
     ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
     ArrayList<WiFi> wifiList;
+    ArrayList<WiFi>userList;
     ListView wifiListView;
     ImageView settingView;
 
@@ -61,6 +63,7 @@ public class WifiListActivity extends Activity {
 
         UseManager.getInstance(this).setUiHandler(uiHandler);
         UseManager.getInstance(this).getAvailableWiFi();
+        UseManager.getInstance(this).getOwnerList();
 
     }
 
@@ -83,7 +86,23 @@ public class WifiListActivity extends Activity {
         wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Object listItem = listview.getItemAtPosition(position);  把下一个activity写到这里就好了
+                Object listItem = wifiListView.getItemAtPosition(position);  //把下一个activity写到这里就好了
+                //跳转到开启ap成功的页面，下个页面可以关闭ap
+                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                //传递参数
+                bundle.putString("SSID","WIFI 9" );
+                bundle.putString("userID","user 9" );
+                bundle.putString("WiFitype","蜂窝9G" );
+                bundle.putString("upperLimit","9" );
+                bundle.putString("maxConnect","9" );
+                bundle.putString("state","强度 9" );
+                bundle.putString("flowUsed","99MB" );
+                bundle.putString("cost","9流量币" );
+                bundle.putString("cost","endTime" );
+
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
