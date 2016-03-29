@@ -2,6 +2,8 @@ package com.chinamobile.wifibao.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +34,7 @@ public class WifiListActivity extends Activity {
     ArrayList<WiFi>userList;
     ListView wifiListView;
     ImageView settingView;
-
+    public  final static String SER_KEY = "com.chinamobile.wifibao.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +79,13 @@ public class WifiListActivity extends Activity {
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("Image", icon[0]);
-            map.put("Title", wifiList.get(i).getSSID());
-            map.put("Subtitle", "当前接入人数：" + wifiList.get(i).getCurConnect());
+            map.put("SSID", wifiList.get(i).getSSID());
+            map.put("CurCon", "当前接入人数：" + wifiList.get(i).getCurConnect());
             map.put("Score", wifiList.get(i).getScore());
             Item.add(map);
 
         }
-        SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "Title","Subtitle","Score"},
+        SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "SSID","CurCon","Score"},
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
         wifiListView.setAdapter(saImageItems);
 
@@ -91,20 +93,41 @@ public class WifiListActivity extends Activity {
         wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object listItem = wifiListView.getItemAtPosition(position);  //把下一个activity写到这里就好了
+
+//               ListView listView = (ListView)parent;
+//                HashMap<String, Object> map = (HashMap<String, Object>) listView.getItemAtPosition(position);
+
+//                String user = wifiList.get(position).getUser().getUsername();
+//                String ssid = wifiList.get(position).getSSID();
+//                int curcon = wifiList.get(position).getCurConnect();
+//                String type = wifiList.get(position).getWiFitype();
+//                Double uperlimit = wifiList.get(position).getUpperLimit();
+//
+//                //获取wifi信号强度
+//                int strength = 0;
+//                String wserviceName = Context.WIFI_SERVICE;
+//                WifiManager wm = (WifiManager) getSystemService(wserviceName);
+//                WifiInfo info = wm.getConnectionInfo();
+//                if (info.getBSSID() == wifiList.get(position).getBSSID()) {
+//                    //int strength = info.getRssi(); // 链接信号强度
+//                    strength = WifiManager.calculateSignalLevel(info.getRssi(), 5);
+//                    //int speed = info.getLinkSpeed(); // 链接速度
+//                    //String units = WifiInfo.LINK_SPEED_UNITS; // 链接速度单位
+//                    //return info.toString();
+//                }
+
                 //跳转到开启ap成功的页面，下个页面可以关闭ap
                 Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
                 Bundle bundle=new Bundle();
                 //传递参数
-                bundle.putString("SSID","WIFI 9" );
-//                bundle.putString("userID","user 9" );
-//                bundle.putString("WiFitype","蜂窝9G" );
-//                bundle.putString("upperLimit","9" );
-//                bundle.putString("maxConnect","9" );
-//                bundle.putString("state","强度 9" );
-//                bundle.putString("flowUsed","99MB" );
-//                bundle.putString("cost","9流量币" );
-//                bundle.putString("cost","endTime" );
+//                bundle.putString("SSID",ssid );
+//                bundle.putInt("CurCon", curcon);
+//                bundle.putInt("strength", strength);
+//                bundle.putString("userID",user );
+//                bundle.putString("WiFitype",type );
+//                bundle.putDouble("upperLimit", uperlimit);
+
+                bundle.putSerializable(SER_KEY,wifiList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
