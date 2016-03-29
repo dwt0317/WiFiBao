@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.bean;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -8,21 +9,13 @@ import cn.bmob.v3.datatype.BmobRelation;
  * Created by dwt on 2016/3/16.
  */
 public class ShareRecord extends BmobObject {
-    private BmobRelation WiFiId;
+    private BmobObject WiFi;
     private Double income;
     private BmobDate startTime;
     private BmobDate endTime;
     private Double flowShared;
-    private BmobRelation userId;
+    private BmobUser user;
 
-
-    public BmobRelation getWiFiId() {
-        return WiFiId;
-    }
-
-    public void setWiFiId(BmobRelation wiFiId) {
-        WiFiId = wiFiId;
-    }
 
     public Double getIncome() {
         return income;
@@ -56,11 +49,19 @@ public class ShareRecord extends BmobObject {
         this.flowShared = flowShared;
     }
 
-    public BmobRelation getUserId() {
-        return userId;
+    public BmobObject getWiFi() {
+        return WiFi;
     }
 
-    public void setUserId(BmobRelation userId) {
-        this.userId = userId;
+    public void setWiFi(BmobObject wiFi) {
+        WiFi = wiFi;
+    }
+
+    public BmobUser getUser() {
+        return user;
+    }
+
+    public void setUser(BmobUser user) {
+        this.user = user;
     }
 }
