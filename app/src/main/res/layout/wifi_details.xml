@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff">
+    android:background="#ffffffff"
+    android:weightSum="1">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -43,7 +44,7 @@
             android:id="@+id/sky"
             />
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="220px"
             android:src="@mipmap/potrait"
             android:layout_marginTop="360px"
@@ -186,11 +187,13 @@
         android:background="#ff1baf0d"
         android:height="30dip"
         android:width="90dip"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dip"
+        android:layout_gravity="center_horizontal"
         android:text="确认接入"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        />
+        android:layout_alignBottom="@+id/tyepText"
+        android:layout_toRightOf="@+id/curconnectText"
+        android:layout_toEndOf="@+id/curconnectText"
+        android:layout_weight="0.17" />
 
 </LinearLayout>
