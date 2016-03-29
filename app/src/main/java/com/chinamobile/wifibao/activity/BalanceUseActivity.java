@@ -1,6 +1,8 @@
 package com.chinamobile.wifibao.activity;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.chinamobile.wifibao.R;
@@ -27,4 +29,15 @@ public class BalanceUseActivity extends Activity {
 //        textView.setText("111");
 
     }
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getRepeatCount() == 0) {
+            Intent intent = new Intent(BalanceUseActivity.this, WifiListActivity.class);
+            startActivity(intent);
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
 }

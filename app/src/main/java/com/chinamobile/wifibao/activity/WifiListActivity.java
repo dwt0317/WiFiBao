@@ -1,5 +1,6 @@
 package com.chinamobile.wifibao.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.UseManager;
+import com.squareup.okhttp.Cache;
+
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -65,8 +68,9 @@ public class WifiListActivity extends Activity {
         UseManager.getInstance(this).getAvailableWiFi();
         UseManager.getInstance(this).getOwnerList();
 
-    }
+        //Item.clear();
 
+    }
     public void updateWiFiListView(){
         Iterator iter = wifiList.iterator();
         int size=wifiList.size();
@@ -77,6 +81,7 @@ public class WifiListActivity extends Activity {
             map.put("Subtitle", "当前接入人数：" + wifiList.get(i).getCurConnect());
             map.put("Score", wifiList.get(i).getScore());
             Item.add(map);
+
         }
         SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "Title","Subtitle","Score"},
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
@@ -92,20 +97,18 @@ public class WifiListActivity extends Activity {
                 Bundle bundle=new Bundle();
                 //传递参数
                 bundle.putString("SSID","WIFI 9" );
-                bundle.putString("userID","user 9" );
-                bundle.putString("WiFitype","蜂窝9G" );
-                bundle.putString("upperLimit","9" );
-                bundle.putString("maxConnect","9" );
-                bundle.putString("state","强度 9" );
-                bundle.putString("flowUsed","99MB" );
-                bundle.putString("cost","9流量币" );
-                bundle.putString("cost","endTime" );
-
+//                bundle.putString("userID","user 9" );
+//                bundle.putString("WiFitype","蜂窝9G" );
+//                bundle.putString("upperLimit","9" );
+//                bundle.putString("maxConnect","9" );
+//                bundle.putString("state","强度 9" );
+//                bundle.putString("flowUsed","99MB" );
+//                bundle.putString("cost","9流量币" );
+//                bundle.putString("cost","endTime" );
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
     }
-
 }
