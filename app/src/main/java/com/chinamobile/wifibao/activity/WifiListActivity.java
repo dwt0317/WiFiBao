@@ -2,6 +2,8 @@ package com.chinamobile.wifibao.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -94,22 +96,37 @@ public class WifiListActivity extends Activity {
 
                 ListView listView = (ListView)parent;
                 HashMap<String, Object> map = (HashMap<String, Object>) listView.getItemAtPosition(position);
-                String ssid = (String) map.get("SSID");
-                String curcon = (String) map.get("CurCon");
+                //String ssid = (String) map.get("SSID");
+                String user = wifiList.get(position).getUser().getUsername();
+                String ssid = wifiList.get(position).getSSID();
+                int curcon = wifiList.get(position).getCurConnect();
+                String type = wifiList.get(position).getWiFitype();
+                Double uperlimit = wifiList.get(position).getUpperLimit();
 
-                //Toast.makeText(SQLiteCRUDActivity.this, userid +" , "+ name +" , "+ age ,Toast.LENGTH_LONG).show();
+                //获取wifi信号强度
+                int strength = 0;
+                String wserviceName = Context.WIFI_SERVICE;
+                WifiManager wm = (WifiManager) getSystemService(wserviceName);
+                WifiInfo info = wm.getConnectionInfo();
+                if (info.getBSSID() == wifiList.get(position).getBSSID()) {
+                    //int strength = info.getRssi(); // 链接信号强度
+                    strength = WifiManager.calculateSignalLevel(info.getRssi(), 5);
+                    //int speed = info.getLinkSpeed(); // 链接速度
+                    //String units = WifiInfo.LINK_SPEED_UNITS; // 链接速度单位
+                    //return info.toString();
+                }
 
                 //跳转到开启ap成功的页面，下个页面可以关闭ap
                 Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
                 Bundle bundle=new Bundle();
                 //传递参数
                 bundle.putString("SSID",ssid );
-                bundle.putString("CurCon",curcon );
-                bundle.putString("strength","9" );
-                bundle.putString("userID","user 9" );
-                bundle.putString("WiFitype","蜂窝9G" );
-                bundle.putString("upperLimit","9M" );
-
+                bundle.putInt("CurCon", curcon);
+                bundle.putInt("strength", strength);
+                bundle.putString("userID",user );
+                bundle.putString("WiFitype",type );
+                bundle.putDouble("upperLimit", uperlimit);
+                //bundle.putSerializable();
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

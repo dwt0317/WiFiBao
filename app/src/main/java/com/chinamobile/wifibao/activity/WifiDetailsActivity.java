@@ -47,15 +47,15 @@ public class WifiDetailsActivity extends Activity {
         tV3.setText(wifitype);
         //接收信号强度
         TextView tV4 = (TextView) findViewById(R.id.sigstrText);
-        String strength = bundle.getString("strength");
+        Integer strength = bundle.getInt("strength");
         tV4.setText(strength);
         //接收流量上限
         TextView tV5 = (TextView) findViewById(R.id.maxflowText);
-        String maxflow = bundle.getString("SSID");
+        String maxflow =String.valueOf(bundle.getDouble("upperLimit"));
         tV5.setText(maxflow);
         //接收接入人数
         TextView tV6 = (TextView) findViewById(R.id.curconnectText);
-        String curcon = bundle.getString("SSID");
+        int curcon = bundle.getInt("CurCon");
         tV6.setText(curcon);
 
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
@@ -75,7 +75,7 @@ public class WifiDetailsActivity extends Activity {
                         startActivity(intent);
                     }
                 };
-                timer.schedule(tast,2500);
+                timer.schedule(tast,2000);
 
                 Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
