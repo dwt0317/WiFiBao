@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,8 +38,13 @@ public class FlowUsingActivity extends Activity {
                 //传递参数
                 bundle.putString("flowUsed","99" );
                 intent.putExtras(bundle);
-                startActivity(intent);                startActivity(intent);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();    //设置back键不可用
     }
 }

@@ -113,11 +113,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="#FFFFFF"
-            android:src="@drawable/dollar"
+            android:src="@drawable/saveflow"
             android:id="@+id/iv3"
-            android:layout_alignTop="@+id/textview8"
-            android:layout_alignLeft="@+id/iv4"
-            android:layout_alignStart="@+id/iv4" />
+            android:layout_below="@+id/textview6"
+            android:layout_alignLeft="@+id/iv2"
+            android:layout_alignStart="@+id/iv2" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -144,11 +144,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="#FFFFFF"
-            android:src="@drawable/dollar"
+            android:src="@drawable/b"
             android:id="@+id/iv4"
-            android:layout_below="@+id/textview6"
-            android:layout_alignLeft="@+id/iv2"
-            android:layout_alignStart="@+id/iv2" />
+            android:layout_below="@+id/textview7"
+            android:layout_alignLeft="@+id/iv3"
+            android:layout_alignStart="@+id/iv3" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,7 +176,8 @@
             android:src="@drawable/balance"
             android:background="#FFFFFF"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView9" />
     </RelativeLayout>
 
 </LinearLayout>

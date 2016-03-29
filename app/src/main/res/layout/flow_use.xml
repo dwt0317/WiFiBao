@@ -7,34 +7,33 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="0px">
+        android:layout_height="190px"
+        >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="match_parent"
             android:text="正在使用"
             android:textSize="22dip"
             android:textColor="#FFFFFF"
             android:paddingLeft="140dip"
             android:paddingRight="50dip"
-            android:paddingTop="10dip"
+            android:paddingTop="12dip"
             android:background="#1892eb"
-            android:layout_alignBottom="@+id/homeView" />
+            android:layout_alignParentBottom="true" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/home"
-            android:background="#1892eb"
+            android:layout_width="90px"
+            android:layout_height="90px"
+            android:layout_marginTop="12dip"
+            android:layout_marginLeft="20px"
+            android:background="@mipmap/home"
             android:id="@+id/homeView" />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/refresh"
-            android:background="#1892eb"
-            android:layout_marginTop="10dp"
+            android:layout_width="90px"
+            android:layout_height="90px"
+
+            android:background="@drawable/refresh"
+            android:layout_alignTop="@+id/homeView"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
