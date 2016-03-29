@@ -1,5 +1,7 @@
 package com.chinamobile.wifibao.bean;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
@@ -8,7 +10,7 @@ import cn.bmob.v3.datatype.BmobRelation;
 /**
  * Created by dwt on 2016/3/16.
  */
-public class WiFi extends BmobObject{
+public class WiFi extends BmobObject implements Serializable{
     private String SSID;
     private String BSSID;
     private String password;
