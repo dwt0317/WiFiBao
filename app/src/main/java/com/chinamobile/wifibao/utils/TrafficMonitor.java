@@ -5,6 +5,7 @@ import android.net.TrafficStats;
 
 import android.app.AlertDialog;
 
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -42,8 +43,8 @@ public class TrafficMonitor {
     }
 
     public void startTrafficMonitor(){
-        double mStartRX = TrafficStats.getTotalRxBytes();
-        double mStartTX = TrafficStats.getTotalTxBytes();
+        mStartRX = TrafficStats.getTotalRxBytes();
+        mStartTX = TrafficStats.getTotalTxBytes();
         if (mStartRX == TrafficStats.UNSUPPORTED || mStartTX == TrafficStats.UNSUPPORTED) {
             AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
             alert.setTitle("Uh Oh!");
@@ -56,17 +57,24 @@ public class TrafficMonitor {
 
     private Runnable mRunnable = new Runnable() {
         public void run() {
-            rxBytes = TrafficStats.getTotalRxBytes()- mStartRX;
-            txBytes = TrafficStats.getTotalTxBytes()- mStartTX;
-            totalTraffic =(rxBytes+txBytes);
-            formatRst();
             Message msg = new Message();
-            msg.what = 1;
-            getUiHandler().sendMessage(msg);
-            Log.i("traffic",mStartRX+" "+mStartTX);
+            WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager.isWifiEnabled()) {
+                rxBytes = TrafficStats.getTotalRxBytes() - mStartRX;
+                txBytes = TrafficStats.getTotalTxBytes() - mStartTX;
+                totalTraffic = (rxBytes + txBytes);
+                formatRst();
+                msg.what = 1;
+                getUiHandler().sendMessage(msg);
+                Log.i("traffic",mStartRX+" "+mStartTX);
+            }else{
+                msg.what = 0;
+                getUiHandler().sendMessage(msg);
+            }
         }
     };
 
+    //转成mb并保留两位小数
     private void formatRst(){
         totalTraffic = totalTraffic/1024/1024;
         DecimalFormat df  = new DecimalFormat("######0.00");

@@ -52,6 +52,10 @@ public class UseManager {
 
     public void getAvailableWiFi(){
         double[] userLoc = {12.0,33.0};
+        wifiList.clear();
+        ownerList.clear();
+        dbNearbyWiFi.clear();
+        enableWiFi();
         readDBNearbyWiFi(userLoc);
     }
 
@@ -139,23 +143,8 @@ public class UseManager {
         WifiConfiguration conf = new WifiConfiguration();
         conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
         conf.preSharedKey = "\""+ networkPass +"\"";
-        Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
 
-        //检测wifi是否开启
-        if (!wifiManager.isWifiEnabled())
-        {
-            wifiManager.setWifiEnabled(true);
-            while(!wifiManager.isWifiEnabled()){
-                Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(1500);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        enableWiFi();
 
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
@@ -173,7 +162,37 @@ public class UseManager {
         return true;
     }
 
+    public void disconnectWiFi(String BSSID){
+        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.disconnect();
+        //删除之前添加的conf
+        List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
+        for (WifiConfiguration existingConfig : existingConfigs)
+        {
+            if (existingConfig.BSSID.equals("\""+BSSID+"\"")){
+                wifiManager.removeNetwork(existingConfig.networkId);
+            }
+        }
+    }
 
+    //检测wifi是否开启并开启
+    private void enableWiFi(){
+        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+        if (!wifiManager.isWifiEnabled())
+        {
+            wifiManager.setWifiEnabled(true);
+            while(!wifiManager.isWifiEnabled()){
+                Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
+                try {
+                    Thread.currentThread();
+                    Thread.sleep(1500);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void testConnect(){
         String networkSSID = "qqqqq";
