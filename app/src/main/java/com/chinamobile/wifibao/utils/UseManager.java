@@ -6,6 +6,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 import android.os.Handler;
 
@@ -70,7 +71,7 @@ public class UseManager {
         for(WiFi wifi: getWifiList()){
             BmobUser user = new BmobUser();
             BmobQuery<User> query = new BmobQuery<User>();
-            query.addWhereRelatedTo("userId", new BmobPointer(user) );    // 查询当前wifi的用户
+            query.addWhereRelatedTo("user", new BmobPointer(user) );    // 查询当前wifi的用户
             query.findObjects(mContext, new FindListener<User>() {
                 @Override
                 public void onSuccess(List<User> object) {
@@ -79,7 +80,6 @@ public class UseManager {
                     msg.what = 1;
                     getUiHandler().sendMessage(msg);
                 }
-
                 @Override
                 public void onError(int code, String msg) {
 //                    toast("查询失败:"+msg);
@@ -97,11 +97,6 @@ public class UseManager {
             @Override
             public void onSuccess(List<WiFi> object) {
                 dbNearbyWiFi = new ArrayList<WiFi>(object);
-                for (WiFi wifi : object) {
-                    //获得playerName的信息
-                    Log.i("wifi", wifi.getSSID());
-                    Log.i("wifi", dbNearbyWiFi.get(0).getBSSID());
-                }
                 compareWiFiList();
                 Message msg = new Message();
                 msg.what = 1;
@@ -169,6 +164,7 @@ public class UseManager {
             wifiManager.reconnect();
             BmobDate startTime = new BmobDate(new Date());
             useRecord.setStartTime(startTime);
+
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -198,7 +194,9 @@ public class UseManager {
         {
             wifiManager.setWifiEnabled(true);
             while(!wifiManager.isWifiEnabled()){
-                Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
+                Toast toast=Toast.makeText(mContext, "正在打开WLAN...", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
                 try {
                     Thread.currentThread();
                     Thread.sleep(1500);
