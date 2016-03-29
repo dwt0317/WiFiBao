@@ -49,20 +49,13 @@ public class UseManager {
     }
 
 
-//    public ArrayList<WiFi> getAvailableWiFi(){
-//        double[] userLoc = {12.0,33.0};
-//        readDBNearbyWiFi(userLoc);
-//
-//        return wifiList;
-//
-//    }
 
     public void getAvailableWiFi(){
         double[] userLoc = {12.0,33.0};
         readDBNearbyWiFi(userLoc);
     }
 
-    public ArrayList<User> getOwnerList(){
+    public void getOwnerList(){
         for(WiFi wifi: getWifiList()){
             BmobUser user = new BmobUser();
             BmobQuery<User> query = new BmobQuery<User>();
@@ -71,6 +64,9 @@ public class UseManager {
                 @Override
                 public void onSuccess(List<User> object) {
                     ownerList.add(object.get(0));
+                    Message msg = new Message();
+                    msg.what = 1;
+                    getUiHandler().sendMessage(msg);
                 }
 
                 @Override
@@ -79,8 +75,6 @@ public class UseManager {
                 }
             });
         }
-
-        return ownerList;
     }
 
     private void readDBNearbyWiFi(double[] userLoc){
