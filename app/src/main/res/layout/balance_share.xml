@@ -16,14 +16,13 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:paddingTop="10dip"
-            android:background="#1892eb"
-            android:layout_alignBottom="@+id/imageView8" />
+            android:background="#1892eb" />
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/home"
             android:background="#1892eb"
             android:id="@+id/imageView8" />
@@ -32,7 +31,7 @@
             android:layout_height="30dp"
             android:src="@drawable/refresh"
             android:background="#1892eb"
-            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
@@ -51,9 +50,11 @@
             android:background="#FFFFFF"
             android:src="@drawable/cellular"
             android:id="@+id/iv1"
-            android:layout_marginRight="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_alignBottom="@+id/textview5"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_marginRight="27dp"
+            android:layout_marginEnd="27dp"
+            android:layout_above="@+id/textview6"
             android:layout_toLeftOf="@+id/textview5"
             android:layout_toStartOf="@+id/textview5" />
         <TextView
@@ -82,13 +83,16 @@
 
         <ImageView
             android:layout_width="20dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/iv2"
-            android:layout_alignTop="@+id/textview6"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_alignBottom="@+id/textview6"
             android:layout_alignLeft="@+id/iv1"
-            android:layout_alignStart="@+id/iv1" />
+            android:layout_alignStart="@+id/iv1"
+            android:layout_below="@+id/iv1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,11 +118,13 @@
 
         <ImageView
             android:layout_width="25dp"
-            android:layout_height="27dp"
+            android:layout_height="33dp"
             android:background="#FFFFFF"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             android:src="@drawable/saveflow"
             android:id="@+id/iv3"
-            android:layout_below="@+id/textview6"
+            android:layout_below="@+id/iv2"
             android:layout_alignLeft="@+id/iv2"
             android:layout_alignStart="@+id/iv2" />
         <TextView
@@ -146,14 +152,17 @@
 
 
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/b"
             android:id="@+id/iv4"
-            android:layout_below="@+id/textview7"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_alignBottom="@+id/textview8"
             android:layout_alignLeft="@+id/iv3"
-            android:layout_alignStart="@+id/iv3" />
+            android:layout_alignStart="@+id/iv3"
+            android:layout_below="@+id/textview7" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
