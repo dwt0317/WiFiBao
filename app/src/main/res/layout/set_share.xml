@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="   WiFi分享"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:layout_gravity="center"
             android:checked="false" />
 
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="   流量分享"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:layout_gravity="center"
             android:checked="true" />
     </RadioGroup>
@@ -58,8 +58,8 @@
         android:paddingTop="30dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="27dp"
             android:background="#FFFFFF"
             android:src="@drawable/heart"
             android:id="@+id/imageView"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/apname"
             android:text="热 点 名 称 :"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:layout_marginTop="15sp"
             android:layout_marginLeft="90sp"
             android:paddingTop="7sp"
@@ -80,17 +80,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/apnametext"
             android:text="hello"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:layout_alignTop="@+id/apname"
-            android:layout_toRightOf="@+id/apname"
-            android:layout_toEndOf="@+id/apname" />
+            android:layout_above="@+id/passwordtext"
+            android:layout_alignLeft="@+id/maxsharetext"
+            android:layout_alignStart="@+id/maxsharetext" />
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="27dp"
             android:background="#FFFFFF"
             android:src="@drawable/key"
             android:id="@+id/imageView2"
@@ -106,14 +106,14 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="密 码 设 置 : "
-            android:textSize="20sp" />
+            android:textSize="16dp" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/passwordtext"
             android:layout_toRightOf="@+id/password"
             android:text="12345678"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:password="true"
@@ -121,8 +121,8 @@
              />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="27dp"
             android:background="#FFFFFF"
             android:src="@drawable/cellular"
             android:id="@+id/imageView3"
@@ -136,7 +136,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="最大分享流量:"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:layout_below="@+id/imageView2"
             android:layout_alignLeft="@+id/password"
             android:layout_alignStart="@+id/password" />
@@ -146,15 +146,15 @@
             android:id="@+id/maxsharetext"
             android:layout_toRightOf="@+id/maxshare"
             android:text="78M"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:layout_below="@+id/passwordtext"
             android:layout_above="@+id/maxaccess" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="27dp"
             android:background="#FFFFFF"
             android:src="@drawable/men"
             android:id="@+id/imageView6"
@@ -169,7 +169,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="最多接入人数:"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:layout_below="@+id/maxshare"
             android:layout_toLeftOf="@+id/maxsharetext"
             android:layout_toStartOf="@+id/maxsharetext" />
@@ -180,7 +180,7 @@
             android:layout_toRightOf="@+id/maxaccess"
             android:layout_below="@+id/maxsharetext"
             android:text="8   "
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
