@@ -8,12 +8,12 @@ import cn.bmob.v3.datatype.BmobRelation;
  * Created by dwt on 2016/3/16.
  */
 public class UseRecord extends BmobObject{
-    private BmobObject WiFi;
+    private WiFi WiFi;
     private Double cost;
     private BmobDate startTime;
     private BmobDate endTime;
     private Double flowUsed;
-    private BmobObject user;
+    private User user;
 
 
     public Double getCost() {
@@ -48,19 +48,20 @@ public class UseRecord extends BmobObject{
         this.flowUsed = flowUsed;
     }
 
-    public BmobObject getWiFi() {
+
+    public com.chinamobile.wifibao.bean.WiFi getWiFi() {
         return WiFi;
     }
 
-    public void setWiFi(BmobObject wiFi) {
+    public void setWiFi(com.chinamobile.wifibao.bean.WiFi wiFi) {
         WiFi = wiFi;
     }
 
-    public BmobObject getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(BmobObject user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

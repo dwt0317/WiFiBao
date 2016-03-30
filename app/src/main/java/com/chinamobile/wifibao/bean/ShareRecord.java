@@ -9,12 +9,12 @@ import cn.bmob.v3.datatype.BmobRelation;
  * Created by dwt on 2016/3/16.
  */
 public class ShareRecord extends BmobObject {
-    private BmobObject WiFi;
+    private WiFi WiFi;
     private Double income;
     private BmobDate startTime;
     private BmobDate endTime;
     private Double flowShared;
-    private BmobUser user;
+    private User user;
 
 
     public Double getIncome() {
@@ -49,19 +49,20 @@ public class ShareRecord extends BmobObject {
         this.flowShared = flowShared;
     }
 
-    public BmobObject getWiFi() {
+
+    public com.chinamobile.wifibao.bean.WiFi getWiFi() {
         return WiFi;
     }
 
-    public void setWiFi(BmobObject wiFi) {
+    public void setWiFi(com.chinamobile.wifibao.bean.WiFi wiFi) {
         WiFi = wiFi;
     }
 
-    public BmobUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(BmobUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }
