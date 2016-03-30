@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:text="分享设置"
         android:textSize="22sp"
         android:gravity="center"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="   WiFi分享"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:layout_gravity="center"
             android:checked="false" />
 
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="   流量分享"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:layout_gravity="center"
             android:checked="true" />
     </RadioGroup>
@@ -58,13 +58,19 @@
         android:paddingTop="30dp">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="27dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="#FFFFFF"
             android:src="@drawable/heart"
             android:id="@+id/imageView"
-            android:layout_alignTop="@+id/apname"
-            android:layout_marginLeft="40dp"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_marginRight="26dp"
+            android:layout_marginEnd="26dp"
+            android:layout_alignBottom="@+id/apname"
+            android:layout_toLeftOf="@+id/maxshare"
+            android:layout_toStartOf="@+id/maxshare"
+            android:layout_alignTop="@+id/apname" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,14 +95,17 @@
 
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="27dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="#FFFFFF"
             android:src="@drawable/key"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             android:id="@+id/imageView2"
             android:layout_alignBottom="@+id/password"
             android:layout_alignLeft="@+id/imageView"
-            android:layout_alignStart="@+id/imageView" />
+            android:layout_alignStart="@+id/imageView"
+            android:layout_alignTop="@+id/password" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,9 +135,12 @@
             android:background="#FFFFFF"
             android:src="@drawable/cellular"
             android:id="@+id/imageView3"
-            android:layout_alignBottom="@+id/maxshare"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_above="@+id/maxaccess"
             android:layout_alignLeft="@+id/imageView2"
-            android:layout_alignStart="@+id/imageView2" />
+            android:layout_alignStart="@+id/imageView2"
+            android:layout_below="@+id/imageView2" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,14 +165,17 @@
             android:layout_above="@+id/maxaccess" />
 
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="22dp"
             android:layout_height="27dp"
             android:background="#FFFFFF"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
             android:src="@drawable/men"
             android:id="@+id/imageView6"
             android:layout_alignBottom="@+id/maxaccess"
-            android:layout_alignLeft="@+id/imageView3"
-            android:layout_alignStart="@+id/imageView3" />
+            android:layout_alignRight="@+id/imageView3"
+            android:layout_alignEnd="@+id/imageView3"
+            android:layout_alignTop="@+id/maxaccess" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
