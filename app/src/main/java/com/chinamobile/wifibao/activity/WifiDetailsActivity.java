@@ -1,7 +1,10 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -32,42 +35,37 @@ public class WifiDetailsActivity extends Activity {
     private void setViewComponent() {
         setContentView(R.layout.wifi_details);
         //新页面接收数据
-        Bundle bundle = this.getIntent().getExtras();
+        //Bundle bundle = this.getIntent().getExtras();
         WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.SER_KEY);
-//        //接收ssid值
+       //接收ssid值
         TextView tV1 = (TextView) findViewById(R.id.wifiname);
-//        String ssid = bundle.getString("SSID");
         tV1.setText(wifi.getSSID());
-//        //接收userid值
-//        TextView tV2 = (TextView) findViewById(R.id.shareuserText);
-//        String userid = bundle.getString("userID");
-//        tV2.setText(userid);
-//        //接收网络类型
-//        TextView tV3 = (TextView) findViewById(R.id.tyepText);
-//        String wifitype = bundle.getString("WiFitype");
-//        tV3.setText(wifitype);
-//        //接收信号强度
-//        TextView tV4 = (TextView) findViewById(R.id.sigstrText);
-//        Integer strength = bundle.getInt("strength");
-//        tV4.setText(strength);
-//        //接收流量上限
-//        TextView tV5 = (TextView) findViewById(R.id.maxflowText);
-//        String maxflow =String.valueOf(bundle.getDouble("upperLimit"));
-//        tV5.setText(maxflow);
-//        //接收接入人数
-//        TextView tV6 = (TextView) findViewById(R.id.curconnectText);
-//        int curcon = bundle.getInt("CurCon");
-//        tV6.setText(curcon);
+        //接收userid值
+        TextView tV2 = (TextView) findViewById(R.id.shareuserText);
+        tV2.setText(wifi.getUser().getUsername());
+        //接收网络类型
+        TextView tV3 = (TextView) findViewById(R.id.tyepText);
+        tV3.setText(wifi.getWiFitype());
+        //获取wifi信号强度
+        TextView tV4 = (TextView) findViewById(R.id.sigstrText);
+        tV4.setText("5");
+        //接收流量上限
+        TextView tV5 = (TextView) findViewById(R.id.maxflowText);
+        tV5.setText(String.valueOf(wifi.getUpperLimit()));
+        //tV5.setText("999");
+        //接收接入人数
+        TextView tV6 = (TextView) findViewById(R.id.curconnectText);
+        //tV6.setText(wifi.getCurConnect());
 
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
 
                 final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
-                Bundle bundle=new Bundle();
+                //Bundle bundle=new Bundle();
                 //传递参数
-                bundle.putString("flowUsing","99" );
-                intent.putExtras(bundle);
+                //bundle.putString("flowUsing","99" );
+                //intent.putExtras(bundle);
 
                 Timer timer = new Timer();
                 TimerTask tast = new TimerTask() {
