@@ -1,5 +1,9 @@
 package com.chinamobile.wifibao.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +13,8 @@ import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.UseManager;
+import com.squareup.okhttp.Cache;
+
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,9 +31,10 @@ public class WifiListActivity extends Activity {
 
     ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
     ArrayList<WiFi> wifiList;
+    ArrayList<WiFi>userList;
     ListView wifiListView;
     ImageView settingView;
-
+    public  final static String SER_KEY = "com.chinamobile.wifibao.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,32 +68,39 @@ public class WifiListActivity extends Activity {
 
         UseManager.getInstance(this).setUiHandler(uiHandler);
         UseManager.getInstance(this).getAvailableWiFi();
+//        UseManager.getInstance(this).getUiHandler().removeMessages(1);
+
+        //Item.clear();
 
     }
-
     public void updateWiFiListView(){
         Iterator iter = wifiList.iterator();
         int size=wifiList.size();
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("Image", icon[0]);
-            map.put("Title", wifiList.get(i).getSSID());
-            map.put("Subtitle", "当前接入人数：" + wifiList.get(i).getCurConnect());
+            map.put("SSID", wifiList.get(i).getSSID());
+            map.put("CurCon", "当前接入人数：" + wifiList.get(i).getCurConnect());
             map.put("Score", wifiList.get(i).getScore());
             Item.add(map);
+
         }
-        SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "Title","Subtitle","Score"},
+        SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "SSID","CurCon","Score"},
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
         wifiListView.setAdapter(saImageItems);
-
         wifiListView.setTextFilterEnabled(true);
         wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Object listItem = listview.getItemAtPosition(position);  把下一个activity写到这里就好了
+
+                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
+                Bundle bundle=new Bundle();
+                //传递参数
+                bundle.putSerializable(SER_KEY,wifiList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
     }
-
 }

@@ -3,36 +3,37 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffffff">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="0px">
+        android:layout_height="190px"
+        >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="分享流量"
+            android:layout_height="match_parent"
+            android:text="正在使用"
             android:textSize="22dip"
-            android:gravity="center"
             android:textColor="#FFFFFF"
-            android:paddingTop="10dip"
-            android:background="#1892eb" />
+            android:paddingLeft="140dip"
+            android:paddingRight="50dip"
+            android:paddingTop="12dip"
+            android:background="#1892eb"
+            android:layout_alignParentBottom="true" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="left"
-            android:layout_centerVertical="true"
-            android:src="@drawable/home"
-            android:background="#1892eb"
-            android:id="@+id/imageView7" />
+            android:layout_width="90px"
+            android:layout_height="90px"
+            android:layout_marginTop="12dip"
+            android:layout_marginLeft="20px"
+            android:background="@mipmap/home"
+            android:id="@+id/homeView" />
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/refresh"
-            android:background="#1892eb"
-            android:layout_centerVertical="true"
+            android:layout_width="90px"
+            android:layout_height="90px"
+
+            android:background="@drawable/refresh"
+            android:layout_alignTop="@+id/homeView"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -40,11 +41,11 @@
 
     <ImageView
         android:layout_width="350dp"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="30dp"
         android:background="#FFFFFF"
-        android:src="@drawable/wave"
+        android:src="@mipmap/wifi"
         />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -52,28 +53,25 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:paddingLeft="45dp"
-        android:paddingTop="40px">
+        android:paddingLeft="25dp"
+        android:paddingTop="20px">
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="27dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="#FFFFFF"
             android:src="@drawable/cellular"
-            android:id="@+id/imageView3"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
+            android:id="@+id/flowiconView"
             android:layout_marginLeft="41dp"
             android:layout_marginStart="41dp"
-            android:layout_alignBottom="@+id/tv1"
+            android:layout_alignTop="@+id/flowusingView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/tv1" />
+            android:layout_alignParentStart="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv1"
-            android:text="已分享流量："
+            android:id="@+id/flowusingView"
+            android:text="已使用流量："
             android:textSize="16dp"
             android:layout_marginTop="20sp"
             android:layout_marginLeft="90sp"
@@ -82,97 +80,90 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv11"
-            android:layout_toEndOf="@+id/tv1"
-            android:layout_toRightOf="@+id/tv1"
-            android:text="12M"
+            android:id="@+id/flowusingText"
+            android:layout_toEndOf="@+id/flowusingView"
+            android:layout_toRightOf="@+id/flowusingView"
+            android:text="120  MB"
             android:textSize="16dp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="27dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:background="#FFFFFF"
-            android:src="@drawable/men"
-            android:id="@+id/imageView4"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:layout_alignLeft="@+id/imageView3"
-            android:layout_alignStart="@+id/imageView3"
-            android:layout_below="@+id/imageView3"
-            android:layout_above="@+id/tv3" />
+            android:src="@drawable/time"
+            android:id="@+id/timeiconView"
+            android:layout_alignTop="@+id/timeuseView"
+            android:layout_alignLeft="@+id/flowiconView"
+            android:layout_alignStart="@+id/flowiconView" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv2"
+            android:id="@+id/timeuseView"
             android:layout_marginLeft="90sp"
-            android:layout_below="@+id/tv1"
+            android:layout_below="@+id/flowusingView"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="已接入人数："
+            android:text="已使用时间："
             android:textSize="16dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv21"
-            android:layout_toRightOf="@+id/tv2"
-            android:layout_below="@+id/tv11"
-            android:text="6"
+            android:id="@+id/timeuseText"
+            android:layout_toRightOf="@+id/timeuseView"
+            android:layout_below="@+id/flowusingText"
+            android:text="05:32"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
 
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="27dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
-            android:id="@+id/imageView5"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:layout_alignBottom="@+id/tv3"
-            android:layout_alignRight="@+id/imageView4"
-            android:layout_alignEnd="@+id/imageView4"
-            android:layout_below="@+id/imageView4" />
+            android:id="@+id/moneyiconView"
+            android:layout_below="@+id/timeuseView"
+            android:layout_alignLeft="@+id/timeiconView"
+            android:layout_alignStart="@+id/timeiconView" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv3"
+            android:id="@+id/moneyuseView"
             android:layout_marginLeft="90sp"
-            android:layout_below="@+id/tv2"
+            android:layout_below="@+id/timeuseView"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="已获得收益："
+            android:text="消 费 金 额："
             android:textSize="16dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv31"
-            android:layout_toRightOf="@+id/tv3"
-            android:layout_below="@+id/tv21"
-            android:text="789"
+            android:id="@+id/moneyuseText"
+            android:layout_toRightOf="@+id/moneyuseView"
+            android:layout_below="@+id/timeuseText"
+            android:text="8.9 流量币"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
     </RelativeLayout>
 
-
-
-
     <Button
-        android:id="@+id/share_stop"
+        android:id="@+id/use_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#f72411"
         android:height="30dip"
         android:width="90dip"
         android:layout_gravity="center"
-        android:layout_marginTop="100dip"
-        android:text="停止分享"
+        android:layout_marginTop="60dip"
+        android:text="断开连接"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:onClick="disconnectButton"
+        />
 </LinearLayout>

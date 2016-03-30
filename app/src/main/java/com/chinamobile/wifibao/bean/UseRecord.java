@@ -1,26 +1,20 @@
 package com.chinamobile.wifibao.bean;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by dwt on 2016/3/16.
  */
-public class UseRecord {
-    private BmobRelation WiFiId;
+public class UseRecord extends BmobObject{
+    private WiFi WiFi;
     private Double cost;
     private BmobDate startTime;
     private BmobDate endTime;
     private Double flowUsed;
-    private BmobRelation userId;
+    private User user;
 
-    public BmobRelation getWiFiId() {
-        return WiFiId;
-    }
-
-    public void setWiFiId(BmobRelation wiFiId) {
-        WiFiId = wiFiId;
-    }
 
     public Double getCost() {
         return cost;
@@ -54,11 +48,20 @@ public class UseRecord {
         this.flowUsed = flowUsed;
     }
 
-    public BmobRelation getUserId() {
-        return userId;
+
+    public com.chinamobile.wifibao.bean.WiFi getWiFi() {
+        return WiFi;
     }
 
-    public void setUserId(BmobRelation userId) {
-        this.userId = userId;
+    public void setWiFi(com.chinamobile.wifibao.bean.WiFi wiFi) {
+        WiFi = wiFi;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
