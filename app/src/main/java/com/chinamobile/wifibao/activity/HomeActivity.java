@@ -10,6 +10,8 @@ import android.widget.*;
 import android.content.Intent;
 import java.util.HashMap;
 import java.util.ArrayList;
+import com.chinamobile.wifibao.R;
+
 /**
  * Created by Administrator on 2016/3/29.
  */
