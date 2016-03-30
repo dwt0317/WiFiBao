@@ -4,45 +4,46 @@ import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
+import com.chinamobile.wifibao.utils.TrafficMonitor;
 import com.chinamobile.wifibao.utils.UseManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class TestActivity2 extends AppCompatActivity {
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_test2);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
 //        writeToDatabase();
 //        Toast.makeText(TestActivity2.this,"1111111",Toast.LENGTH_LONG);
 //        UseManager uh = UseManager.getInstance(this);
 //        uh.testConnect();
-        scanNearbyWiFi();
+//        scanNearbyWiFi();
+        updateWiFi();
     }
+
 
 
     public void scanNearbyWiFi(){
@@ -56,6 +57,59 @@ public class TestActivity2 extends AppCompatActivity {
     }
 
 
+    public void updateWiFi(){
+
+        final Handler uiHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    WiFi wifi = new WiFi();
+                    wifi.setUser(user);
+                    wifi.update(TestActivity2.this, "c429a1b401", new UpdateListener() {
+
+                        @Override
+                        public void onSuccess() {
+                            // TODO Auto-generated method stub
+                            Log.i("bmob","更新成功：");
+                        }
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            // TODO Auto-generated method stub
+                            Log.i("bmob","更新失败："+msg);
+                        }
+                    });
+                }else{
+//                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
+                }
+            }
+        };
+
+
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.getObject(this, "ec9b0e6af9", new GetListener<User>() {
+
+            @Override
+            public void onSuccess(User object) {
+                // TODO Auto-generated method stub
+                user = (User) object;
+                int i = 0;
+
+                Message msg = new Message();
+                msg.what = 1;
+                uiHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onFailure(int code, String arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
+
+
+    }
 
     public  void writeToDatabase(){
         WiFi wifi = new WiFi();

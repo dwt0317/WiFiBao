@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 import android.os.Handler;
 
+import com.chinamobile.wifibao.activity.WifiListActivity;
 import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.bean.User;
@@ -24,6 +25,7 @@ import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -36,7 +38,7 @@ public class UseManager {
     private ArrayList<WiFi> dbNearbyWiFi = new ArrayList<WiFi>();    //在数据库查询到的附近的wifi
     private Context mContext;
     private Handler uiHandler;
-
+    private User selectedUser;
     private UseRecord useRecord = new UseRecord();
 
 
@@ -67,26 +69,6 @@ public class UseManager {
         readDBNearbyWiFi(userLoc);
     }
 
-    public void getOwnerList(){
-        for(WiFi wifi: getWifiList()){
-            BmobUser user = new BmobUser();
-            BmobQuery<User> query = new BmobQuery<User>();
-            query.addWhereRelatedTo("user", new BmobPointer(user) );    // 查询当前wifi的用户
-            query.findObjects(mContext, new FindListener<User>() {
-                @Override
-                public void onSuccess(List<User> object) {
-                    ownerList.add(object.get(0));
-                    Message msg = new Message();
-                    msg.what = 1;
-                    getUiHandler().sendMessage(msg);
-                }
-                @Override
-                public void onError(int code, String msg) {
-//                    toast("查询失败:"+msg);
-                }
-            });
-        }
-    }
 
     private void readDBNearbyWiFi(double[] userLoc){
         BmobGeoPoint userPoint = new BmobGeoPoint(userLoc[0], userLoc[1]);
@@ -105,7 +87,10 @@ public class UseManager {
 
             @Override
             public void onError(int code, String msg) {
-                Log.i("wifi", "read wifi fail");
+                Log.e("wifi", "read wifi fail");
+                Toast toast=Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
             }
         });
     }
@@ -126,6 +111,30 @@ public class UseManager {
             }
         }
     }
+
+    public void queryUser(WiFi wifi){
+        User user = wifi.getUser();
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.getObject(mContext, user.getObjectId(), new GetListener<User>()  {
+            public void onSuccess(User object) {
+                selectedUser=object;
+                Message msg = new Message();
+                msg.what = 1;
+                getUiHandler().sendMessage(msg);
+                // TODO Auto-generated method stub
+                Log.i("bmob", "query user successfully");
+            }
+
+            @Override
+            public void onFailure(int code, String arg0) {
+                Log.e("bmob", "query user error");
+                Toast toast=Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
+            }
+        });
+    }
+
 
     public boolean connectWiFi(WiFi wifi){
         String BSSID = wifi.getBSSID();
@@ -186,6 +195,18 @@ public class UseManager {
             }
         }
     }
+
+    public int getWiFiLevel(WiFi wifi){
+        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+        List<ScanResult> results = wifiManager.getScanResults();
+
+        for (ScanResult result : results) {
+            if(result.BSSID.equals(wifi.getBSSID()))
+                return result.level;
+        }
+        return 0;
+    }
+
 
     //检测wifi是否开启并开启
     private void enableWiFi(){
@@ -268,5 +289,9 @@ public class UseManager {
 
     public void setUiHandler(Handler uiHandler) {
         this.uiHandler = uiHandler;
+    }
+
+    public User getSelectedUser() {
+        return selectedUser;
     }
 }

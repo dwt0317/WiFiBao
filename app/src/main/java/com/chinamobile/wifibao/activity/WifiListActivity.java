@@ -68,7 +68,7 @@ public class WifiListActivity extends Activity {
 
         UseManager.getInstance(this).setUiHandler(uiHandler);
         UseManager.getInstance(this).getAvailableWiFi();
-        UseManager.getInstance(this).getOwnerList();
+//        UseManager.getInstance(this).getUiHandler().removeMessages(1);
 
         //Item.clear();
 
@@ -92,18 +92,7 @@ public class WifiListActivity extends Activity {
         wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //获取wifi信号强度
-//                int strength = 0;
-//                String wserviceName = Context.WIFI_SERVICE;
-//                WifiManager wm = (WifiManager) getSystemService(wserviceName);
-//                WifiInfo info = wm.getConnectionInfo();
-//                if (info.getBSSID() == wifiList.get(position).getBSSID()) {
-//                    //int strength = info.getRssi(); // 链接信号强度
-//                    strength = WifiManager.calculateSignalLevel(info.getRssi(), 5);
-//                    //int speed = info.getLinkSpeed(); // 链接速度
-//                    //String units = WifiInfo.LINK_SPEED_UNITS; // 链接速度单位
-//                    //return info.toString();
-//                }
+
                 Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
                 Bundle bundle=new Bundle();
                 //传递参数

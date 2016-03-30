@@ -20,7 +20,7 @@ public class WiFi extends BmobObject implements Serializable{
     private Boolean state;
     private String WiFitype;
     private Double upperLimit;
-    private BmobUser user;
+    private User user;
     private BmobGeoPoint location;
 
     public String getSSID() {
@@ -105,11 +105,12 @@ public class WiFi extends BmobObject implements Serializable{
         this.location = location;
     }
 
-    public BmobUser getUser() {
+
+    public User getUser() {
         return user;
     }
 
-    public void setUser(BmobUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }
