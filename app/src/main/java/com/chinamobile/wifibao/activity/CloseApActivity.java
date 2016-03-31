@@ -102,11 +102,11 @@ public class CloseApActivity extends Activity{
             }
         });
     }
-
-        @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop = true;
     }
 
     private class IplistenerThread extends Thread{
