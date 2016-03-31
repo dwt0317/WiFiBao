@@ -18,6 +18,6 @@ public class BalanceShareActivity extends Activity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.alpha_out, R.anim.translate_out);
+        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
     }
 }
