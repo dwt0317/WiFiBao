@@ -114,72 +114,8 @@ public class UseManager {
         }
     }
 
-    public void queryUser(WiFi wifi){
-        User user = wifi.getUser();
-        BmobQuery<User> query = new BmobQuery<User>();
-        query.getObject(mContext, user.getObjectId(), new GetListener<User>()  {
-            public void onSuccess(User object) {
-                selectedUser=object;
-                Message msg = new Message();
-                msg.what = 1;
-                getUiHandler().sendMessage(msg);
-                // TODO Auto-generated method stub
-                Log.i("bmob", "query user successfully");
-            }
-
-            @Override
-            public void onFailure(int code, String arg0) {
-                Log.e("bmob", "query user error");
-                Toast toast=Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
-            }
-        });
-    }
 
 
-    public boolean connectWiFi(WiFi wifi){
-        String BSSID = wifi.getBSSID();
-        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
-
-        String networkSSID = wifi.getSSID();
-        String networkPass = wifi.getPassword();
-
-        WifiConfiguration conf = new WifiConfiguration();
-        conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
-        conf.preSharedKey = "\""+ networkPass +"\"";
-
-        enableWiFi();
-        if(wifiManager.getConnectionInfo().getBSSID().equals(BSSID))
-        {
-            Toast toast=Toast.makeText(mContext, "您已接入此WiFi", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-            toast.show();
-            return false;
-        }
-
-
-        //删除之前添加的conf
-        List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
-        for (WifiConfiguration existingConfig : existingConfigs)
-        {
-            if (existingConfig.SSID.equals("\""+networkSSID+"\"")){
-                wifiManager.removeNetwork(existingConfig.networkId);
-            }
-        }
-        try{
-            int netId = wifiManager.addNetwork(conf);
-            wifiManager.disconnect();
-            wifiManager.enableNetwork(netId, true);
-            wifiManager.reconnect();
-            BmobDate startTime = new BmobDate(new Date());
-
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     public void disconnectWiFi(WiFi wifi){
         String SSID = wifi.getSSID();
