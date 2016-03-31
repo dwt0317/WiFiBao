@@ -163,7 +163,7 @@
             android:layout_below="@+id/maxflowView"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"
-            android:text="接入人数："
+            android:text="接入上限："
             android:textSize="15dp" />
 
         <TextView

@@ -27,6 +27,7 @@
             android:src="@drawable/home"
             android:background="#1892eb"
             android:id="@+id/imageView8"
+            android:clickable="true"
             android:layout_centerHorizontal="true"/>
         <ImageView
             android:layout_width="30dp"
@@ -56,8 +57,8 @@
             android:id="@+id/iv1"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:layout_marginRight="27dp"
-            android:layout_marginEnd="27dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
             android:layout_above="@+id/textview6"
             android:layout_toLeftOf="@+id/textview5"
             android:layout_toStartOf="@+id/textview5" />
@@ -87,7 +88,7 @@
 
         <ImageView
             android:layout_width="20dp"
-            android:layout_height="23dp"
+            android:layout_height="20dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/iv2"
@@ -157,7 +158,7 @@
 
         <ImageView
             android:layout_width="20dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:background="#FFFFFF"
             android:src="@drawable/b"
             android:id="@+id/iv4"
@@ -166,7 +167,9 @@
             android:layout_alignBottom="@+id/textview8"
             android:layout_alignLeft="@+id/iv3"
             android:layout_alignStart="@+id/iv3"
-            android:layout_below="@+id/textview7" />
+            android:layout_alignTop="@+id/textview8"
+            android:layout_alignRight="@+id/iv3"
+            android:layout_alignEnd="@+id/iv3" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -108,17 +108,27 @@
             android:paddingBottom="7sp"
             android:text="已使用时间："
             android:textSize="16dp" />
-        <TextView
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/timeuseText"-->
+            <!--android:layout_toRightOf="@+id/timeuseView"-->
+            <!--android:layout_below="@+id/flowusingText"-->
+            <!--android:text="05:32"-->
+            <!--android:textSize="16dp"-->
+            <!--android:paddingTop="7sp"-->
+            <!--android:paddingBottom="7sp"/>-->
+
+        <Chronometer
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/timeuseText"
+            android:id="@+id/chronometer"
             android:layout_toRightOf="@+id/timeuseView"
             android:layout_below="@+id/flowusingText"
-            android:text="05:32"
             android:textSize="16dp"
             android:paddingTop="7sp"
-            android:paddingBottom="7sp"/>
-
+            android:paddingBottom="7sp"
+             />
 
         <ImageView
             android:layout_width="30dp"
@@ -144,11 +154,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/moneyuseText"
             android:layout_toRightOf="@+id/moneyuseView"
-            android:layout_below="@+id/timeuseText"
+            android:layout_below="@+id/chronometer"
             android:text="8.9 流量币"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
+
+
 
     </RelativeLayout>
 

@@ -8,13 +8,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.TrafficMonitor;
-import com.chinamobile.wifibao.utils.UseManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +34,6 @@ public class TestActivity2 extends AppCompatActivity {
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
 //        writeToDatabase();
 //        Toast.makeText(TestActivity2.this,"1111111",Toast.LENGTH_LONG);
-//        UseManager uh = UseManager.getInstance(this);
 //        uh.testConnect();
 //        scanNearbyWiFi();
         updateWiFi();
@@ -66,7 +61,7 @@ public class TestActivity2 extends AppCompatActivity {
                 if(msg.what == 1){
                     WiFi wifi = new WiFi();
                     wifi.setUser(user);
-                    wifi.update(TestActivity2.this, "c429a1b401", new UpdateListener() {
+                    wifi.update(TestActivity2.this, "cTgRKKKO", new UpdateListener() {
 
                         @Override
                         public void onSuccess() {

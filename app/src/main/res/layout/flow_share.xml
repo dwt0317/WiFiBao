@@ -15,6 +15,7 @@
             android:text="分享流量"
             android:textSize="22dip"
             android:gravity="center"
+            android:layout_centerVertical="true"
             android:textColor="#FFFFFF"
             android:paddingTop="10dip"
             android:background="#1892eb" />
@@ -26,12 +27,15 @@
             android:layout_centerVertical="true"
             android:src="@drawable/home"
             android:background="#1892eb"
+            android:clickable="true"
             android:id="@+id/imageView7" />
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:id="@+id/refresh"
             android:src="@drawable/refresh"
             android:background="#1892eb"
+            android:clickable="true"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
@@ -127,7 +131,7 @@
 
         <ImageView
             android:layout_width="22dp"
-            android:layout_height="27dp"
+            android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/imageView5"
@@ -136,7 +140,7 @@
             android:layout_alignBottom="@+id/tv3"
             android:layout_alignRight="@+id/imageView4"
             android:layout_alignEnd="@+id/imageView4"
-            android:layout_below="@+id/imageView4" />
+            android:layout_alignTop="@+id/tv3" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

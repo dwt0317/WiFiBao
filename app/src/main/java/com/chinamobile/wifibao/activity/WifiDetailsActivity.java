@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.UseManager;
+import com.chinamobile.wifibao.utils.WiFiDetailsManager;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -34,7 +34,7 @@ public class WifiDetailsActivity extends Activity {
     private User user;
     //接收userid值
     TextView shareuserText;
-
+    public final static String wifiDetailSER_KEY = "com.chinamobile.wifibao.wifiDetail";
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setViewComponent();
@@ -45,7 +45,7 @@ public class WifiDetailsActivity extends Activity {
         setContentView(R.layout.wifi_details);
         //新页面接收数据
         //Bundle bundle = this.getIntent().getExtras();
-        WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.SER_KEY);
+        final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.wifiListSER_KEY);
        //接收ssid值
         TextView tV1 = (TextView) findViewById(R.id.wifiname);
         tV1.setText(wifi.getSSID());
@@ -58,7 +58,7 @@ public class WifiDetailsActivity extends Activity {
         tV3.setText(wifi.getWiFitype());
         //获取wifi信号强度
         TextView tV4 = (TextView) findViewById(R.id.sigstrText);
-        tV4.setText(String.valueOf(UseManager.getInstance(this).getWiFiLevel(wifi)));
+        tV4.setText(String.valueOf(WiFiDetailsManager.getInstance(this).getWiFiLevel(wifi)));
         //接收流量上限
         TextView tV5 = (TextView) findViewById(R.id.maxflowText);
         tV5.setText(String.valueOf(wifi.getUpperLimit()));
@@ -72,40 +72,33 @@ public class WifiDetailsActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                    user = UseManager.getInstance(WifiDetailsActivity.this).getSelectedUser();
-                    shareuserText.setText(UseManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
+                    shareuserText.setText(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
                 }else{
 
                 }
             }
         };
 
-        UseManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
-        UseManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
-//        UseManager.getInstance(WifiDetailsActivity.this).getUiHandler().removeMessages(1);
+        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
+        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
 
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
 
                 final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
-                //Bundle bundle=new Bundle();
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(wifiDetailSER_KEY,wifi);
+                intent.putExtras(bundle);
                 //传递参数
-                //bundle.putString("flowUsing","99" );
-                //intent.putExtras(bundle);
 
-                Timer timer = new Timer();
-                TimerTask tast = new TimerTask() {
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-                };
-                timer.schedule(tast,2000);
+                if(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi)){
+                    startActivity(intent);
+                }
 
-                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
+//                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+//                toast.show();
 
             }
         });

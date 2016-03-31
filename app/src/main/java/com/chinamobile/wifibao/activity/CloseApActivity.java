@@ -3,31 +3,47 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.TrafficStats;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.chinamobile.wifibao.R;
-import com.chinamobile.wifibao.utils.ConnectedIP;
-import com.chinamobile.wifibao.utils.RunningProcess;
 import com.chinamobile.wifibao.utils.WifiApAdmin;
-
-import java.util.ArrayList;
 
 /**
  * Created by cdd on 2016/3/16.
  */
 public class CloseApActivity extends Activity{
     private Context mContext = null;
+    private ImageView home = null;
+    private ImageView refresh = null;
+
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         //setContentView(R.layout.close_share);
         setContentView(R.layout.flow_share);
+
+        //返回HomeActivity
+        home = (ImageView)findViewById(R.id.imageView7);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CloseApActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        //refresh
+        refresh = (ImageView)findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CloseApActivity.this,CloseApActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mContext = this;
         //close wifi ap
@@ -50,6 +66,7 @@ public class CloseApActivity extends Activity{
                 show.setText(sR+"KB");*/
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
 
             }
         });
@@ -78,6 +95,12 @@ public class CloseApActivity extends Activity{
 
             }
         });*/
+    }
+
+        @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
     }
 
 }
