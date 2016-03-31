@@ -14,4 +14,10 @@ public class BalanceShareActivity extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.balance_share);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.alpha_out, R.anim.translate_out);
+    }
 }
