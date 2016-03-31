@@ -27,6 +27,7 @@
             android:src="@drawable/home"
             android:background="#1892eb"
             android:id="@+id/imageView8"
+            android:clickable="true"
             android:layout_centerHorizontal="true"/>
         <ImageView
             android:layout_width="30dp"

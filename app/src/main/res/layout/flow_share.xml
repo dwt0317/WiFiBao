@@ -27,12 +27,15 @@
             android:layout_centerVertical="true"
             android:src="@drawable/home"
             android:background="#1892eb"
+            android:clickable="true"
             android:id="@+id/imageView7" />
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:id="@+id/refresh"
             android:src="@drawable/refresh"
             android:background="#1892eb"
+            android:clickable="true"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
