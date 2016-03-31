@@ -15,6 +15,7 @@
             android:text="分享流量"
             android:textSize="22dip"
             android:gravity="center"
+            android:layout_centerVertical="true"
             android:textColor="#FFFFFF"
             android:paddingTop="10dip"
             android:background="#1892eb" />
