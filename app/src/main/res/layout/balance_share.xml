@@ -21,19 +21,23 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="left"
+            android:layout_gravity="center"
             android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/home"
             android:background="#1892eb"
-            android:id="@+id/imageView8" />
+            android:id="@+id/imageView8"
+            android:layout_centerHorizontal="true"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/refresh"
+            android:src="@drawable/share"
             android:background="#1892eb"
+            android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -187,13 +191,13 @@
             android:layout_alignStart="@+id/textview71" />
 
         <ImageView
-            android:layout_width="700dp"
-            android:layout_height="260dp"
+            android:layout_width="900dp"
+            android:layout_height="270dp"
             android:src="@drawable/balance"
             android:background="#FFFFFF"
+            android:id="@+id/imageView9"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/imageView9" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </LinearLayout>
