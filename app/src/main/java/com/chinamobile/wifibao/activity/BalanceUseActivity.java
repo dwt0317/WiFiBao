@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.chinamobile.wifibao.R;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by apple on 2016/3/25.
  */
@@ -23,10 +25,19 @@ public class BalanceUseActivity extends Activity {
         Bundle bundle = this.getIntent().getExtras();
 
         //接收flowuse值
-       TextView textView = (TextView) findViewById(R.id.flowusedText);
+        TextView flowusedtextView = (TextView) findViewById(R.id.flowusedText);
         String flowused = bundle.getString("flowUsed");
-        textView.setText(flowused);
-//        textView.setText("111");
+        flowusedtextView.setText(flowused);
+        //接收cost值
+        TextView costtextView = (TextView) findViewById(R.id.moneyuseText);
+        String cost = bundle.getString("cost");
+        costtextView.setText(cost);
+        //设置节省流量费用的cost值
+        double save = 0.0;
+        save = 12 * Double.parseDouble(cost);
+        DecimalFormat df  = new DecimalFormat("######0.00");
+        TextView savetextView = (TextView) findViewById(R.id.saveText);
+        savetextView.setText(String.valueOf(df.format(save)));
 
     }
 
@@ -34,7 +45,7 @@ public class BalanceUseActivity extends Activity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN
                 && event.getRepeatCount() == 0) {
-            Intent intent = new Intent(BalanceUseActivity.this, WifiListActivity.class);
+            Intent intent = new Intent(BalanceUseActivity.this, HomeActivity.class);
             startActivity(intent);
         }
         return super.dispatchKeyEvent(event);

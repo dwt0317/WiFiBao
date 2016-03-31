@@ -43,7 +43,7 @@ public class HomeActivity extends Activity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,FlowUsingActivity.class);
+                    intent.setClass(HomeActivity.this,WifiListActivity.class);
                     startActivity(intent);
                 }
             }
@@ -75,7 +75,6 @@ public class HomeActivity extends Activity{
                 }
             }
         });
-
         //设置页面弹框
         final PopupWindow popup = new PopupWindow(setting_content,600,800);
         popup.setFocusable(true);   //设置可以获取焦点
