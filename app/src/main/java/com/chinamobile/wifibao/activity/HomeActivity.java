@@ -68,7 +68,7 @@ public class HomeActivity extends Activity{
         settinglist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
+                if (position == 3) {
                     Intent intent = new Intent();
                     intent.setClass(setting_content.getContext(),BalanceShareActivity .class);
                     startActivity(intent);
