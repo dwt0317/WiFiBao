@@ -80,12 +80,13 @@ public class FlowUsingActivity extends Activity {
                 Bundle bundle=new Bundle();
                 //传递参数
                 bundle.putString("flowUsed",flowUsed );
-//                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-//                bundle.putString("timeUsed",String.valueOf(elapsedMillis));
+                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                bundle.putString("timeUsed",String.valueOf(elapsedMillis));
                 double cost=0.0;
                 cost = 0.2 * Double.parseDouble(flowUsed);
                 DecimalFormat df  = new DecimalFormat("######0.00");
                 bundle.putString("cost",String.valueOf(df.format(cost)));
+
                 intent.putExtras(bundle);
                 UseManager.getInstance(FlowUsingActivity.this).disconnectWiFi(wifi);
                 startActivity(intent);

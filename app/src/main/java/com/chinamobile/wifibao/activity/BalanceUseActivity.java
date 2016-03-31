@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 
@@ -29,7 +30,7 @@ public class BalanceUseActivity extends Activity {
         String flowused = bundle.getString("flowUsed");
         flowusedtextView.setText(flowused);
         //接收cost值
-        TextView costtextView = (TextView) findViewById(R.id.moneyuseText);
+        TextView costtextView = (TextView) findViewById(R.id.costText);
         String cost = bundle.getString("cost");
         costtextView.setText(cost);
         //设置节省流量费用的cost值
@@ -41,14 +42,22 @@ public class BalanceUseActivity extends Activity {
 
     }
 
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
-                && event.getAction() == KeyEvent.ACTION_DOWN
-                && event.getRepeatCount() == 0) {
+//    public boolean dispatchKeyEvent(KeyEvent event) {
+//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+//                && event.getAction() == KeyEvent.ACTION_DOWN
+//                ) {
+//            Intent intent = new Intent(BalanceUseActivity.this, HomeActivity.class);
+//            startActivity(intent);
+//        }
+//        return super.dispatchKeyEvent(event);
+//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             Intent intent = new Intent(BalanceUseActivity.this, HomeActivity.class);
             startActivity(intent);
         }
-        return super.dispatchKeyEvent(event);
+        return super.onKeyDown(keyCode, event);
     }
 
 }
