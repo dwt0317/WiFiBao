@@ -13,6 +13,7 @@ import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.UseManager;
+import com.chinamobile.wifibao.utils.WiFiListManager;
 import com.squareup.okhttp.Cache;
 
 import android.widget.AdapterView;
@@ -34,7 +35,7 @@ public class WifiListActivity extends Activity {
     ArrayList<WiFi>userList;
     ListView wifiListView;
     ImageView settingView;
-    public  final static String SER_KEY = "com.chinamobile.wifibao.ser";
+    public  final static String wifiListSER_KEY = "com.chinamobile.wifibao.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class WifiListActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                    wifiList = UseManager.getInstance(WifiListActivity.this).getWifiList();
+                    wifiList = WiFiListManager.getInstance(WifiListActivity.this).getWifiList();
                     updateWiFiListView();
                 }else{
                     Toast.makeText(WifiListActivity.this,  "Please wait..", Toast.LENGTH_LONG).show();
@@ -66,12 +67,8 @@ public class WifiListActivity extends Activity {
             }
         };
 
-        UseManager.getInstance(this).setUiHandler(uiHandler);
-        UseManager.getInstance(this).getAvailableWiFi();
-//        UseManager.getInstance(this).getUiHandler().removeMessages(1);
-
-        //Item.clear();
-
+        WiFiListManager.getInstance(this).setUiHandler(uiHandler);
+        WiFiListManager.getInstance(this).getAvailableWiFi();
     }
     public void updateWiFiListView(){
         Iterator iter = wifiList.iterator();
@@ -96,7 +93,7 @@ public class WifiListActivity extends Activity {
                 Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
                 Bundle bundle=new Bundle();
                 //传递参数
-                bundle.putSerializable(SER_KEY,wifiList.get(position));
+                bundle.putSerializable(wifiListSER_KEY,wifiList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
