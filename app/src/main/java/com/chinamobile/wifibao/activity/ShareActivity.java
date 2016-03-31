@@ -1,5 +1,4 @@
 package com.chinamobile.wifibao.activity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +47,8 @@ public class ShareActivity extends Activity {
                     //跳转到开启ap成功的页面，下个页面可以关闭ap
                     Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
+
                 }
             }
         });

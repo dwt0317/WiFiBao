@@ -127,7 +127,7 @@
 
         <ImageView
             android:layout_width="22dp"
-            android:layout_height="27dp"
+            android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/imageView5"
@@ -136,7 +136,7 @@
             android:layout_alignBottom="@+id/tv3"
             android:layout_alignRight="@+id/imageView4"
             android:layout_alignEnd="@+id/imageView4"
-            android:layout_below="@+id/imageView4" />
+            android:layout_alignTop="@+id/tv3" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

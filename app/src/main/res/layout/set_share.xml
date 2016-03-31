@@ -156,13 +156,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/maxsharetext"
+            android:numeric="integer"
             android:layout_toRightOf="@+id/maxshare"
-            android:text="78M"
+            android:text="  78  "
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:layout_below="@+id/passwordtext"
             android:layout_above="@+id/maxaccess" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            android:text="M"
+            android:textSize="16dp"
+            android:layout_below="@+id/passwordtext"
+            android:layout_toRightOf="@+id/apnametext"
+            android:layout_toEndOf="@+id/apnametext" />
+
 
         <ImageView
             android:layout_width="22dp"
