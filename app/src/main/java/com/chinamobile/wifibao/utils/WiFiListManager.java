@@ -1,6 +1,8 @@
 package com.chinamobile.wifibao.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.chinamobile.wifibao.activity.WifiListActivity;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
@@ -56,7 +59,6 @@ public class WiFiListManager {
 
 
     private void readDBNearbyWiFi(double[] userLoc){
-        BmobGeoPoint userPoint = new BmobGeoPoint(userLoc[0], userLoc[1]);
         BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
 //        bmobQuery.addWhereNear("location", userPoint);
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
@@ -99,18 +101,19 @@ public class WiFiListManager {
     }
 
     //检测wifi是否开启并开启
+
     private void enableWiFi(){
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         if (!wifiManager.isWifiEnabled())
         {
             wifiManager.setWifiEnabled(true);
+            Toast toast=Toast.makeText(mContext, "正在打开WLAN...", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+            toast.show();
             while(!wifiManager.isWifiEnabled()){
-                Toast toast=Toast.makeText(mContext, "正在打开WLAN...", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
                 try {
                     Thread.currentThread();
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -118,6 +121,26 @@ public class WiFiListManager {
             }
         }
     }
+
+
+    private boolean isWiFiActive() {
+        Context context = mContext.getApplicationContext();
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getTypeName().equals("WIFI") && info[i].isConnected()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 
     public ArrayList<WiFi> getWifiList() {
         return wifiList;

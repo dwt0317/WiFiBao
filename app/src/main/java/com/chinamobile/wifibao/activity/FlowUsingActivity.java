@@ -14,21 +14,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.TrafficMonitor;
-import com.chinamobile.wifibao.utils.UseManager;
+import com.chinamobile.wifibao.utils.FlowUsingManager;
 
 import java.text.DecimalFormat;
+import java.util.Date;
+
+import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by apple on 2016/3/25.
  */
 public class FlowUsingActivity extends Activity {
     private String flowUsed;
-    TextView flowusingText;
+    private TextView flowusingText;
 //    TextView timeuseText;
-    Chronometer chronometer;
-    TextView moneyuseText;
+    private Chronometer chronometer;
+    private TextView moneyuseText;
+    private UseRecord useRecord;
+
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setViewComponent();
@@ -43,7 +49,8 @@ public class FlowUsingActivity extends Activity {
         chronometer=(Chronometer)findViewById(R.id.chronometer);
         //接收cost值
         moneyuseText= (TextView) findViewById(R.id.moneyuseText);
-
+        //新页面接收数据
+        final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiDetailsActivity.wifiDetailSER_KEY);
 
         Handler uiHandler = new Handler(){
             @Override
@@ -53,10 +60,7 @@ public class FlowUsingActivity extends Activity {
                 if(msg.what == 1){
                     flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
                     flowusingText.setText(flowUsed);
-                    double cost=0.0;
-                    cost = 0.2 * Double.parseDouble(flowUsed);
-                    DecimalFormat df  = new DecimalFormat("######0.00");
-                    moneyuseText.setText(df.format(cost));
+                    moneyuseText.setText(computeCost(flowUsed));
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
 //                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
@@ -67,27 +71,30 @@ public class FlowUsingActivity extends Activity {
         TrafficMonitor.getInstance(FlowUsingActivity.this).startTrafficMonitor();
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
+        useRecord=new UseRecord();
+        useRecord.setWiFi(wifi);
+        useRecord.setStartTime(new BmobDate(new Date()));
 
-        //新页面接收数据
-        final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiDetailsActivity.wifiDetailSER_KEY);
+
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
                 TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
                 flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
+
                 Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
                 Bundle bundle=new Bundle();
                 //传递参数
-                bundle.putString("flowUsed",flowUsed );
-//                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-//                bundle.putString("timeUsed",String.valueOf(elapsedMillis));
-                double cost=0.0;
-                cost = 0.2 * Double.parseDouble(flowUsed);
-                DecimalFormat df  = new DecimalFormat("######0.00");
-                bundle.putString("cost",String.valueOf(df.format(cost)));
+                bundle.putString("flowUsed", flowUsed);
+                bundle.putString("cost", computeCost(flowUsed));
                 intent.putExtras(bundle);
-                UseManager.getInstance(FlowUsingActivity.this).disconnectWiFi(wifi);
+                useRecord.setEndTime(new BmobDate(new Date()));
+                double cost=Double.parseDouble(computeCost(flowUsed));
+                useRecord.setCost(cost);
+                useRecord.setFlowUsed(Double.parseDouble(flowUsed));
+
+                FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord);
                 startActivity(intent);
             }
         });
@@ -96,5 +103,12 @@ public class FlowUsingActivity extends Activity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();    //设置back键不可用
+    }
+
+    private String computeCost(String flowUsed){
+        double cost=0.0;
+        cost = 0.2 * Double.parseDouble(flowUsed);
+        DecimalFormat df  = new DecimalFormat("######0.00");
+        return String.valueOf(df.format(cost));
     }
 }

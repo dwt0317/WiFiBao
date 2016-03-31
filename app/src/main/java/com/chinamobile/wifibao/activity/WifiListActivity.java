@@ -1,9 +1,6 @@
 package com.chinamobile.wifibao.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,9 +9,7 @@ import cn.bmob.v3.Bmob;
 import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.UseManager;
 import com.chinamobile.wifibao.utils.WiFiListManager;
-import com.squareup.okhttp.Cache;
 
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -71,7 +66,6 @@ public class WifiListActivity extends Activity {
         WiFiListManager.getInstance(this).getAvailableWiFi();
     }
     public void updateWiFiListView(){
-        Iterator iter = wifiList.iterator();
         int size=wifiList.size();
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -80,7 +74,6 @@ public class WifiListActivity extends Activity {
             map.put("CurCon", "当前接入人数：" + wifiList.get(i).getCurConnect());
             map.put("Score", wifiList.get(i).getScore());
             Item.add(map);
-
         }
         SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.item, new String[]{"Image", "SSID","CurCon","Score"},
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
