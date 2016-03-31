@@ -96,6 +96,7 @@ public class CloseApActivity extends Activity{
                 WifiApAdmin.closeWifiAp(mContext);
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
+                intent.putExtra("flow", showFlow.getText().toString());
                 startActivity(intent);
                 overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
                 CloseApActivity.this.finish();

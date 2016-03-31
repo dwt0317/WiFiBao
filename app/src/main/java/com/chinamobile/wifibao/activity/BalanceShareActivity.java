@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.chinamobile.wifibao.R;
 
 /**
@@ -16,9 +18,13 @@ public class BalanceShareActivity extends Activity {
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.balance_share);
+        //显示已分享流量
+        Intent intent = getIntent();
+        TextView tv = (TextView)findViewById(R.id.textview51);
+        tv.setText(intent.getStringExtra("flow"));
 
         //返回HomeActivity
-        home = (ImageView)findViewById(R.id.imageView8);
+        home = (ImageView) findViewById(R.id.imageView8);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,9 +34,4 @@ public class BalanceShareActivity extends Activity {
         });
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
-    }
 }
