@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.WifiApAdmin;
-import com.chinamobile.wifibao.utils.traffic.TrafficMonitor;
+import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
 import java.lang.reflect.Method;
 
@@ -50,7 +51,7 @@ public class CloseApActivity extends Activity{
                 }
             }
         };
-        TrafficMonitor trafficThread = new TrafficMonitor();
+        TrafficMonitorService trafficThread = TrafficMonitorService.getInstance();
         trafficThread.setHandler(flowHandle);
         trafficThread.setContext(mContext);
         trafficThread.start();
@@ -104,12 +105,6 @@ public class CloseApActivity extends Activity{
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stop = true;
-    }
-
     private class IplistenerThread extends Thread{
         private Handler handler;
         private Context context;
@@ -159,4 +154,18 @@ public class CloseApActivity extends Activity{
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop = true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
 }
