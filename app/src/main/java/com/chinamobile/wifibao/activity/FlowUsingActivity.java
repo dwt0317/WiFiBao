@@ -88,12 +88,7 @@ public class FlowUsingActivity extends Activity {
                 Bundle bundle=new Bundle();
                 //传递参数
                 bundle.putString("flowUsed",flowUsed );
-//                long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-//                bundle.putString("timeUsed",String.valueOf(elapsedMillis));
-                double cost=0.0;
-                cost = 0.2 * Double.parseDouble(flowUsed);
-                DecimalFormat df  = new DecimalFormat("######0.00");
-                bundle.putString("cost",String.valueOf(df.format(cost)));
+                bundle.putString("cost",computeCost(flowUsed));
                 intent.putExtras(bundle);
                 useRecord.setEndTime(new BmobDate(new Date()));
                 double cost=Double.parseDouble(computeCost(flowUsed));
