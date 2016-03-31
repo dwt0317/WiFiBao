@@ -102,7 +102,7 @@ public class CloseApActivity extends Activity{
             }
         });
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

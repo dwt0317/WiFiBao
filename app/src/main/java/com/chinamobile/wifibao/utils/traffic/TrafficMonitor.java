@@ -50,7 +50,7 @@ public class TrafficMonitor extends Thread {
             DecimalFormat df = new DecimalFormat("#0.00");
             String sR = df.format(apTrafficKBytesDouble)+"KB";
             message.obj = sR;
-            if(apTrafficKBytesDouble > 600.00){
+            if(apTrafficKBytesDouble > 1000.00){
                 //告诉主线程到达流量上限
                 message.arg1=0;
                 handler.sendMessage(message);
