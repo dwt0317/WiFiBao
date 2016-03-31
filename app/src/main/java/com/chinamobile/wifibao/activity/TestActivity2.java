@@ -66,7 +66,7 @@ public class TestActivity2 extends AppCompatActivity {
                 if(msg.what == 1){
                     WiFi wifi = new WiFi();
                     wifi.setUser(user);
-                    wifi.update(TestActivity2.this, "c429a1b401", new UpdateListener() {
+                    wifi.update(TestActivity2.this, "cTgRKKKO", new UpdateListener() {
 
                         @Override
                         public void onSuccess() {

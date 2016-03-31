@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!--DON'T REMOVE Authorization-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -30,6 +31,10 @@
             android:name=".activity.TestActivity2"
             android:label="TestActivity2"
             android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!--activities for share wifi ap.DON'T REMOVE -->
@@ -45,15 +50,20 @@
         </activity>
         <activity android:name=".activity.WifiDetailsActivity">
 
-
         </activity>
         <activity android:name=".activity.BalanceShareActivity">
         </activity>
-        <activity android:name=".activity.WifiListActivity" >
+        <activity
+            android:name=".activity.WifiListActivity"
+            android:label="WifiListActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.HomeActivity">
         </activity>
     </application>
 

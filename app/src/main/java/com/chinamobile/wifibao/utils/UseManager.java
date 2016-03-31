@@ -1,6 +1,8 @@
 package com.chinamobile.wifibao.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -39,7 +41,6 @@ public class UseManager {
     private Context mContext;
     private Handler uiHandler;
     private User selectedUser;
-    private UseRecord useRecord = new UseRecord();
 
 
 
@@ -102,7 +103,8 @@ public class UseManager {
         ArrayList<String> scanIDList= new ArrayList<String>();
         for(ScanResult result:results){
             scanIDList.add(result.BSSID);
-            Log.i("wifi-mac",result.BSSID);
+            Log.i("wifi", result.SSID);
+            Log.i("wifi", result.BSSID);
         }
 
         for(WiFi wifi: dbNearbyWiFi){
@@ -139,30 +141,29 @@ public class UseManager {
     public boolean connectWiFi(WiFi wifi){
         String BSSID = wifi.getBSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
-        WiFi connect=null;
-        for(WiFi wifiItem: getWifiList()){
-            if(wifiItem.getBSSID().equals(BSSID))
-                connect = wifiItem;
-        }
-        if(connect==null){
-            Log.e("UseWiFi", "No such WiFi found!");
-            return false;
-        }
 
-        String networkSSID = connect.getSSID();
-        String networkPass = connect.getPassword();
+        String networkSSID = wifi.getSSID();
+        String networkPass = wifi.getPassword();
 
         WifiConfiguration conf = new WifiConfiguration();
         conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
         conf.preSharedKey = "\""+ networkPass +"\"";
 
         enableWiFi();
+        if(wifiManager.getConnectionInfo().getBSSID().equals(BSSID))
+        {
+            Toast toast=Toast.makeText(mContext, "您已接入此WiFi", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+            toast.show();
+            return false;
+        }
+
 
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs)
         {
-            if (existingConfig.BSSID.equals("\""+BSSID+"\"")){
+            if (existingConfig.SSID.equals("\""+networkSSID+"\"")){
                 wifiManager.removeNetwork(existingConfig.networkId);
             }
         }
@@ -172,7 +173,6 @@ public class UseManager {
             wifiManager.enableNetwork(netId, true);
             wifiManager.reconnect();
             BmobDate startTime = new BmobDate(new Date());
-            useRecord.setStartTime(startTime);
 
             return true;
         }catch (Exception e){
@@ -182,15 +182,14 @@ public class UseManager {
     }
 
     public void disconnectWiFi(WiFi wifi){
-        String BSSID = wifi.getBSSID();
+        String SSID = wifi.getSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         wifiManager.disconnect();
-        updateUseRecord(wifi);
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs)
         {
-            if (existingConfig.BSSID.equals("\""+BSSID+"\"")){
+            if (existingConfig.SSID.equals("\""+SSID+"\"")){
                 wifiManager.removeNetwork(existingConfig.networkId);
             }
         }
@@ -230,16 +229,12 @@ public class UseManager {
     }
 
     //待测试
-    private void updateUseRecord(WiFi wifi){
-        BmobDate endTime = new BmobDate(new Date());
-        useRecord.setEndTime(endTime);
-        useRecord.setWiFi(wifi);
+    public void updateUseRecord(UseRecord useRecord){
         useRecord.save(mContext, new SaveListener() {
             @Override
             public void onSuccess() {
                 Log.i("bmob","add use record done!");
             }
-
             @Override
             public void onFailure(int code, String arg0) {
                 Log.e("bmob", "add use record fail!");
@@ -247,37 +242,6 @@ public class UseManager {
         });
     }
 
-    public void testConnect(){
-        String networkSSID = "qqqqq";
-        String networkPass = "12121212";
-
-        WifiConfiguration conf = new WifiConfiguration();
-        conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
-        conf.preSharedKey = "\""+ networkPass +"\"";
-
-        //删除之前添加的conf
-        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
-        //检测wifi是否开启
-        if (!wifiManager.isWifiEnabled())
-        {
-            Toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
-            wifiManager.setWifiEnabled(true);
-            while(!wifiManager.isWifiEnabled()){
-            }
-        }
-
-        List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
-        for (WifiConfiguration existingConfig : existingConfigs) {
-            if (existingConfig.SSID.equals("\""+networkSSID+"\"")){
-                wifiManager.removeNetwork(existingConfig.networkId);
-            }
-        }
-
-        int netId = wifiManager.addNetwork(conf);
-        wifiManager.disconnect();
-        wifiManager.enableNetwork(netId, true);
-        wifiManager.reconnect();
-    }
 
     public ArrayList<WiFi> getWifiList() {
         return wifiList;

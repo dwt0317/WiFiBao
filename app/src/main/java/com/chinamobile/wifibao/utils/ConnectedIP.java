@@ -26,4 +26,24 @@ public class ConnectedIP {
         }
         return connectedIP;
     }
+
+    public int getConnectedIpCount(){
+        int count=0;
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(
+                    "/proc/net/arp"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] splitted = line.split(" +");
+                if (splitted != null && splitted.length >= 4) {
+                    ++count;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }

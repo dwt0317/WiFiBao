@@ -34,7 +34,7 @@ public class WifiDetailsActivity extends Activity {
     private User user;
     //接收userid值
     TextView shareuserText;
-
+    public final static String wifiDetailSER_KEY = "com.chinamobile.wifibao.wifiDetail";
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setViewComponent();
@@ -45,7 +45,7 @@ public class WifiDetailsActivity extends Activity {
         setContentView(R.layout.wifi_details);
         //新页面接收数据
         //Bundle bundle = this.getIntent().getExtras();
-        WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.SER_KEY);
+        final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.wifiListSER_KEY);
        //接收ssid值
         TextView tV1 = (TextView) findViewById(R.id.wifiname);
         tV1.setText(wifi.getSSID());
@@ -72,7 +72,6 @@ public class WifiDetailsActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                    user = UseManager.getInstance(WifiDetailsActivity.this).getSelectedUser();
                     shareuserText.setText(UseManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
                 }else{
 
@@ -89,23 +88,29 @@ public class WifiDetailsActivity extends Activity {
             public void onClick(View v) {
 
                 final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
-                //Bundle bundle=new Bundle();
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(wifiDetailSER_KEY,wifi);
+                intent.putExtras(bundle);
                 //传递参数
-                //bundle.putString("flowUsing","99" );
-                //intent.putExtras(bundle);
 
-                Timer timer = new Timer();
-                TimerTask tast = new TimerTask() {
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-                };
-                timer.schedule(tast,2000);
 
-                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
+                if(UseManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi)){
+                    startActivity(intent);
+                }
+
+
+//                Timer timer = new Timer();
+//                TimerTask tast = new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        startActivity(intent);
+//                    }
+//                };
+//                timer.schedule(tast,2000);
+//
+//                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+//                toast.show();
 
             }
         });
