@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -43,7 +44,7 @@ public class HomeActivity extends Activity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,FlowUsingActivity.class);
+                    intent.setClass(HomeActivity.this,WifiListActivity.class);
                     startActivity(intent);
                 }
             }
@@ -75,7 +76,6 @@ public class HomeActivity extends Activity{
                 }
             }
         });
-
         //设置页面弹框
         final PopupWindow popup = new PopupWindow(setting_content,600,800);
         popup.setFocusable(true);   //设置可以获取焦点
@@ -97,5 +97,24 @@ public class HomeActivity extends Activity{
                 }
             }
         });
+    }
+
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }

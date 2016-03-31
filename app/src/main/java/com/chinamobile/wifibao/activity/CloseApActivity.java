@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.WifiApAdmin;
@@ -15,11 +16,34 @@ import com.chinamobile.wifibao.utils.WifiApAdmin;
  */
 public class CloseApActivity extends Activity{
     private Context mContext = null;
+    private ImageView home = null;
+    private ImageView refresh = null;
+
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         //setContentView(R.layout.close_share);
         setContentView(R.layout.flow_share);
+
+        //返回HomeActivity
+        home = (ImageView)findViewById(R.id.imageView7);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CloseApActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        //refresh
+        refresh = (ImageView)findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CloseApActivity.this,CloseApActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mContext = this;
         //close wifi ap
@@ -76,7 +100,7 @@ public class CloseApActivity extends Activity{
         @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.alpha_out, R.anim.translate_out);
+        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
     }
 
 }
