@@ -89,7 +89,7 @@
             android:id="@+id/tv11"
             android:layout_toEndOf="@+id/tv1"
             android:layout_toRightOf="@+id/tv1"
-            android:text="12M"
+            android:text="0"
             android:textSize="16dp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
@@ -123,7 +123,7 @@
             android:id="@+id/tv21"
             android:layout_toRightOf="@+id/tv2"
             android:layout_below="@+id/tv11"
-            android:text="6"
+            android:text="0"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
@@ -157,7 +157,7 @@
             android:id="@+id/tv31"
             android:layout_toRightOf="@+id/tv3"
             android:layout_below="@+id/tv21"
-            android:text="789"
+            android:text="7"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
