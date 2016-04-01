@@ -47,6 +47,11 @@ public class HomeActivity extends Activity{
                     intent.setClass(HomeActivity.this,WifiListActivity.class);
                     startActivity(intent);
                 }
+                if(position == 1){
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this,ShareActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
