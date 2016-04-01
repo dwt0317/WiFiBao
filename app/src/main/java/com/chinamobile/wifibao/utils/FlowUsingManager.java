@@ -47,6 +47,7 @@ public class FlowUsingManager {
 
 
     public void disconnect(WiFi wifi,UseRecord useRecord){
+//        disconnectWiFi(wifi);
         updateUseRecord(wifi, useRecord);
     }
 
@@ -69,6 +70,7 @@ public class FlowUsingManager {
             @Override
             public void onSuccess() {
                 Log.i("bmob", "add use record done!");
+                disconnectWiFi(wifi);
 //                updateOwnerIncome(wifi, useRecord);
             }
             @Override
@@ -90,7 +92,7 @@ public class FlowUsingManager {
                     @Override
                     public void onSuccess() {
                         Log.i("bmob", "balance 更新成功");
-                        disconnectWiFi(wifi);
+
                     }
                     @Override
                     public void onFailure(int code, String msg) {

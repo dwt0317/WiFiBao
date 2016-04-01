@@ -2,7 +2,10 @@ package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +37,8 @@ public class FlowUsingActivity extends Activity {
     private Chronometer chronometer;
     private TextView moneyuseText;
     private UseRecord useRecord;
+    private WiFi wifi;
+    private Handler wifiDetectHandler= new Handler();
 
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -50,7 +55,7 @@ public class FlowUsingActivity extends Activity {
         //接收cost值
         moneyuseText= (TextView) findViewById(R.id.moneyuseText);
         //新页面接收数据
-        final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiDetailsActivity.wifiDetailSER_KEY);
+        wifi = (WiFi)this.getIntent().getSerializableExtra(WifiDetailsActivity.wifiDetailSER_KEY);
 
 
         Handler uiHandler = new Handler(){
@@ -76,27 +81,12 @@ public class FlowUsingActivity extends Activity {
         useRecord.setWiFi(wifi);
         useRecord.setStartTime(new BmobDate(new Date()));
 
-
+        wifiDetectHandler.postDelayed(wifiDetectRunnable,200);
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
-                TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
-                flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
-
-                Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
-                Bundle bundle=new Bundle();
-                //传递参数
-                bundle.putString("flowUsed",flowUsed );
-                bundle.putString("cost",computeCost(flowUsed));
-                intent.putExtras(bundle);
-                useRecord.setEndTime(new BmobDate(new Date()));
-                double cost=Double.parseDouble(computeCost(flowUsed));
-                useRecord.setCost(cost);
-                useRecord.setFlowUsed(Double.parseDouble(flowUsed));
-
-                FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord);
-                startActivity(intent);
+                endUsing();
             }
         });
     }
@@ -106,10 +96,52 @@ public class FlowUsingActivity extends Activity {
         //super.onBackPressed();    //设置back键不可用
     }
 
+
+    private Runnable wifiDetectRunnable  = new Runnable() {
+        @Override
+        public void run() {
+            if(isWiFiActive()){
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,1000);
+            }else
+                 endUsing();
+        }
+    };
+
+
     private String computeCost(String flowUsed){
         double cost=0.0;
         cost = 0.2 * Double.parseDouble(flowUsed);
         DecimalFormat df  = new DecimalFormat("######0.00");
         return String.valueOf(df.format(cost));
+    }
+
+
+    private boolean isWiFiActive() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWifi.isConnected())
+            return true;
+        else
+            return false;
+    }
+
+
+    private void endUsing(){
+        TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
+        flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
+
+        Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
+        Bundle bundle=new Bundle();
+        //传递参数
+        bundle.putString("flowUsed",flowUsed );
+        bundle.putString("cost",computeCost(flowUsed));
+        intent.putExtras(bundle);
+        useRecord.setEndTime(new BmobDate(new Date()));
+        double cost=Double.parseDouble(computeCost(flowUsed));
+        useRecord.setCost(cost);
+        useRecord.setFlowUsed(Double.parseDouble(flowUsed));
+
+        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord);
+        startActivity(intent);
     }
 }
