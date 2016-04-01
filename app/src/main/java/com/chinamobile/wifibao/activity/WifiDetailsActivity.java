@@ -82,6 +82,8 @@ public class WifiDetailsActivity extends Activity {
         WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
         WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
 
+
+
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
@@ -91,10 +93,17 @@ public class WifiDetailsActivity extends Activity {
                 bundle.putSerializable(wifiDetailSER_KEY,wifi);
                 intent.putExtras(bundle);
                 //传递参数
-
-                if(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi)){
-                    startActivity(intent);
-                }
+                Handler connectHandler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if(msg.what == 1){
+                            startActivity(intent);
+                        }
+                    }
+                };
+                WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(connectHandler);
+                WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi);
 
 //                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
 //                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些

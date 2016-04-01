@@ -1,6 +1,8 @@
 package com.chinamobile.wifibao.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -30,7 +32,7 @@ public class WiFiDetailsManager {
     private Context mContext;
     private Handler uiHandler;
     private User selectedUser;
-
+    private Handler wifiDetectHandler= new Handler();
 
     public static synchronized WiFiDetailsManager getInstance(Context context)
     {
@@ -117,14 +119,27 @@ public class WiFiDetailsManager {
             wifiManager.disconnect();
             wifiManager.enableNetwork(netId, true);
             wifiManager.reconnect();
-            BmobDate startTime = new BmobDate(new Date());
-
+            wifiDetectHandler.postDelayed(wifiDetectRunnable,500);
             return true;
         }catch (Exception e){
             e.printStackTrace();
         }
         return false;
     }
+
+    private Runnable wifiDetectRunnable  = new Runnable() {
+        @Override
+        public void run() {
+            if(isWiFiActive()){
+                Message msg = new Message();
+                msg.what = 1;
+                getUiHandler().sendMessage(msg);
+            }else{
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,300);
+            }
+        }
+    };
+
 
 
     //检测wifi是否开启并开启
@@ -148,6 +163,14 @@ public class WiFiDetailsManager {
         }
     }
 
+    private boolean isWiFiActive() {
+        ConnectivityManager connManager = (ConnectivityManager)mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWifi.isConnected())
+            return true;
+        else
+            return false;
+    }
 
     public Context getmContext() {
         return mContext;
