@@ -3,31 +3,75 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.WifiApAdmin;
+import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by cdd on 2016/3/16.
  */
 public class CloseApActivity extends Activity{
     private Context mContext = null;
-    private ImageView home = null;
-    private ImageView refresh = null;
+    private boolean stop = false;
 
 
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        //setContentView(R.layout.close_share);
+        mContext = this;
         setContentView(R.layout.flow_share);
 
+        Toast.makeText(mContext,"热点已开启！",Toast.LENGTH_SHORT).show();
+
+        final TextView showFlow = (TextView) findViewById(R.id.tv11);
+        final Handler flowHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String sR = (String) msg.obj;
+                showFlow.setText(sR);
+                if (msg.arg1 == 0) {
+                    WifiApAdmin.closeWifiAp(mContext);
+                    Toast.makeText(mContext, "超出上限，正在关闭热点！", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        TrafficMonitorService trafficThread = TrafficMonitorService.getInstance();
+        trafficThread.setHandler(flowHandle);
+        trafficThread.setContext(mContext);
+        trafficThread.start();
+
+        final TextView ipCount = (TextView)findViewById(R.id.tv21);
+        final Handler ipHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String ip = String.valueOf(msg.arg1);
+                ipCount.setText(ip);
+            }
+        };
+        IplistenerThread it=new IplistenerThread();
+        it.setHandler(ipHandle);
+        it.setContext(mContext);
+        it.start();
+
         //返回HomeActivity
-        home = (ImageView)findViewById(R.id.imageView7);
+        ImageView home = (ImageView)findViewById(R.id.imageView7);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,71 +80,92 @@ public class CloseApActivity extends Activity{
             }
         });
         //refresh
-        refresh = (ImageView)findViewById(R.id.refresh);
+        ImageView refresh = (ImageView)findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CloseApActivity.this,CloseApActivity.class);
-                startActivity(intent);
+                //线程会自动刷新的
+                Toast.makeText(mContext,"正在刷新",Toast.LENGTH_SHORT).show();
             }
         });
 
-        mContext = this;
         //close wifi ap
         Button stopBt = (Button)findViewById(R.id.share_stop);
         stopBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                 WifiApAdmin.closeWifiAp(mContext);
-                /*//统计分享的流量
-                RunningProcess rp = new RunningProcess();
-                int uid = rp.getUidOfProcess(mContext, "system");
-                Log.i("cdd:",String.valueOf(uid));
-                long uidTxBytes = TrafficStats.getUidTxBytes(uid);
-                double uidTxKBytes_d = uidTxBytes*1.0/1024;
-                java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");
-                String sR = df.format(uidTxKBytes_d);
-                //显示使用流量
-                final TextView show=(TextView)findViewById(R.id.total);
-                show.setText(sR+"KB");*/
+                Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
+                intent.putExtra("flow", showFlow.getText().toString());
                 startActivity(intent);
                 overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
-
+                CloseApActivity.this.finish();
             }
         });
-        /*//show connected ips
-        Button bt2 = (Button)findViewById(R.id.button2);
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectedIP cp = new ConnectedIP();
-                ArrayList<String> connectedIP;
-                connectedIP = cp.getConnectedIP();
-                for(String s: connectedIP){
-                    Log.i("cdd",s);
-                }
-                Toast.makeText(mContext,"已接入"+String.valueOf(connectedIP.size()-1)+"台设备",Toast.LENGTH_LONG).show();
-
-            }
-        });
-        //show activity processes
-        Button bt3 = (Button)findViewById(R.id.button3);
-        bt3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RunningProcess rp = new RunningProcess();
-                rp.showActivityProcesses(mContext);
-
-            }
-        });*/
     }
+
+    private class IplistenerThread extends Thread{
+        private Handler handler;
+        private Context context;
+        private static final int WIFI_AP_STATE_ENABLING = 12;
+        private static final int WIFI_AP_STATE_ENABLED = 13;
+        private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
+
+        public void setHandler(Handler handler) {
+            this.handler = handler;
+        }
+        public void setContext(Context context) {
+            this.context = context;
+        }
 
         @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.alpha_in, R.anim.translate_out);
+        public void run() {
+            ConnectedIP cp = new ConnectedIP();
+            while(true){
+                if(stop) break;
+                Message mess = new Message();
+                if(getWiFiApState()!=WIFI_AP_STATE_ENABLING && getWiFiApState()!=WIFI_AP_STATE_ENABLED){
+                    mess.arg1 = 0;
+                    handler.sendMessage(mess);
+                    break;
+                }
+                mess.arg1 = cp.getConnectedIpCount()-1;
+                handler.sendMessage(mess);
+                try {
+                    Thread.currentThread().sleep(2000);
+                } catch (InterruptedException e) {
+                    Log.e("cdd:", "Thread ex", e);
+                }
+            }
+        }
+
+        private int getWiFiApState() {
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            int apState = WIFI_AP_STATE_ENABLED;
+            try {
+                String name = METHOD_GET_WIFI_AP_STATE;
+                Method method = WifiManager.class.getMethod(name);
+                apState =  (int)method.invoke(wifiManager);
+            } catch (Exception e) {
+                Log.e("cdd:", "SecurityException", e);
+            }
+            return apState;
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop = true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
 }

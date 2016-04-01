@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/apname"
             android:text="热 点 名 称 :"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_marginTop="15sp"
             android:layout_marginLeft="90sp"
             android:paddingTop="7sp"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/apnametext"
             android:text="hello"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:layout_above="@+id/passwordtext"
@@ -115,14 +115,14 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="密 码 设 置 : "
-            android:textSize="16dp" />
+            android:textSize="16sp" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/passwordtext"
             android:layout_toRightOf="@+id/password"
             android:text="12345678"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:password="true"
@@ -148,7 +148,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="最大分享流量:"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_below="@+id/imageView2"
             android:layout_alignLeft="@+id/password"
             android:layout_alignStart="@+id/password" />
@@ -158,8 +158,8 @@
             android:id="@+id/maxsharetext"
             android:numeric="integer"
             android:layout_toRightOf="@+id/maxshare"
-            android:text="  78  "
-            android:textSize="16dp"
+            android:text="12"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:layout_below="@+id/passwordtext"
@@ -170,10 +170,10 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="M"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_below="@+id/passwordtext"
-            android:layout_toRightOf="@+id/apnametext"
-            android:layout_toEndOf="@+id/apnametext" />
+            android:layout_toRightOf="@+id/maxsharetext"
+            android:layout_toEndOf="@+id/maxsharetext" />
 
 
         <ImageView
@@ -196,7 +196,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="最多接入人数:"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_below="@+id/maxshare"
             android:layout_toLeftOf="@+id/maxsharetext"
             android:layout_toStartOf="@+id/maxsharetext" />
@@ -207,7 +207,7 @@
             android:layout_toRightOf="@+id/maxaccess"
             android:layout_below="@+id/maxsharetext"
             android:text="  8  "
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
