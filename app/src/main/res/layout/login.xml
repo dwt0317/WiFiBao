@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="30dp">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/username"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -24,7 +24,9 @@
             android:layout_below="@id/username"
             android:singleLine="true"
             android:inputType="text"
-            />
+            >
+        </AutoCompleteTextView>
+
         <EditText
             android:id="@+id/password"
             android:layout_width="300dp"
