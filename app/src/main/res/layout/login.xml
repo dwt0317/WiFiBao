@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/logo" />
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="用户名"
+            android:layout_below="@id/username"
+            android:singleLine="true"
+            android:inputType="text"
+            />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="密    码"
+            android:layout_below="@id/username"
+            android:paddingTop="25dp"
+            android:singleLine="true"
+            android:inputType="text"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <CheckBox
+                android:id="@+id/savePassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"
+                android:textColor="#888"
+                android:text="记住密码"
+                android:layout_weight="1">
+            </CheckBox>
+
+            <TextView
+                android:id="@+id/forgetPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="忘记密码"
+                android:textColor="#888"
+                android:layout_weight="0.46" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/loginbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/password"
+        android:text="登陆"
+        android:layout_marginTop="25dp"
+        android:height="30dip"
+        android:width="120dip"
+        android:textColor="#FFFFFF"
+        android:background="#1892eb"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView  android:id="@+id/register"
+        android:text="没有账号？注册"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="65dp"
+        android:textColor="#888"
+        android:textColorLink="#FF0066CC"
+        />
+</LinearLayout>
