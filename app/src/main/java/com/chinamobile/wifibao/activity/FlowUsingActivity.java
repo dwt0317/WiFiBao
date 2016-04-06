@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -101,6 +102,9 @@ public class FlowUsingActivity extends Activity {
         @Override
         public void run() {
             if(isWiFiActive()){
+                Toast toast = Toast.makeText(FlowUsingActivity.this, "正在连接...请稍候", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
                 wifiDetectHandler.postDelayed(wifiDetectRunnable,1000);
             }else
                  endUsing();

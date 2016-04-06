@@ -51,24 +51,24 @@ public class CloseApActivity extends Activity{
                 }
             }
         };
-        TrafficMonitorService trafficThread = TrafficMonitorService.getInstance();
-        trafficThread.setHandler(flowHandle);
-        trafficThread.setContext(mContext);
-        trafficThread.start();
+        TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
+        monitorThread.setHandler(flowHandle);
+        monitorThread.setContext(mContext);
+        monitorThread.start();
 
-        final TextView ipCount = (TextView)findViewById(R.id.tv21);
-        final Handler ipHandle = new Handler() {
+        final TextView accessCount = (TextView)findViewById(R.id.tv21);
+        final Handler accessHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String ip = String.valueOf(msg.arg1);
-                ipCount.setText(ip);
+                String count = String.valueOf(msg.arg1);
+                accessCount.setText(count);
             }
         };
-        IplistenerThread it=new IplistenerThread();
-        it.setHandler(ipHandle);
-        it.setContext(mContext);
-        it.start();
+        accessListenerThread listenerThread=new accessListenerThread();
+        listenerThread.setHandler(accessHandle);
+        listenerThread.setContext(mContext);
+        listenerThread.start();
 
         //返回HomeActivity
         ImageView home = (ImageView)findViewById(R.id.imageView7);
@@ -88,7 +88,6 @@ public class CloseApActivity extends Activity{
                 Toast.makeText(mContext,"正在刷新",Toast.LENGTH_SHORT).show();
             }
         });
-
         //close wifi ap
         Button stopBt = (Button)findViewById(R.id.share_stop);
         stopBt.setOnClickListener(new View.OnClickListener() {
@@ -103,9 +102,9 @@ public class CloseApActivity extends Activity{
                 CloseApActivity.this.finish();
             }
         });
-    }
+    }//end onCreate
 
-    private class IplistenerThread extends Thread{
+    private class accessListenerThread extends Thread{
         private Handler handler;
         private Context context;
         private static final int WIFI_AP_STATE_ENABLING = 12;
@@ -121,7 +120,7 @@ public class CloseApActivity extends Activity{
 
         @Override
         public void run() {
-            ConnectedIP cp = new ConnectedIP();
+            ConnectedIP cp = ConnectedIP.getInstance();
             while(true){
                 if(stop) break;
                 Message mess = new Message();
@@ -129,9 +128,11 @@ public class CloseApActivity extends Activity{
                     mess.arg1 = 0;
                     handler.sendMessage(mess);
                     break;
+                }else {
+                    mess.arg1 = cp.getConnectedIpCount();
+                    Log.i("ip:", String.valueOf(mess.arg1));
+                    handler.sendMessage(mess);
                 }
-                mess.arg1 = cp.getConnectedIpCount()-1;
-                handler.sendMessage(mess);
                 try {
                     Thread.currentThread().sleep(2000);
                 } catch (InterruptedException e) {
