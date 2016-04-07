@@ -99,15 +99,17 @@ public class WifiDetailsActivity extends Activity {
                         super.handleMessage(msg);
                         if(msg.what == 1){
                             startActivity(intent);
+                        }else if(msg.what==0){
+                            Toast toast=Toast.makeText(getApplicationContext(), "已达到最大接入人数", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                            toast.show();
                         }
                     }
                 };
                 WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(connectHandler);
                 WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi);
 
-//                Toast toast=Toast.makeText(getApplicationContext(), "正在接入wifi...", Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-//                toast.show();
+
 
             }
         });

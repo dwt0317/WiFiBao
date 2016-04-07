@@ -98,16 +98,16 @@ public class FlowUsingActivity extends Activity {
     }
 
 
+    /**
+     * 监测wifi是否处于可用状态
+     */
     private Runnable wifiDetectRunnable  = new Runnable() {
         @Override
         public void run() {
             if(isWiFiActive()){
-                Toast toast = Toast.makeText(FlowUsingActivity.this, "正在连接...请稍候", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
                 wifiDetectHandler.postDelayed(wifiDetectRunnable,1000);
             }else
-                 endUsing();
+                endUsing();
         }
     };
 
@@ -131,6 +131,7 @@ public class FlowUsingActivity extends Activity {
 
 
     private void endUsing(){
+        wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
 

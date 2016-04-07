@@ -1,11 +1,12 @@
 package com.chinamobile.wifibao.bean;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by dwt on 2016/4/6.
  */
-public class ConnectionPool {
+public class ConnectionPool extends BmobObject {
     private WiFi WiFi;
     private Double cost;
     private Double flowUsed;
