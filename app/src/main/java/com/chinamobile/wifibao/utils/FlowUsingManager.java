@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.activity.TestActivity2;
+import com.chinamobile.wifibao.bean.ConnectionPool;
 import com.chinamobile.wifibao.bean.ShareRecord;
 import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.User;
@@ -81,6 +82,40 @@ public class FlowUsingManager {
     }
 
 
+    /**
+     * @param wifi
+     * 更新connectionPool中的分享的cost和flow
+     */
+    public void updateShareInfo(WiFi wifi, final double trafficDiff){
+        BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
+        query.addWhereEqualTo("WiFi", wifi);    // 查询当前用户的所有帖子
+        query.findObjects(mContext, new FindListener<ConnectionPool>() {
+            @Override
+            public void onSuccess(List<ConnectionPool> object) {
+                ConnectionPool conn = object.get(0);
+                conn.setFlowUsed(trafficDiff);
+                double cost = trafficDiff * 0.00005;
+                conn.setCost(cost);
+                conn.update(mContext,conn.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.i("bmob", "更新成功：");
+                    }
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        Log.e("bmob", "更新失败：" + msg);
+                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Log.i("bomb", "写入cost和flow成功 "+trafficDiff);
+            }
+            @Override
+            public void onError(int code, String msg) {
+                Log.e("bomb","写入cost和flow失败");
+                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void updateOwnerIncome(final WiFi wifi, final UseRecord useRecord){
         User user = wifi.getUser();
