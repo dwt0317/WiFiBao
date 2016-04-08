@@ -19,6 +19,7 @@ public class LoginManager {
     private Context mContext;
     private Handler uiHandler;
     private User loginUser;
+    private String errorMsg;
 
 
     public static synchronized LoginManager getInstance(Context context)
@@ -31,7 +32,7 @@ public class LoginManager {
     }
 
 
-    public void loginByPhoneNumber(String phoneNumber,String password){
+    public void loginByAccount(String phoneNumber,String password){
 
         BmobUser.loginByAccount(mContext, phoneNumber, password, new LogInListener<User>() {
 
@@ -45,6 +46,10 @@ public class LoginManager {
                     msg.what = 1;
                     getUiHandler().sendMessage(msg);
                 }else{
+                    Message msg = new Message();
+                    msg.what = 0;
+                    getUiHandler().sendMessage(msg);
+                    errorMsg=e.toString();
                     Log.e("login",e.toString());
                 }
             }
@@ -71,5 +76,9 @@ public class LoginManager {
 
     public void setUiHandler(Handler uiHandler) {
         this.uiHandler = uiHandler;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
     }
 }

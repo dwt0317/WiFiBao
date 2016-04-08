@@ -3,6 +3,8 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.LoginManager;
+import com.chinamobile.wifibao.utils.WiFiListManager;
 
 /**
  * Created by apple on 2016/4/6.
@@ -78,29 +82,33 @@ public class LoginActivity extends Activity {
                         .toString(), ""));// 自动输入密码
             }
         });
-
-        loginbutton = (Button)findViewById(R.id.loginbutton);//登陆按钮
-        loginbutton.setOnClickListener(new Button.OnClickListener() {//创建监听
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                usernameStr = username.getText().toString();
-                passwordStr = password.getText().toString();
-
-                if (!((usernameStr.equals("test")) && (passwordStr
-                        .equals("test")))) {
-                    Toast.makeText(LoginActivity.this, "密码错误，请重新输入",
+        final Handler uiHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    Toast.makeText(LoginActivity.this, "登陆成功，正在获取用户数据……",
                             Toast.LENGTH_SHORT).show();
-                } else {
                     if (savePassword.isChecked()) {// 登陆成功才保存密码
                         sp.edit().putString(usernameStr, passwordStr).commit();
                     }
-                    Toast.makeText(LoginActivity.this, "登陆成功，正在获取用户数据……",
-                            Toast.LENGTH_SHORT).show();
                     // 跳转到另一个Activity
                     // do something
-
+                }else{
+                    String error = LoginManager.getInstance(LoginActivity.this).getErrorMsg();
+                    Toast.makeText(LoginActivity.this, error,
+                            Toast.LENGTH_SHORT).show();
                 }
+            }
+        };
+        loginbutton = (Button)findViewById(R.id.loginbutton);//登陆按钮
+        loginbutton.setOnClickListener(new Button.OnClickListener() {//创建监听
+            public void onClick(View v) {
+                usernameStr = username.getText().toString();
+                passwordStr = password.getText().toString();
+
+                LoginManager.getInstance(LoginActivity.this).setUiHandler(uiHandler);
+                LoginManager.getInstance(LoginActivity.this).loginByAccount(usernameStr,passwordStr);
 
             }
         });

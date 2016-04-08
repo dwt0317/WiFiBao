@@ -161,7 +161,7 @@ public class TestActivity2 extends AppCompatActivity {
         };
 
         LoginManager.getInstance(this).setUiHandler(uiHandler);
-        LoginManager.getInstance(this).loginByPhoneNumber("ddd","123");
+        LoginManager.getInstance(this).loginByAccount("ddd","123");
     }
 
 

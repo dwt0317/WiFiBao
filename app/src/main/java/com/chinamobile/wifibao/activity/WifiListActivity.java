@@ -36,7 +36,6 @@ public class WifiListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         setContentView(R.layout.wifi_list);
         setViewComponent();
     }
