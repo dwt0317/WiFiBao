@@ -38,14 +38,27 @@
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:entries="@array/languages">
+            android:layout_height="32dp"
+            android:entries="@array/location"
+            android:clickable="false"
+            android:dropDownWidth="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:spinnerMode="dropdown"
+            android:backgroundTintMode="multiply">
         </Spinner>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginTop="6dp"
+            android:background="#F2F2F2" >
+        </View>
 
         <EditText
             android:id="@+id/phonenumber"
@@ -141,7 +154,7 @@
         </View>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="50dp">
             <EditText
                 android:id="@+id/RegMail"
                 android:layout_width="111dp"
@@ -178,7 +191,7 @@
         android:layout_width="260dp"
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="注  册"
         android:background="#2eb314"

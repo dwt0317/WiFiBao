@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="languages">
-        <item>+86        中国</item>
+    <string-array name="location">
+        <item>+86中国</item>
         <item>java </item>
         <item>php</item>
         <item>xml</item>
