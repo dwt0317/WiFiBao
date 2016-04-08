@@ -25,11 +25,12 @@ public class WifiListActivity extends Activity {
 
     private int[] icon = {R.mipmap.potrait};//图标
 
-    ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
-    ArrayList<WiFi> wifiList;
-    ArrayList<WiFi>userList;
-    ListView wifiListView;
-    ImageView settingView;
+    private ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
+    private ArrayList<WiFi> wifiList;
+    private ArrayList<WiFi>userList;
+    private ListView wifiListView;
+    private ImageView settingView;
+    private Handler updateListHandler = new Handler();
     public  final static String wifiListSER_KEY = "com.chinamobile.wifibao.ser";
 
     @Override
@@ -64,7 +65,33 @@ public class WifiListActivity extends Activity {
 
         WiFiListManager.getInstance(this).setUiHandler(uiHandler);
         WiFiListManager.getInstance(this).getAvailableWiFi();
+
+        wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                //传递参数
+                bundle.putSerializable(wifiListSER_KEY, wifiList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+    private Runnable updateListRunnable = new Runnable() {
+        @Override
+        public void run() {
+            WiFiListManager.getInstance(WifiListActivity.this).getAvailableWiFi();
+            updateWiFiListView();
+            updateListHandler.postDelayed(updateListRunnable,5000);
+        }
+    };
+
+
     public void updateWiFiListView(){
         int size=wifiList.size();
         for (int i = 0; i < size; i++) {
@@ -79,18 +106,6 @@ public class WifiListActivity extends Activity {
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
         wifiListView.setAdapter(saImageItems);
         wifiListView.setTextFilterEnabled(true);
-        wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
-                Bundle bundle=new Bundle();
-                //传递参数
-                bundle.putSerializable(wifiListSER_KEY,wifiList.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
 
     }
 }

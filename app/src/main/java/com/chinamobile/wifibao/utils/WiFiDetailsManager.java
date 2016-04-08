@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.chinamobile.wifibao.activity.WifiDetailsActivity;
+import com.chinamobile.wifibao.bean.ConnectionPool;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
@@ -20,7 +22,9 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 
 /**
@@ -72,6 +76,33 @@ public class WiFiDetailsManager {
         });
     }
 
+    private void isExceedingConnLimit(WiFi wifi, final Handler handler){
+        BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
+        query.addWhereEqualTo("WiFi", wifi);
+        query.findObjects(mContext, new FindListener<ConnectionPool>() {
+            @Override
+            public void onSuccess(List<ConnectionPool> object) {
+                // TODO Auto-generated method stub
+                ConnectionPool conn = object.get(0);
+                Integer curConnect = conn.getCurConnect();
+                Integer maxConnect = conn.getMaxConnect();
+                Message msg = new Message();
+
+//
+                if (curConnect >= maxConnect)
+                    msg.what = 0;
+                else
+                    msg.what = 1;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+
+            }
+        });
+    }
+
     public int getWiFiLevel(WiFi wifi){
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> results = wifiManager.getScanResults();
@@ -85,7 +116,24 @@ public class WiFiDetailsManager {
 
 
 
-    public boolean connectWiFi(WiFi wifi){
+    public void connectWiFi(final WiFi wifi){
+        Handler connLimitHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    doConnect(wifi);
+                }else{
+                    Message errorMsg = new Message();
+                    errorMsg.what = 0;
+                    getUiHandler().sendMessage(errorMsg);
+                }
+            }
+        };
+        isExceedingConnLimit(wifi,connLimitHandler);
+    }
+
+    private boolean doConnect(WiFi wifi){
         String BSSID = wifi.getBSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
 
@@ -119,7 +167,7 @@ public class WiFiDetailsManager {
             wifiManager.disconnect();
             wifiManager.enableNetwork(netId, true);
             wifiManager.reconnect();
-            wifiDetectHandler.postDelayed(wifiDetectRunnable,500);
+            wifiDetectHandler.postDelayed(wifiDetectRunnable,100);
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -127,15 +175,24 @@ public class WiFiDetailsManager {
         return false;
     }
 
+    /**
+     * 检测wifi是否连接runnable
+     */
     private Runnable wifiDetectRunnable  = new Runnable() {
         @Override
         public void run() {
+            Toast toast=Toast.makeText(mContext, "正在连接...", Toast.LENGTH_SHORT);
             if(isWiFiActive()){
+                toast.cancel();
+                wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
+                wifiDetectHandler.removeMessages(0);
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
             }else{
-                wifiDetectHandler.postDelayed(wifiDetectRunnable,300);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,2000);
             }
         }
     };
@@ -171,6 +228,9 @@ public class WiFiDetailsManager {
         else
             return false;
     }
+
+
+
 
     public Context getmContext() {
         return mContext;

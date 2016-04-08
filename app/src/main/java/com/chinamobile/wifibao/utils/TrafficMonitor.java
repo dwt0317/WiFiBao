@@ -10,7 +10,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.chinamobile.wifibao.bean.ConnectionPool;
+import com.chinamobile.wifibao.bean.WiFi;
+
 import java.text.DecimalFormat;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by dwt on 2016/3/22.
@@ -26,6 +33,8 @@ public class TrafficMonitor {
     private double mStartRX;
     private double mStartTX;
     private double totalTraffic;
+    private double lastTraffic;
+    private double trafficDiff;    // 单位Bytes
     private String totalTrafficStr;
 
     public static synchronized TrafficMonitor getInstance(Context context)
@@ -55,6 +64,7 @@ public class TrafficMonitor {
         }
     }
 
+    //runnable to update traffic
     private Runnable mRunnable = new Runnable() {
         public void run() {
             Message msg = new Message();
@@ -63,6 +73,8 @@ public class TrafficMonitor {
                 rxBytes = TrafficStats.getTotalRxBytes() - mStartRX;
                 txBytes = TrafficStats.getTotalTxBytes() - mStartTX;
                 totalTraffic = (rxBytes + txBytes);
+                trafficDiff=(totalTraffic-lastTraffic);
+                lastTraffic=totalTraffic;
                 formatRst();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
@@ -82,8 +94,11 @@ public class TrafficMonitor {
     }
 
     public void refreshTraffic(){
-        uiHandler.postDelayed(mRunnable,2000);
+        uiHandler.postDelayed(mRunnable, 2000);
     }
+
+
+
 
     public void disableTrafficMonitor(){
         uiHandler.removeCallbacks(mRunnable);
@@ -99,5 +114,9 @@ public class TrafficMonitor {
 
     public String getTotalTrafficStr() {
         return totalTrafficStr;
+    }
+
+    public double getTrafficDiff() {
+        return trafficDiff;
     }
 }
