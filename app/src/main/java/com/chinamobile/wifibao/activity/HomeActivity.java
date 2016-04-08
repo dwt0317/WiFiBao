@@ -13,6 +13,7 @@ import android.content.Intent;
 import java.util.HashMap;
 import java.util.ArrayList;
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.GoToManager;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -46,12 +47,7 @@ public class HomeActivity extends Activity{
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BmobUser bmobUser = BmobUser.getCurrentUser(HomeActivity.this);
-                if(bmobUser == null){
-                    Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                }
+
                 if(position == 0){
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this,WifiListActivity.class);
@@ -61,6 +57,10 @@ public class HomeActivity extends Activity{
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this,ShareActivity.class);
                     startActivity(intent);
+                }else if(position==2){
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this,ShareActivity.class);
+                    GoToManager.getInstance(HomeActivity.this).goToActivity(intent);
                 }
             }
         });
