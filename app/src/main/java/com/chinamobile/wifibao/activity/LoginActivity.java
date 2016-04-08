@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class LoginActivity extends Activity {
 
     private void setViewComponent() {
         setContentView(R.layout.login);
+
 
         username = (AutoCompleteTextView) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -92,8 +94,9 @@ public class LoginActivity extends Activity {
                     if (savePassword.isChecked()) {// 登陆成功才保存密码
                         sp.edit().putString(usernameStr, passwordStr).commit();
                     }
-                    // 跳转到另一个Activity
-                    // do something
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this,HomeActivity.class);
+                    startActivity(intent);
                 }else{
                     String error = LoginManager.getInstance(LoginActivity.this).getErrorMsg();
                     Toast.makeText(LoginActivity.this, error,

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
+import com.chinamobile.wifibao.utils.GoToManager;
 import com.chinamobile.wifibao.utils.WiFiDetailsManager;
 
 import java.util.ArrayList;
@@ -88,10 +89,12 @@ public class WifiDetailsActivity extends Activity {
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
 
+
                 final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(wifiDetailSER_KEY,wifi);
                 intent.putExtras(bundle);
+                GoToManager.getInstance(WifiDetailsActivity.this).goToActivity(intent);
                 //传递参数
                 Handler connectHandler = new Handler(){
                     @Override
