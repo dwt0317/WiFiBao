@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import com.chinamobile.wifibao.R;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by Administrator on 2016/3/29.
  */
@@ -20,7 +23,7 @@ public class HomeActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
+        Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         //gridview填充数据
         int[] icon = {R.drawable.home_useflow,R.drawable.home_shareflow,R.drawable.home_userinfo,R.drawable.home_wallet,
                 R.drawable.home_viewused,R.drawable.home_viewshared,R.drawable.home_recharge,R.drawable.home_bill};
@@ -42,6 +45,12 @@ public class HomeActivity extends Activity{
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BmobUser bmobUser = BmobUser.getCurrentUser(HomeActivity.this);
+                if(bmobUser == null){
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
                 if(position == 0){
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this,WifiListActivity.class);
