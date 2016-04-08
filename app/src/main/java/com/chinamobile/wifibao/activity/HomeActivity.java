@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,45 +57,26 @@ public class HomeActivity extends Activity{
         });
 
         //设置页面数据填充
-        int settingicon[] = {R.drawable.home_userinfo,R.drawable.home_wallet,R.drawable.home_recharge,R.drawable.home_bill};
-        String settingtext[] = {"个人信息","我的钱包","充值","我的账单"};
 
-        final View setting_content= this.getLayoutInflater().inflate(R.layout.setting, null);
-        ListView settinglist = (ListView) setting_content.findViewById(R.id.settinglist);
-        ArrayList<HashMap<String, Object>> listdata = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < settingicon.length; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("Image", settingicon[i]);
-            map.put("Text", settingtext[i]);
-            listdata.add(map);
-        }
-        SimpleAdapter settinglistadp = new SimpleAdapter(this,listdata,R.layout.settinglist_item,new String[]{"Image","Text"},
-                new int[]{R.id.setting_img, R.id.setting_text});
-        settinglist.setAdapter(settinglistadp);
-        settinglist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 3) {
-                    Intent intent = new Intent();
-                    intent.setClass(setting_content.getContext(),BalanceShareActivity .class);
-                    startActivity(intent);
-                }
-            }
-        });
+
+        final View setting_content= this.getLayoutInflater().inflate(R.layout.haslogged, null);
+     //   ListView settinglist = (ListView) setting_content.findViewById(R.id.settinglist);
+
         //设置页面弹框
-        final PopupWindow popup = new PopupWindow(setting_content,600,800);
+        final PopupWindow popup = new PopupWindow(setting_content,900,2560);
         popup.setFocusable(true);   //设置可以获取焦点
         popup.setBackgroundDrawable(new BitmapDrawable()); //防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
 
-        ImageView  image_set= (ImageView) findViewById(R.id.setting);
-        final View top =  findViewById(R.id.top_layout);
+        final ImageView  image_set= (ImageView) findViewById(R.id.setting);
         image_set.setOnClickListener(new View.OnClickListener() {
             boolean visibilty_flag = true;
-            View top =  findViewById(R.id.top_layout);
+        //    View top =  findViewById(R.id.top_layout);
 
             public void onClick(View v) {
                 if (visibilty_flag) {
-                    popup.showAsDropDown(top);
+                  //  popup.showAsDropDown(top);
+                    popup.setAnimationStyle(R.style.PopupAnimation);
+                    popup.showAtLocation(image_set, Gravity.NO_GRAVITY,0,0);
                     visibilty_flag = false;
                 } else {
                     popup.dismiss();

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@layout/hasloggedback">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:orientation="vertical"
+        android:layout_marginLeft="100px">
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:background="@drawable/usericon" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:layout_marginTop="60px"
+            android:background="@layout/settingpageback">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18810543307"
+                android:textSize="60px"
+                android:layout_gravity="center" />
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:background="@drawable/setting_next"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="20px" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="140px"
+            android:layout_height="140px"
+            android:background="@drawable/setting_wallet" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的钱包"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"
+            android:textIsSelectable="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="140px"
+            android:layout_height="140px"
+            android:background="@drawable/setting_setshare" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享设置"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="140px"
+            android:layout_height="140px"
+            android:background="@drawable/setting_aboutus" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于我们"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="140px"
+            android:layout_height="140px"
+            android:background="@drawable/setting_set" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="60px"
+            android:layout_marginLeft="40px"
+            android:layout_gravity="center" />
+    </LinearLayout>
+</LinearLayout>
