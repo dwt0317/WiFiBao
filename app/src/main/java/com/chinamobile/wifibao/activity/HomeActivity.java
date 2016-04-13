@@ -26,6 +26,7 @@ public class HomeActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+
         //gridview填充数据
         int[] icon = {R.drawable.home_useflow,R.drawable.home_shareflow,R.drawable.home_userinfo,R.drawable.home_wallet,
                 R.drawable.home_viewused,R.drawable.home_viewshared,R.drawable.home_recharge,R.drawable.home_bill};
@@ -65,13 +66,8 @@ public class HomeActivity extends Activity{
             }
         });
 
-        //设置页面数据填充
-
-
+        //用户设置页面
         final View setting_content= this.getLayoutInflater().inflate(R.layout.haslogged, null);
-     //   ListView settinglist = (ListView) setting_content.findViewById(R.id.settinglist);
-
-        //设置页面弹框
         final PopupWindow popup = new PopupWindow(setting_content,900,2560);
         popup.setFocusable(true);   //设置可以获取焦点
         popup.setBackgroundDrawable(new BitmapDrawable()); //防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
