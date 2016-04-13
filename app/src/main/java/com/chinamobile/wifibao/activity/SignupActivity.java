@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Button;
 import android.text.InputType;
 import android.widget.Toast;
@@ -149,7 +150,7 @@ public class SignupActivity extends AppCompatActivity {
             password.setError("密码不能为空");
             return false;
         }
-        if (rePwdStr == null || rePwdStr.equals("")) {
+        if (rePwdStr == null || usernameStr.equals("")) {
             password.setError("请再次输入密码");
             return false;
         }
