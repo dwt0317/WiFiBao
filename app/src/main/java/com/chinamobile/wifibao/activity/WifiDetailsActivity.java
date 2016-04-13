@@ -1,17 +1,13 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +15,7 @@ import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.GoToManager;
-import com.chinamobile.wifibao.utils.WiFiDetailsManager;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.chinamobile.wifibao.utils.usingFlow.WiFiDetailsManager;
 
 /**
  * Created by apple on 2016/3/25.

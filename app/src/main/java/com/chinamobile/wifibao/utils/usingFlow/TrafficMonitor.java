@@ -1,4 +1,4 @@
-package com.chinamobile.wifibao.utils;
+package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
 import android.net.TrafficStats;
@@ -10,14 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.chinamobile.wifibao.bean.ConnectionPool;
-import com.chinamobile.wifibao.bean.WiFi;
-
 import java.text.DecimalFormat;
-import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by dwt on 2016/3/22.

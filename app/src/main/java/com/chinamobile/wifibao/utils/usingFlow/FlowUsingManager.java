@@ -1,17 +1,14 @@
-package com.chinamobile.wifibao.utils;
+package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.chinamobile.wifibao.activity.TestActivity2;
 import com.chinamobile.wifibao.bean.ConnectionPool;
-import com.chinamobile.wifibao.bean.ShareRecord;
 import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
