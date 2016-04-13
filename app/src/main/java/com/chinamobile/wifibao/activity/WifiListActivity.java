@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import cn.bmob.v3.Bmob;
 import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.WiFiListManager;
+import com.chinamobile.wifibao.utils.usingFlow.WiFiListManager;
 
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class WifiListActivity extends Activity {
 
