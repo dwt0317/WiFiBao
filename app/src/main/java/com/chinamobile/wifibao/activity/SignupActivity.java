@@ -53,7 +53,8 @@ public class SignupActivity extends AppCompatActivity {
         verifyCodeBtn=(Button) findViewById(R.id.verifyCodeBtn);
         password.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
+        repwd.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +151,7 @@ public class SignupActivity extends AppCompatActivity {
             password.setError("密码不能为空");
             return false;
         }
-        if (rePwdStr == null || usernameStr.equals("")) {
+        if (rePwdStr == null || rePwdStr.equals("")) {
             password.setError("请再次输入密码");
             return false;
         }
