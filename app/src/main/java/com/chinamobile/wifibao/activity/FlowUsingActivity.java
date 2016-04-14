@@ -132,7 +132,6 @@ public class FlowUsingActivity extends Activity {
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
         flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
-        FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
 
         Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
         Bundle bundle=new Bundle();
@@ -145,7 +144,7 @@ public class FlowUsingActivity extends Activity {
         useRecord.setCost(cost);
         useRecord.setFlowUsed(Double.parseDouble(flowUsed));
 
-        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord);
+        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff);
         startActivity(intent);
     }
 }

@@ -17,7 +17,6 @@
             android:gravity="center"
             android:layout_centerVertical="true"
             android:textColor="#FFFFFF"
-            android:paddingTop="10dip"
             android:background="#1892eb" />
 
         <ImageView
@@ -28,7 +27,8 @@
             android:src="@drawable/home"
             android:background="#1892eb"
             android:clickable="true"
-            android:id="@+id/imageView7" />
+            android:id="@+id/home"
+            android:layout_marginLeft="10dp" />
 
     </RelativeLayout>
 

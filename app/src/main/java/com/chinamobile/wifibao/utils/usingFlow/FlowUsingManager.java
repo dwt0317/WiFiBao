@@ -16,6 +16,7 @@ import com.chinamobile.wifibao.bean.WiFi;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -44,8 +45,9 @@ public class FlowUsingManager {
     }
 
 
-    public void disconnect(WiFi wifi,UseRecord useRecord){
+    public void disconnect(WiFi wifi,UseRecord useRecord,double flowDiff){
 //        disconnectWiFi(wifi);
+        updateUseInfo(wifi,flowDiff);
         updateUseRecord(wifi, useRecord);
     }
 
@@ -68,7 +70,7 @@ public class FlowUsingManager {
             @Override
             public void onSuccess() {
                 Log.i("bmob", "add use record done!");
-                updateOwnerIncome(wifi, useRecord);
+                updateUserBalance(wifi,useRecord);
             }
             @Override
             public void onFailure(int code, String arg0) {
@@ -113,33 +115,23 @@ public class FlowUsingManager {
         });
     }
 
-    private void updateOwnerIncome(final WiFi wifi, final UseRecord useRecord){
-        User user = wifi.getUser();
-        BmobQuery<User> query = new BmobQuery<User>();
-        query.getObject(mContext, user.getObjectId(), new GetListener<User>() {
-            public void onSuccess(User owner) {
-                owner.setBalance(owner.getBalance() + useRecord.getCost());
-                owner.update(mContext, owner.getObjectId(), new UpdateListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.i("bmob", "balance 更新成功");
-                        disconnectWiFi(wifi);
-                    }
 
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        Log.i("bmob", "balance 更新失败：" + msg);
-                        disconnectWiFi(wifi);
-                    }
-                });
+
+
+    private void updateUserBalance(final WiFi wifi, final UseRecord useRecord){
+        User user = User.getCurrentUser(mContext,User.class);
+        user.setBalance(user.getBalance() + useRecord.getCost());
+        user.update(mContext, user.getObjectId(), new UpdateListener() {
+            @Override
+            public void onSuccess() {
+                Log.i("bmob", "balance 更新成功");
+                disconnectWiFi(wifi);
             }
 
             @Override
-            public void onFailure(int code, String arg0) {
-                Log.e("bmob", "query user error");
-                Toast toast = Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
+            public void onFailure(int code, String msg) {
+                Log.i("bmob", "balance 更新失败：" + msg);
+                disconnectWiFi(wifi);
             }
         });
     }
