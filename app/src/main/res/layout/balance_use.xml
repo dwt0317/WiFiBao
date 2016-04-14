@@ -15,9 +15,9 @@
             android:text="结算"
             android:textSize="22dip"
             android:textColor="#FFFFFF"
-            android:paddingLeft="140dip"
+            android:paddingLeft="155dip"
             android:paddingRight="50dip"
-            android:paddingTop="12dip"
+            android:paddingTop="10dip"
             android:background="#1892eb"
             />
 
@@ -86,7 +86,7 @@
             android:id="@+id/flowusedText"
             android:layout_toEndOf="@+id/flowusedView"
             android:layout_toRightOf="@+id/flowusedView"
-            android:text="123  MB"
+            android:text="123"
             android:textSize="15dp"
             android:layout_marginTop="20sp"
             android:paddingTop="10sp"
@@ -119,7 +119,7 @@
             android:id="@+id/costText"
             android:layout_toRightOf="@+id/costView"
             android:layout_below="@+id/flowusedText"
-            android:text="456  流量币"
+            android:text="456"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
@@ -151,10 +151,49 @@
             android:id="@+id/saveText"
             android:layout_toRightOf="@+id/saveView"
             android:layout_below="@+id/costText"
-            android:text="789  MB"
+            android:text="789"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/useUnit"
+            android:text="MB"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/flowusedText"
+            android:layout_toRightOf="@+id/flowusedText"
+            android:layout_toEndOf="@+id/flowusedText"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/costUnit"
+            android:text="流量币"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/costText"
+            android:layout_toRightOf="@+id/costText"
+            android:layout_toEndOf="@+id/costText"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveUnit"
+            android:text="元"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_below="@+id/costText"
+            android:layout_toRightOf="@+id/saveText"
+            android:layout_toEndOf="@+id/saveText"
+            android:layout_marginLeft="10dp" />
 
     </RelativeLayout>
 

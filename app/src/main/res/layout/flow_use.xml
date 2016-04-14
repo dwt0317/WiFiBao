@@ -83,7 +83,7 @@
             android:id="@+id/flowusingText"
             android:layout_toEndOf="@+id/flowusingView"
             android:layout_toRightOf="@+id/flowusingView"
-            android:text="120  MB"
+            android:text=""
             android:textSize="16dp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
@@ -155,7 +155,7 @@
             android:id="@+id/moneyuseText"
             android:layout_toRightOf="@+id/moneyuseView"
             android:layout_below="@+id/chronometer"
-            android:text="8.9 流量币"
+            android:text=""
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>

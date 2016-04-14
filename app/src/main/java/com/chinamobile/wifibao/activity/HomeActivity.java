@@ -23,6 +23,13 @@ import cn.bmob.v3.BmobUser;
  * Created by Administrator on 2016/3/29.
  */
 public class HomeActivity extends Activity{
+
+    private ImageView portrait;
+    private ImageView portraitNotLogin;
+    private TextView username;
+    private LinearLayout usernameLayout;
+    private LinearLayout logoutLayout;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
@@ -51,36 +58,24 @@ public class HomeActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
+                if (position == 0) {
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,WifiListActivity.class);
+                    intent.setClass(HomeActivity.this, WifiListActivity.class);
                     startActivity(intent);
-                }
-                else if(position == 1){
+                } else if (position == 1) {
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,ShareActivity.class);
+                    intent.setClass(HomeActivity.this, ShareActivity.class);
                     startActivity(intent);
-                }else if(position==2){
+                } else if (position == 2) {
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,ShareActivity.class);
+                    intent.setClass(HomeActivity.this, PersonalActivity.class);
                     GoToManager.getInstance(HomeActivity.this).goToActivity(intent);
                 }
             }
         });
 
-        //用户设置页面
-        final View setting_content= this.getLayoutInflater().inflate(R.layout.haslogged, null);
-        final PopupWindow popup = new PopupWindow(setting_content,900,2560);
-        popup.setFocusable(true);   //设置可以获取焦点
-        popup.setBackgroundDrawable(new BitmapDrawable()); //防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
+        createSettingPanel();
 
-        final ImageView  image_set= (ImageView) findViewById(R.id.setting);
-        image_set.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                popup.setAnimationStyle(R.style.PopupAnimation);
-                popup.showAtLocation(image_set, Gravity.NO_GRAVITY,0,0);
-            }
-        });
     }
 
     private long exitTime = 0;
@@ -92,6 +87,62 @@ public class HomeActivity extends Activity{
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    private void createSettingPanel(){
+        //用户设置页面
+        final View setting_content= this.getLayoutInflater().inflate(R.layout.haslogged, null);
+        final PopupWindow popup = new PopupWindow(setting_content,900,2560);
+        popup.setFocusable(true);   //设置可以获取焦点
+        popup.setBackgroundDrawable(new BitmapDrawable()); //防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
+
+        final ImageView  image_set= (ImageView) findViewById(R.id.setting);
+        image_set.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                popup.setAnimationStyle(R.style.PopupAnimation);
+                popup.showAtLocation(image_set, Gravity.NO_GRAVITY, 0, 0);
+            }
+        });
+
+        portrait = (ImageView) setting_content.findViewById(R.id.portrait);
+        portraitNotLogin = (ImageView) setting_content.findViewById(R.id.portraitNotLogin);
+        username = (TextView) setting_content.findViewById(R.id.username);
+        usernameLayout = (LinearLayout) setting_content.findViewById(R.id.usernameLayout);
+        logoutLayout = (LinearLayout) setting_content.findViewById(R.id.logoutLayout);
+
+        BmobUser bmobUser = BmobUser.getCurrentUser(this);
+        if(bmobUser == null){
+            usernameLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            portrait.setVisibility(View.VISIBLE);
+            portraitNotLogin.setVisibility(View.GONE);
+            logoutLayout.setVisibility(View.VISIBLE);
+            username.setText(bmobUser.getUsername());
+            usernameLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this, PersonalActivity.class);
+                    startActivity(intent);
+                }
+            });
+            logoutLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    BmobUser.logOut(HomeActivity.this);
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+    }
+
+
     public void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getApplicationContext(), "再按一次退出程序",Toast.LENGTH_SHORT).show();

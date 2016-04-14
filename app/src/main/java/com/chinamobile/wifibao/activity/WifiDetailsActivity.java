@@ -17,6 +17,8 @@ import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.GoToManager;
 import com.chinamobile.wifibao.utils.usingFlow.WiFiDetailsManager;
 
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by apple on 2016/3/25.
  */
@@ -80,35 +82,40 @@ public class WifiDetailsActivity extends Activity {
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
+                if(!isLogin()){
+                    Intent loginIntent = new Intent(WifiDetailsActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                }else{
+                    final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable(wifiDetailSER_KEY,wifi);
+                    intent.putExtras(bundle);
 
-
-                final Intent intent = new Intent(WifiDetailsActivity.this, FlowUsingActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable(wifiDetailSER_KEY,wifi);
-                intent.putExtras(bundle);
-                GoToManager.getInstance(WifiDetailsActivity.this).goToActivity(intent);
-                //传递参数
-                Handler connectHandler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        if(msg.what == 1){
-                            startActivity(intent);
-                        }else if(msg.what==0){
-                            Toast toast=Toast.makeText(getApplicationContext(), "已达到最大接入人数", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                            toast.show();
+                    //传递参数
+                    Handler connectHandler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            if(msg.what == 1){
+                                startActivity(intent);
+                            }else if(msg.what==0){
+                                Toast toast=Toast.makeText(getApplicationContext(), "已达到最大接入人数", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                                toast.show();
+                            }
                         }
-                    }
-                };
-                WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(connectHandler);
-                WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi);
-
-
-
+                    };
+                    WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(connectHandler);
+                    WiFiDetailsManager.getInstance(WifiDetailsActivity.this).connectWiFi(wifi);
+                }
             }
         });
 
-
+    }
+    private boolean isLogin(){
+        BmobUser bmobUser = BmobUser.getCurrentUser(this);
+        if(bmobUser == null)
+            return false;
+        else return true;
     }
 }

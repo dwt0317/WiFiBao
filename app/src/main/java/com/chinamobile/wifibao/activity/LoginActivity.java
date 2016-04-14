@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
@@ -24,13 +25,14 @@ import com.chinamobile.wifibao.utils.LoginManager;
  * Created by apple on 2016/4/6.
  */
 public class LoginActivity extends Activity {
-    Button loginbutton;
-    CheckBox savePassword;
-    EditText password;
-    AutoCompleteTextView username;
-    SharedPreferences sp;
-    String usernameStr;
-    String passwordStr;
+    private Button loginbutton;
+    private CheckBox savePassword;
+    private EditText password;
+    private AutoCompleteTextView username;
+    private TextView register;
+    private SharedPreferences sp;
+    private String usernameStr;
+    private String passwordStr;
 
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -44,7 +46,7 @@ public class LoginActivity extends Activity {
 
         username = (AutoCompleteTextView) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-
+        register = (TextView) findViewById(R.id.register);
         sp = this.getSharedPreferences("passwordFile", MODE_PRIVATE);
         savePassword = (CheckBox) findViewById(R.id.savePassword);
         savePassword.setChecked(true);// 默认为记住密码
@@ -87,7 +89,7 @@ public class LoginActivity extends Activity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if(msg.what == 1){
-                    Toast.makeText(LoginActivity.this, "登陆成功，正在获取用户数据……",
+                    Toast.makeText(LoginActivity.this, "登陆成功",
                             Toast.LENGTH_SHORT).show();
                     if (savePassword.isChecked()) {// 登陆成功才保存密码
                         sp.edit().putString(usernameStr, passwordStr).commit();
@@ -113,6 +115,16 @@ public class LoginActivity extends Activity {
 
             }
         });
+
+        register.setOnClickListener(new TextView.OnClickListener(){
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
 }

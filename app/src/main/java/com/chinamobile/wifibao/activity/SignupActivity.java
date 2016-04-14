@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private ImageView home;
     private EditText phonenumber;
     private TextView username;
     private EditText password;
@@ -113,6 +115,15 @@ public class SignupActivity extends AppCompatActivity {
                 };
                 SignupManager.getInstance(SignupActivity.this).setUiHandler(verifySendHandler);
                 SignupManager.getInstance(SignupActivity.this).requestSMSCode(phoneNumber);
+            }
+        });
+
+        home  = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(SignupActivity.this,HomeActivity.class);
+                startActivity(intent);
             }
         });
     }
