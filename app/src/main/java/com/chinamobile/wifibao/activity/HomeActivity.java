@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.GoToManager;
 
+import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 
@@ -26,6 +27,7 @@ public class HomeActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        BmobSMS.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
 
         //gridview填充数据
         int[] icon = {R.drawable.home_useflow,R.drawable.home_shareflow,R.drawable.home_userinfo,R.drawable.home_wallet,

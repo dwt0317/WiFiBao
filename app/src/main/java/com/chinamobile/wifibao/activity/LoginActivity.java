@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.LoginManager;
-import com.chinamobile.wifibao.utils.WiFiListManager;
 
 /**
  * Created by apple on 2016/4/6.

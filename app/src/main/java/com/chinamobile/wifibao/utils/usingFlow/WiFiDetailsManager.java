@@ -1,4 +1,4 @@
-package com.chinamobile.wifibao.utils;
+package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,18 +12,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.chinamobile.wifibao.activity.WifiDetailsActivity;
 import com.chinamobile.wifibao.bean.ConnectionPool;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 
