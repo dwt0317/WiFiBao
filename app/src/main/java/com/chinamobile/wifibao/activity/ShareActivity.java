@@ -2,6 +2,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class ShareActivity extends Activity {
                         WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                         wifiAp.startWifiAp(name, password);
                         Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
+                        //保存ap信息
+                        writeInCache(ap);
                         //跳转并销毁页面
                         Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
                         intent.putExtra("maxshare",Double.parseDouble(share));
@@ -99,6 +102,22 @@ public class ShareActivity extends Activity {
         WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         return info.getMacAddress();
+    }
+
+    /***
+     * 保存wifiap信息
+     */
+    void writeInCache(WiFi ap){
+        SharedPreferences sp = mContext.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("SSID",ap.getBSSID());
+        editor.putString("password", ap.getPassword());
+        editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
+        editor.putInt("maxConnect", ap.getMaxConnect());
+        editor.putString("BSSID", ap.getBSSID());
+        //记录开始时间
+        //
+        editor.commit();
     }
 
     @Override
