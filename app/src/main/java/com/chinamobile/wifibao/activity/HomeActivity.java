@@ -74,19 +74,9 @@ public class HomeActivity extends Activity{
 
         final ImageView  image_set= (ImageView) findViewById(R.id.setting);
         image_set.setOnClickListener(new View.OnClickListener() {
-            boolean visibilty_flag = true;
-        //    View top =  findViewById(R.id.top_layout);
-
             public void onClick(View v) {
-                if (visibilty_flag) {
-                  //  popup.showAsDropDown(top);
-                    popup.setAnimationStyle(R.style.PopupAnimation);
-                    popup.showAtLocation(image_set, Gravity.NO_GRAVITY,0,0);
-                    visibilty_flag = false;
-                } else {
-                    popup.dismiss();
-                    visibilty_flag = true;
-                }
+                popup.setAnimationStyle(R.style.PopupAnimation);
+                popup.showAtLocation(image_set, Gravity.NO_GRAVITY,0,0);
             }
         });
     }
