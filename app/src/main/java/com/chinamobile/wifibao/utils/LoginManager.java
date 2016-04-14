@@ -32,9 +32,9 @@ public class LoginManager {
     }
 
 
-    public void loginByAccount(String phoneNumber,String password){
+    public void loginByAccount(String account,String password){
 
-        BmobUser.loginByAccount(mContext, phoneNumber, password, new LogInListener<User>() {
+        BmobUser.loginByAccount(mContext, account, password, new LogInListener<User>() {
 
             @Override
             public void done(User user, BmobException e) {

@@ -34,7 +34,7 @@ public class SignupManager {
 
 
     public void requestSMSCode(String phoneNumber){
-        BmobSMS.requestSMSCode(mContext, phoneNumber, "模板名称", new RequestSMSCodeListener() {
+        BmobSMS.requestSMSCode(mContext, phoneNumber, "wifiBao", new RequestSMSCodeListener() {
 
             @Override
             public void done(Integer smsId, BmobException ex) {
@@ -45,7 +45,8 @@ public class SignupManager {
                     msg.what = 1;
                     getUiHandler().sendMessage(msg);
                 }else{
-                    errorMsg = ex.toString();
+                    Log.e("bmob",ex.getLocalizedMessage());
+                    errorMsg = ex.getLocalizedMessage();
                     Message msg = new Message();
                     msg.what = 0;
                     getUiHandler().sendMessage(msg);
@@ -68,6 +69,7 @@ public class SignupManager {
             @Override
             public void onFailure(int code, String error) {
                 // TODO Auto-generated method stub
+                Log.e("bmob",error);
                 errorMsg = error;
                 Message msg = new Message();
                 msg.what = 0;

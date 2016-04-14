@@ -64,7 +64,7 @@ public class FlowUsingActivity extends Activity {
                     flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
                     flowusingText.setText(flowUsed);
                     moneyuseText.setText(computeCost(flowUsed));
-                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateShareInfo(wifi,flowDiff);
+                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
 //                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
@@ -131,6 +131,8 @@ public class FlowUsingActivity extends Activity {
         wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
+        flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
+        FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
 
         Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
         Bundle bundle=new Bundle();

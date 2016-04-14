@@ -91,6 +91,11 @@ public class SignupActivity extends AppCompatActivity {
         verifyCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String phoneNumber=phonenumber.getText().toString().trim();
+                if (phoneNumber == null || phoneNumber.equals("")) {
+                    phonenumber.setError("手机号不能为空");
+                    return;
+                }
                 //发送验证码
                 final Handler verifySendHandler = new Handler() {
                     @Override
@@ -107,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 };
                 SignupManager.getInstance(SignupActivity.this).setUiHandler(verifySendHandler);
-                SignupManager.getInstance(SignupActivity.this).requestSMSCode(verifyCode.getText().toString());
+                SignupManager.getInstance(SignupActivity.this).requestSMSCode(phoneNumber);
             }
         });
     }
