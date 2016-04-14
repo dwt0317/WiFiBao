@@ -41,27 +41,33 @@ public class ShareActivity extends Activity {
                 String share = ((EditText) findViewById(R.id.maxsharetext)).getText().toString().trim();
                 String access = ((EditText) findViewById(R.id.maxaccesstext)).getText().toString().trim();
                 if (name.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 8) {
-                    Toast.makeText(getApplicationContext(), "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
                 } else {
-                    WifiApAdmin wifiAp = new WifiApAdmin(mContext);
-                    wifiAp.startWifiAp(name, password);
-                    Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
                     //上传数据
                     WiFi ap = new WiFi();
                     ap.setSSID(name);
                     ap.setPassword(password);
-                    ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入
+                    ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
                     ap.setMaxConnect(Integer.parseInt(access));
                     ap.setBSSID(getLocalMacAddress());
-                    DatabaseUtil.writeApToDatabase(mContext, ap);
-                    //跳转并销毁页面
-                    Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
-                    ShareActivity.this.finish();
+                    boolean success = DatabaseUtil.getInstance().writeApToDatabase(mContext, ap);
+                    if(success){
+                        WifiApAdmin wifiAp = new WifiApAdmin(mContext);
+                        wifiAp.startWifiAp(name, password);
+                        Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
+                        //跳转并销毁页面
+                        Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
+                        intent.putExtra("maxshare",Double.parseDouble(share));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
+                        ShareActivity.this.finish();
+                    }else{
+                        Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });

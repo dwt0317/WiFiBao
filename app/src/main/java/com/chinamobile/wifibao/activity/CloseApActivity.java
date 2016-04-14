@@ -37,7 +37,7 @@ public class CloseApActivity extends Activity{
         setContentView(R.layout.flow_share);
 
         Toast.makeText(mContext,"热点已开启！",Toast.LENGTH_SHORT).show();
-
+        //流量监测
         final TextView showFlow = (TextView) findViewById(R.id.tv11);
         final Handler flowHandle = new Handler() {
             @Override
@@ -54,8 +54,9 @@ public class CloseApActivity extends Activity{
         TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
         monitorThread.setHandler(flowHandle);
         monitorThread.setContext(mContext);
+        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare",0.0));
         monitorThread.start();
-
+        //接入监测
         final TextView accessCount = (TextView)findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
             @Override

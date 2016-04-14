@@ -21,7 +21,7 @@ public class TrafficMonitorService extends Thread {
 
     private Handler handler;
     private Context context;
-    private int maxAccess;
+    private double maxShare;
     private static TrafficMonitorService tms;
 
     private TrafficMonitorService(){}
@@ -31,8 +31,8 @@ public class TrafficMonitorService extends Thread {
     public void setContext(Context context){
         this.context = context;
     }
-    public void setMaxAccess(int maxAccess){
-        this.maxAccess = maxAccess;
+    public void setMaxShare(double maxShare){
+        this.maxShare = maxShare;
     }
 
     public static TrafficMonitorService getInstance(){
@@ -59,11 +59,11 @@ public class TrafficMonitorService extends Thread {
                     getWiFiApState()!=WIFI_AP_STATE_ENABLED)
                 break;
             long apTraffic = tp.getWifiApTotalTraffic();
-            double apTrafficKBytesDouble = apTraffic*1.0/1024;
+            double apTrafficMBytesDouble = apTraffic*1.0/1048576;
             DecimalFormat df = new DecimalFormat("#0.00");
-            String sR = df.format(apTrafficKBytesDouble)+"KB";
+            String sR = df.format(apTrafficMBytesDouble)+"MB";
             message.obj = sR;
-            if(apTrafficKBytesDouble > 1000.00){
+            if(apTrafficMBytesDouble > maxShare){
                 //告诉主线程到达流量上限
                 message.arg1=0;
                 handler.sendMessage(message);
