@@ -2,6 +2,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -41,27 +42,35 @@ public class ShareActivity extends Activity {
                 String share = ((EditText) findViewById(R.id.maxsharetext)).getText().toString().trim();
                 String access = ((EditText) findViewById(R.id.maxaccesstext)).getText().toString().trim();
                 if (name.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 8) {
-                    Toast.makeText(getApplicationContext(), "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
                 } else {
-                    WifiApAdmin wifiAp = new WifiApAdmin(mContext);
-                    wifiAp.startWifiAp(name, password);
-                    Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
                     //上传数据
                     WiFi ap = new WiFi();
                     ap.setSSID(name);
                     ap.setPassword(password);
-                    ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入
+                    ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
                     ap.setMaxConnect(Integer.parseInt(access));
                     ap.setBSSID(getLocalMacAddress());
-                    DatabaseUtil.writeApToDatabase(mContext, ap);
-                    //跳转并销毁页面
-                    Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
-                    ShareActivity.this.finish();
+                    boolean success = DatabaseUtil.getInstance().writeApToDatabase(mContext, ap);
+                    if(success){
+                        WifiApAdmin wifiAp = new WifiApAdmin(mContext);
+                        wifiAp.startWifiAp(name, password);
+                        Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
+                        //保存ap信息
+                        writeInCache(ap);
+                        //跳转并销毁页面
+                        Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
+                        intent.putExtra("maxshare",Double.parseDouble(share));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
+                        ShareActivity.this.finish();
+                    }else{
+                        Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });
@@ -93,6 +102,22 @@ public class ShareActivity extends Activity {
         WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         return info.getMacAddress();
+    }
+
+    /***
+     * 保存wifiap信息
+     */
+    void writeInCache(WiFi ap){
+        SharedPreferences sp = mContext.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("SSID",ap.getBSSID());
+        editor.putString("password", ap.getPassword());
+        editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
+        editor.putInt("maxConnect", ap.getMaxConnect());
+        editor.putString("BSSID", ap.getBSSID());
+        //记录开始时间
+        //
+        editor.commit();
     }
 
     @Override

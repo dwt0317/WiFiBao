@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.chinamobile.wifibao.bean.ShareRecord;
 import com.chinamobile.wifibao.bean.WiFi;
 
 import cn.bmob.v3.listener.SaveListener;
@@ -14,6 +15,8 @@ public class DatabaseUtil {
 
     private DatabaseUtil(){}
     private static DatabaseUtil du;
+    private boolean savaSuccess;
+    private String apObjectId;
 
     public static DatabaseUtil getInstance(){
         if(du == null)
@@ -21,19 +24,50 @@ public class DatabaseUtil {
         return du;
     }
 
-    public  static void writeApToDatabase(Context context, final WiFi wifiAp){
-        if(wifiAp!=null){
+    public  boolean writeApToDatabase(Context context, final WiFi wifiAp) {
+        savaSuccess = false;
+        if (wifiAp != null) {
             wifiAp.save(context, new SaveListener() {
                 @Override
                 public void onSuccess() {
-                    Log.i("添加数据成功，返回objectId为：",wifiAp.getObjectId());
+                    apObjectId = wifiAp.getObjectId();
+                    Log.i("添加数据成功，返回objectId为：", apObjectId);
+                    savaSuccess = true;
                 }
 
                 @Override
                 public void onFailure(int code, String arg0) {
-                    Log.i("error：","添加数据失败!!!!");
+                    Log.i("error：", "添加数据失败!!!!");
+                    savaSuccess = false;
                 }
             });
+        }else {
+            savaSuccess = false;
         }
+        return savaSuccess;
+    }
+
+    public boolean writeShareToDatabase(Context context, final ShareRecord shareRecord){
+        savaSuccess = false;
+        if(shareRecord != null){
+            shareRecord.save(context, new SaveListener() {
+                @Override
+                public void onSuccess() {
+                    Log.i("添加数据成功，返回objectId为：", shareRecord.getObjectId());
+                    savaSuccess = true;
+                }
+
+                @Override
+                public void onFailure(int i, String s) {
+                    Log.i("error：", "添加数据失败!!!!");
+                    savaSuccess = false;
+                }
+            });
+
+        }else{
+            savaSuccess = false;
+        }
+
+        return savaSuccess;
     }
 }
