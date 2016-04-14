@@ -24,7 +24,7 @@ public class DatabaseUtil {
         return du;
     }
 
-    public  boolean writeApToDatabase(Context context, final WiFi wifiAp) {
+    public boolean writeApToDatabase(Context context, final WiFi wifiAp) {
         savaSuccess = false;
         if (wifiAp != null) {
             wifiAp.save(context, new SaveListener() {
@@ -32,6 +32,7 @@ public class DatabaseUtil {
                 public void onSuccess() {
                     apObjectId = wifiAp.getObjectId();
                     Log.i("添加数据成功，返回objectId为：", apObjectId);
+                    //Log.i("succe:","添加数据成功");
                     savaSuccess = true;
                 }
 
@@ -41,8 +42,6 @@ public class DatabaseUtil {
                     savaSuccess = false;
                 }
             });
-        }else {
-            savaSuccess = false;
         }
         return savaSuccess;
     }
@@ -64,8 +63,6 @@ public class DatabaseUtil {
                 }
             });
 
-        }else{
-            savaSuccess = false;
         }
 
         return savaSuccess;

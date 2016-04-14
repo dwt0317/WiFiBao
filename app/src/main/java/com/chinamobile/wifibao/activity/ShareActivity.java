@@ -54,7 +54,8 @@ public class ShareActivity extends Activity {
                     ap.setMaxConnect(Integer.parseInt(access));
                     ap.setBSSID(getLocalMacAddress());
                     boolean success = DatabaseUtil.getInstance().writeApToDatabase(mContext, ap);
-                    if(success){
+                    Log.i("success:", String.valueOf(success));
+                    if(success == true){
                         WifiApAdmin wifiAp = new WifiApAdmin(mContext);
                         wifiAp.startWifiAp(name, password);
                         Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
