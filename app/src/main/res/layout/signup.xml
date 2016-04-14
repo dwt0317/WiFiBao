@@ -175,6 +175,7 @@
                 android:editable="true">
             </EditText>
             <Button
+                android:id="@+id/verifyCodeBtn"
                 android:layout_width="120dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_horizontal"

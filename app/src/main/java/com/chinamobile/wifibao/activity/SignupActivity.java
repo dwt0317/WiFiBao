@@ -53,7 +53,8 @@ public class SignupActivity extends AppCompatActivity {
         verifyCodeBtn=(Button) findViewById(R.id.verifyCodeBtn);
         password.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
+        repwd.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +91,11 @@ public class SignupActivity extends AppCompatActivity {
         verifyCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String phoneNumber=phonenumber.getText().toString().trim();
+                if (phoneNumber == null || phoneNumber.equals("")) {
+                    phonenumber.setError("手机号不能为空");
+                    return;
+                }
                 //发送验证码
                 final Handler verifySendHandler = new Handler() {
                     @Override
@@ -106,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 };
                 SignupManager.getInstance(SignupActivity.this).setUiHandler(verifySendHandler);
-                SignupManager.getInstance(SignupActivity.this).requestSMSCode(verifyCode.getText().toString());
+                SignupManager.getInstance(SignupActivity.this).requestSMSCode(phoneNumber);
             }
         });
     }
@@ -150,7 +156,7 @@ public class SignupActivity extends AppCompatActivity {
             password.setError("密码不能为空");
             return false;
         }
-        if (rePwdStr == null || usernameStr.equals("")) {
+        if (rePwdStr == null || rePwdStr.equals("")) {
             password.setError("请再次输入密码");
             return false;
         }

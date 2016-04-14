@@ -68,8 +68,7 @@ public class FlowUsingManager {
             @Override
             public void onSuccess() {
                 Log.i("bmob", "add use record done!");
-                disconnectWiFi(wifi);
-//                updateOwnerIncome(wifi, useRecord);
+                updateOwnerIncome(wifi, useRecord);
             }
             @Override
             public void onFailure(int code, String arg0) {
@@ -83,7 +82,7 @@ public class FlowUsingManager {
      * @param wifi
      * 更新connectionPool中的分享的cost和flow
      */
-    public void updateShareInfo(WiFi wifi, final double trafficDiff){
+    public void updateUseInfo(WiFi wifi, final double trafficDiff){
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
         query.addWhereEqualTo("WiFi", wifi);    // 查询当前用户的所有帖子
         query.findObjects(mContext, new FindListener<ConnectionPool>() {
@@ -96,7 +95,7 @@ public class FlowUsingManager {
                 conn.update(mContext,conn.getObjectId(), new UpdateListener() {
                     @Override
                     public void onSuccess() {
-                        Log.i("bmob", "更新成功：");
+                        Log.i("bmob", "流量花费更新成功");
                     }
                     @Override
                     public void onFailure(int code, String msg) {
@@ -119,16 +118,18 @@ public class FlowUsingManager {
         BmobQuery<User> query = new BmobQuery<User>();
         query.getObject(mContext, user.getObjectId(), new GetListener<User>() {
             public void onSuccess(User owner) {
-                owner.setBalance(owner.getBalance()+useRecord.getCost());
-                owner.update(mContext,owner.getObjectId(), new UpdateListener() {
+                owner.setBalance(owner.getBalance() + useRecord.getCost());
+                owner.update(mContext, owner.getObjectId(), new UpdateListener() {
                     @Override
                     public void onSuccess() {
                         Log.i("bmob", "balance 更新成功");
-
+                        disconnectWiFi(wifi);
                     }
+
                     @Override
                     public void onFailure(int code, String msg) {
                         Log.i("bmob", "balance 更新失败：" + msg);
+                        disconnectWiFi(wifi);
                     }
                 });
             }
@@ -141,7 +142,6 @@ public class FlowUsingManager {
                 toast.show();
             }
         });
-
     }
 
 
