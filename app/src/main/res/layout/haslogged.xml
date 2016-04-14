@@ -21,12 +21,14 @@
             android:layout_marginTop="60px"
             android:background="@layout/settingpageback">
             <TextView
+                android:id="@+id/phonenumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="18810543307"
                 android:textSize="60px"
                 android:layout_gravity="center" />
             <ImageView
+                android:id="@+id/next"
                 android:layout_width="100px"
                 android:layout_height="100px"
                 android:background="@drawable/setting_next"
@@ -42,10 +44,11 @@
         android:layout_marginLeft="100px"
         android:layout_marginTop="80px">
         <ImageView
-            android:layout_width="140px"
-            android:layout_height="140px"
+            android:layout_width="130px"
+            android:layout_height="130px"
             android:background="@drawable/setting_wallet" />
         <TextView
+            android:id="@+id/mywallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的钱包"
@@ -61,10 +64,11 @@
         android:layout_marginLeft="100px"
         android:layout_marginTop="80px">
         <ImageView
-            android:layout_width="140px"
-            android:layout_height="140px"
+            android:layout_width="130px"
+            android:layout_height="130px"
             android:background="@drawable/setting_setshare" />
         <TextView
+            android:id="@+id/setshare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分享设置"
@@ -79,10 +83,11 @@
         android:layout_marginLeft="100px"
         android:layout_marginTop="80px">
         <ImageView
-            android:layout_width="140px"
-            android:layout_height="140px"
+            android:layout_width="130px"
+            android:layout_height="130px"
             android:background="@drawable/setting_aboutus" />
         <TextView
+            android:id="@+id/aboutus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="关于我们"
@@ -96,15 +101,37 @@
         android:layout_marginLeft="100px"
         android:layout_marginTop="80px">
         <ImageView
-            android:layout_width="140px"
-            android:layout_height="140px"
+            android:layout_width="130px"
+            android:layout_height="130px"
             android:background="@drawable/setting_set" />
         <TextView
+            android:id="@+id/set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置"
             android:textSize="60px"
             android:layout_marginLeft="40px"
             android:layout_gravity="center" />
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_logout"/>
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注销"
+            android:textSize="60px"
+            android:layout_marginLeft="40px"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
 </LinearLayout>
