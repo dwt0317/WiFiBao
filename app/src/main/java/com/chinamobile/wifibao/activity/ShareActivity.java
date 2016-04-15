@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ public class ShareActivity extends Activity {
     private Context mContext = null;
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
     private static final String METHOD_IS_WIFI_AP_ENABLED = "isWifiApEnabled";
+    private WiFi ap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,51 +35,75 @@ public class ShareActivity extends Activity {
 
         //如果热点已经打开，跳转下个页面
         isWiFiEnabled();
+
+        final Handler openHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.arg1 == 1) {
+                    open();
+                }else {
+                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
         //点击打开热点
         Button shareButton = (Button)findViewById(R.id.share_submit);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = ((EditText) findViewById(R.id.apnametext)).getText().toString().trim();
-                String password = ((EditText) findViewById(R.id.passwordtext)).getText().toString().trim();
-                String share = ((EditText) findViewById(R.id.maxsharetext)).getText().toString().trim();
-                String access = ((EditText) findViewById(R.id.maxaccesstext)).getText().toString().trim();
-                if (name.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
-                } else if (password.length() < 8) {
-                    Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
-                } else {
-                    //上传数据
-                    WiFi ap = new WiFi();
-                    ap.setSSID(name);
-                    ap.setPassword(password);
-                    ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
-                    ap.setMaxConnect(Integer.parseInt(access));
-                    ap.setBSSID(getLocalMacAddress());
-                    boolean success = DatabaseUtil.getInstance().writeApToDatabase(mContext, ap);
-                    Log.i("success:", String.valueOf(success));
-                    if(success == true){
-                        WifiApAdmin wifiAp = new WifiApAdmin(mContext);
-                        wifiAp.startWifiAp(name, password);
-                        Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
-                        //保存ap信息
-                        writeInCache(ap);
-                        //跳转并销毁页面
-                        Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
-                        intent.putExtra("maxshare",Double.parseDouble(share));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
-                        ShareActivity.this.finish();
-                    }else{
-                        Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_LONG).show();
-                    }
-
-                }
+                checkOrDo(openHandle);
             }
         });
+
     }
 
+    /**
+     * 非法输入
+     */
+    private void checkOrDo(Handler handler) {
+        String name = ((EditText) findViewById(R.id.apnametext)).getText().toString().trim();
+        String password = ((EditText) findViewById(R.id.passwordtext)).getText().toString().trim();
+        String share = ((EditText) findViewById(R.id.maxsharetext)).getText().toString().trim();
+        String access = ((EditText) findViewById(R.id.maxaccesstext)).getText().toString().trim();
+        if (name.isEmpty() || password.isEmpty()) {
+            Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 8) {
+            Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
+        } else {
+            //上传数据
+            ap = new WiFi();
+            ap.setSSID(name);
+            ap.setPassword(password);
+            ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
+            ap.setMaxConnect(Integer.parseInt(access));
+            ap.setBSSID(getLocalMacAddress());
+            //成功则打开热点
+            DatabaseUtil.getInstance().writeApToDatabase(mContext, handler, ap);
+        }
+    }
+    /**
+     * 打开热点
+     */
+    private void open(){
+        WifiApAdmin wifiAp = new WifiApAdmin(mContext);
+        wifiAp.startWifiAp(ap.getSSID(), ap.getPassword());
+        Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
+        //保存ap信息
+        writeInCache(ap);
+        //跳转并销毁页面
+        Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
+        intent.putExtra("maxshare",ap.getUpperLimit());
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
+        ShareActivity.this.finish();
+    }
+
+    /***
+     * 热点是否已经开启
+     */
     private void isWiFiEnabled() {
         //wifi ap is open, go to next Activity.
         WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
