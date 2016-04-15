@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +13,10 @@ import com.chinamobile.wifibao.bean.User;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.listener.LogInListener;
 
 /**
  * Created by zb on 2016/4/7.
@@ -27,9 +31,36 @@ public class PersonalActivity extends Activity {
         setContentView(R.layout.personal_info);
         mContext = this;
 
+        BmobUser.loginByAccount(mContext, "cdd", "123", new LogInListener<User>() {
+
+            @Override
+            public void done(User user, BmobException e) {
+                if (user != null) {
+                    Log.i("fdf:", user.getObjectId());
+                    showUserInfo();
+                } else {
+                    Log.i("fdf:", "err");
+                }
+            }
+        });
+
+
+        //showUserInfo();
+
+    }
+
+    private void showUserInfo() {
+        BmobUser u =  BmobUser.getCurrentUser(mContext);
+
+        //String str=u.getUsername();
+        String obectid=u.getObjectId();
+        //String username=u.getUsername();
+        //String phonenumber=u.getMobilePhoneNumber();
+        //Log.i("success", str);
+
 
         BmobQuery<User> query = new BmobQuery<User>();
-        query.getObject(this, "2im5888A", new GetListener<User>() {
+        query.getObject(this, obectid, new GetListener<User>() {
 
             @Override
             public void onSuccess(User object) {
@@ -44,7 +75,7 @@ public class PersonalActivity extends Activity {
                 //Log.i("success", str);
                 //获得数据的objectId信息
                 String objectid=String.valueOf(object.getObjectId());
-                Toast.makeText(mContext,objectid,Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, objectid, Toast.LENGTH_SHORT).show();
                 ((TextView)findViewById(R.id.getflowused)).setText(getflowused+"MB");
                 ((TextView)findViewById(R.id.username)).setText(username);
                 ((TextView)findViewById(R.id.phonenumber)).setText(phonenumber);
@@ -55,7 +86,7 @@ public class PersonalActivity extends Activity {
 
             @Override
             public void onFailure(int code, String arg0) {
-                Log.i("fail",arg0);
+                Log.i("fail", arg0);
             }
 
         });
