@@ -92,7 +92,7 @@ public class WiFiListManager {
         }
 
         for(WiFi wifi: dbNearbyWiFi){
-            if(scanIDList.contains(wifi.getBSSID())){
+            if(scanIDList.contains(wifi.getBSSID())&&wifi.getState()==true){
                 getWifiList().add(wifi);
             }
         }
