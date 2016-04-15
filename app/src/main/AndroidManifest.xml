@@ -37,6 +37,9 @@
         </activity>
         <activity android:name=".activity.CloseApActivity">
         </activity>
+        <activity android:name=".activity.BalanceShareActivity">
+        </activity>
+
         <activity android:name=".activity.BalanceUseActivity">
         </activity>
         <activity android:name=".activity.FlowUsingActivity">

@@ -131,7 +131,7 @@ public class CloseApActivity extends Activity{
                     break;
                 }else {
                     mess.arg1 = cp.getConnectedIpCount();
-                    Log.i("ip:", String.valueOf(mess.arg1));
+                    //Log.i("ip:", String.valueOf(mess.arg1));
                     handler.sendMessage(mess);
                 }
                 try {
