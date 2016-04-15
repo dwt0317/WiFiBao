@@ -51,7 +51,7 @@ public class BalanceShareActivity extends Activity {
             }
         });
         shareRecord = getShareRecord(Double.parseDouble("20"));
-        //还没有获取用户信息
+        //还没有获取热点信息
         sycData(mContext,shareRecord);
     }
 
@@ -86,6 +86,9 @@ public class BalanceShareActivity extends Activity {
 
     private boolean sycData(Context context, ShareRecord shareRecord){
         boolean success= false;
+        if(shareRecord == null)
+            return success;
+
         DatabaseUtil du = DatabaseUtil.getInstance();
         success = du.writeShareToDatabase(context, shareRecord);
 

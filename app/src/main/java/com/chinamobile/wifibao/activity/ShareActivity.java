@@ -72,6 +72,7 @@ public class ShareActivity extends Activity {
         } else if (password.length() < 8) {
             Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
         } else {
+            Toast.makeText(ShareActivity.this, "努力中...", Toast.LENGTH_SHORT).show();
             //上传数据
             ap = new WiFi();
             ap.setSSID(name);
@@ -79,6 +80,7 @@ public class ShareActivity extends Activity {
             ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
             ap.setMaxConnect(Integer.parseInt(access));
             ap.setBSSID(getLocalMacAddress());
+            ap.setState(true);
             //成功则打开热点
             DatabaseUtil.getInstance().writeApToDatabase(mContext, handler, ap);
         }
@@ -143,6 +145,7 @@ public class ShareActivity extends Activity {
         editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
         editor.putInt("maxConnect", ap.getMaxConnect());
         editor.putString("BSSID", ap.getBSSID());
+        editor.putBoolean("state", ap.getState());
         //记录开始时间
         //
         editor.commit();

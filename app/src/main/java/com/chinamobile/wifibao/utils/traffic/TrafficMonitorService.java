@@ -33,6 +33,7 @@ public class TrafficMonitorService extends Thread {
     }
     public void setMaxShare(double maxShare){
         this.maxShare = maxShare;
+        Log.i("Monitor maxshare:", String.valueOf(maxShare));
     }
 
     public static TrafficMonitorService getInstance(){
