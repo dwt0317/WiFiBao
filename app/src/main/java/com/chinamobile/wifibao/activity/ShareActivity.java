@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
-import com.chinamobile.wifibao.utils.WifiApAdmin;
+import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 
 import java.lang.reflect.Method;
 

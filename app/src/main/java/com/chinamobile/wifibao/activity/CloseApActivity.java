@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.ConnectedIP;
-import com.chinamobile.wifibao.utils.WifiApAdmin;
+import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
 import java.lang.reflect.Method;
@@ -51,7 +51,7 @@ public class CloseApActivity extends Activity{
                 }
             }
         };
-        TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
+        final TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
         monitorThread.setHandler(flowHandle);
         monitorThread.setContext(mContext);
         monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare",0.0));
@@ -95,6 +95,7 @@ public class CloseApActivity extends Activity{
             @Override
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
+                monitorThread.stopService();
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
