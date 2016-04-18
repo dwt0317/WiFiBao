@@ -59,6 +59,7 @@ public class WifiListActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WifiListActivity.this,WifiListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
