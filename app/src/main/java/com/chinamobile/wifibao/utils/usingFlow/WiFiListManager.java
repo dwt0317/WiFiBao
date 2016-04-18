@@ -83,6 +83,7 @@ public class WiFiListManager {
     private void compareWiFiList(){
         String wserviceName = Context.WIFI_SERVICE;
         WifiManager wm = (WifiManager) mContext.getSystemService(wserviceName);
+        wm.startScan();
         List<ScanResult> results = wm.getScanResults();
         ArrayList<String> scanIDList= new ArrayList<String>();
         for(ScanResult result:results){

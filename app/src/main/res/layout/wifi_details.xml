@@ -24,6 +24,7 @@
 
         <ImageView
             android:layout_height="90px"
+            android:id="@+id/home"
             android:layout_width="90px"
             android:layout_marginTop="12dip"
             android:layout_marginLeft="20px"
@@ -39,7 +40,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="455px"
-            android:src="@drawable/sky"
+            android:src="@mipmap/sky5"
             android:id="@+id/sky"
             android:layout_alignParentTop="true"
             android:layout_gravity="top"

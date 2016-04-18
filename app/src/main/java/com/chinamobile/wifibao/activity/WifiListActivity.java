@@ -43,6 +43,26 @@ public class WifiListActivity extends Activity {
         wifiListView= (ListView) findViewById(R.id.wifiListView);
         settingView = (ImageView) findViewById(R.id.setting);
 
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WifiListActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //返回HomeActivity
+        ImageView refresh = (ImageView) findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WifiListActivity.this,WifiListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
         //2016/3/23
         //wifiList是一个 ArrayList<WiFi>的实例
 

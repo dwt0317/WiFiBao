@@ -15,7 +15,7 @@
         android:id="@+id/linearLayout"
         android:weightSum="1">
         <ImageView
-            android:id="@+id/setting"
+            android:id="@+id/home"
             android:layout_height="90px"
             android:layout_width="90px"
             android:layout_marginLeft="20px"
@@ -39,6 +39,14 @@
             android:layout_marginLeft="420px"
             android:layout_weight="0.18" />
 
+        <ImageView
+            android:layout_width="90px"
+            android:layout_height="90px"
+            android:id="@+id/refresh"
+            android:background="@drawable/refresh"
+            android:layout_alignTop="@+id/home"
+            android:layout_marginLeft="510px"
+            />
 
 
     </LinearLayout>
