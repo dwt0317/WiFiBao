@@ -52,6 +52,12 @@ public class HomeActivity extends Activity{
                     intent.setClass(HomeActivity.this,ShareActivity.class);
                     startActivity(intent);
                 }
+                else if(position == 2){
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
