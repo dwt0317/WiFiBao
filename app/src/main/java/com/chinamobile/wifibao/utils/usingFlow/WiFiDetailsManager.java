@@ -21,6 +21,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by dwt on 2016/3/31.
@@ -81,19 +82,38 @@ public class WiFiDetailsManager {
                 ConnectionPool conn = object.get(0);
                 Integer curConnect = conn.getCurConnect();
                 Integer maxConnect = conn.getMaxConnect();
-                Message msg = new Message();
 
-//
-                if (curConnect >= maxConnect)
+                if (curConnect >= maxConnect){
+                    Message msg = new Message();
                     msg.what = 0;
-                else
-                    msg.what = 1;
-                handler.sendMessage(msg);
+                    handler.sendMessage(msg);
+                }
+                //如果没有超过，则将已接入人数修改
+                else{
+                    conn.setCurConnect(curConnect+1);
+                    conn.update(mContext,conn.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void onSuccess() {
+                            Message msg2 = new Message();
+                            msg2.what = 1;
+                            handler.sendMessage(msg2);
+                            Log.i("bmob", "修改已接入人数成功");
+                        }
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            Message msg2 = new Message();
+                            msg2.what = 0;
+                            handler.sendMessage(msg2);
+                            Log.e("bmob", "修改已接入人数失败" + msg);
+                            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
-
             @Override
             public void onError(int code, String msg) {
-
+                Log.e("bmob",msg);
+                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -192,6 +212,28 @@ public class WiFiDetailsManager {
         }
     };
 
+
+
+    /**
+     * 修改已接入人数
+     */
+    private void updateConnectionNumInfo(WiFi wifi){
+        BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
+        query.addWhereEqualTo("WiFi", wifi);    //
+        query.findObjects(mContext, new FindListener<ConnectionPool>() {
+            @Override
+            public void onSuccess(List<ConnectionPool> object) {
+                ConnectionPool conn = object.get(0);
+                conn.setCurConnect(conn.getCurConnect() + 1);
+                Log.i("bomb", "写入cost和flow成功 ");
+            }
+            @Override
+            public void onError(int code, String msg) {
+                Log.e("bomb","查询connection失败");
+                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     //检测wifi是否开启并开启

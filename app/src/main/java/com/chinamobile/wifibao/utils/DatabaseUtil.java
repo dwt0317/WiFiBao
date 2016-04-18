@@ -77,8 +77,11 @@ public class DatabaseUtil {
                     });
                     return;
                 }
+                //数据库中存在，保存id
+                wifiAp.setObjectId(object.get(0).getObjectId());
                 final Message message = new Message();
                 message.what=0;
+                //数据库中存在记录，更新记录，不必插入
                 for (final WiFi obj : object) {
                     //修改状态
                     obj.setState(true);

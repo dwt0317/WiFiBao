@@ -86,13 +86,13 @@ public class WiFiListManager {
         List<ScanResult> results = wm.getScanResults();
         ArrayList<String> scanIDList= new ArrayList<String>();
         for(ScanResult result:results){
-            scanIDList.add(result.BSSID);
+            scanIDList.add(result.BSSID.toLowerCase());
             Log.i("wifi", result.SSID);
             Log.i("wifi", result.BSSID);
         }
 
         for(WiFi wifi: dbNearbyWiFi){
-            if(scanIDList.contains(wifi.getBSSID())&&wifi.getState()==true){
+            if(scanIDList.contains(wifi.getBSSID().toLowerCase())&&wifi.getState()==true){
                 getWifiList().add(wifi);
             }
         }

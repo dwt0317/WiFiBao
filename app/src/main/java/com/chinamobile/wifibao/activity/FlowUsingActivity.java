@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,7 +57,7 @@ public class FlowUsingActivity extends Activity {
         wifi = (WiFi)this.getIntent().getSerializableExtra(WifiDetailsActivity.wifiDetailSER_KEY);
 
 
-        Handler uiHandler = new Handler(){
+        final Handler uiHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -95,6 +97,8 @@ public class FlowUsingActivity extends Activity {
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
             public void onClick(View v) {
+                uiHandler.removeMessages(1);
+                uiHandler.removeMessages(0);
                 endUsing();
             }
         });
@@ -131,8 +135,13 @@ public class FlowUsingActivity extends Activity {
     private boolean isWiFiActive() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (mWifi.isConnected())
-            return true;
+        if (mWifi.isConnected()){
+            WifiManager wifi_service = (WifiManager)getSystemService(WIFI_SERVICE);
+            WifiInfo wifiInfo = wifi_service.getConnectionInfo();
+            if(wifiInfo.getBSSID().equals(wifi.getBSSID()))
+                return true;
+            else return false;
+        }
         else
             return false;
     }
@@ -148,7 +157,7 @@ public class FlowUsingActivity extends Activity {
         Bundle bundle=new Bundle();
         //传递参数
         bundle.putString("flowUsed",flowUsed );
-        bundle.putString("cost",computeCost(flowUsed));
+        bundle.putString("cost", computeCost(flowUsed));
         intent.putExtras(bundle);
         useRecord.setEndTime(new BmobDate(new Date()));
         double cost=Double.parseDouble(computeCost(flowUsed));

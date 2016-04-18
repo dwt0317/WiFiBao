@@ -23,9 +23,9 @@ public class TrafficMonitorService extends Thread {
     private Context context;
     private double maxShare;
     private boolean stop=false;
-    private static TrafficMonitorService tms;
+//    private static TrafficMonitorService tms;
 
-    private TrafficMonitorService(){}
+//    private TrafficMonitorService(){}
     public void setHandler(Handler handler) {
         this.handler = handler;
     }
@@ -43,11 +43,11 @@ public class TrafficMonitorService extends Thread {
         setStop(true);
     }
 
-    public static TrafficMonitorService getInstance(){
-        if(tms == null)
-            tms = new TrafficMonitorService();
-        return tms;
-    }
+//    public static TrafficMonitorService getInstance(){
+//        if(tms == null)
+//            tms = new TrafficMonitorService();
+//        return tms;
+//    }
 
     @Override
     public void run() {
