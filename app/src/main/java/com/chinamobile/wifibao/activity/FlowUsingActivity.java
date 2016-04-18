@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.wifibao.R;
@@ -82,6 +83,16 @@ public class FlowUsingActivity extends Activity {
         useRecord.setStartTime(new BmobDate(new Date()));
 
         wifiDetectHandler.postDelayed(wifiDetectRunnable,200);
+        //ImageView refresh = (ImageView)findViewById(R.id.refresh);
+
+        ImageView refresh = (ImageView)findViewById(R.id.refresh);//刷新
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FlowUsingActivity.this,FlowUsingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
         button.setOnClickListener(new Button.OnClickListener() {//创建监听

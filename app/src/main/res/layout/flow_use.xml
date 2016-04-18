@@ -31,7 +31,7 @@
         <ImageView
             android:layout_width="90px"
             android:layout_height="90px"
-
+            android:id="@+id/refresh"
             android:background="@drawable/refresh"
             android:layout_alignTop="@+id/homeView"
             android:layout_alignParentRight="true"

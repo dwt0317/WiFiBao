@@ -18,6 +18,7 @@ import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
+import com.chinamobile.wifibao.utils.WiFiApGradeUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 
 import java.lang.reflect.Method;
@@ -85,6 +86,7 @@ public class ShareActivity extends Activity {
             ap.setPassword(password);
             ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
             ap.setMaxConnect(Integer.parseInt(access));
+            ap.setScore(WiFiApGradeUtil.getGrade(ap));
             ap.setBSSID(getLocalMacAddress());
             ap.setState(true);
             ap.setUser(user);

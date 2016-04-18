@@ -5,40 +5,38 @@
     android:layout_height="match_parent">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="0px">
+        >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="190px"
             android:text="结算"
             android:textSize="22dip"
-            android:gravity="center"
             android:textColor="#FFFFFF"
+            android:paddingLeft="155dip"
+            android:paddingRight="50dip"
             android:paddingTop="10dip"
-            android:background="#1892eb" />
+            android:background="#1892eb"
+
+            />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/home"
-            android:background="#1892eb"
+            android:layout_height="90px"
+            android:layout_width="90px"
+            android:layout_marginTop="12dip"
+            android:layout_marginLeft="20px"
+            android:background="@mipmap/home"
             android:id="@+id/imageView8"
-            android:clickable="true"
-            android:layout_centerHorizontal="true"/>
+            />
         <ImageView
-            android:layout_width="30dp"
+            android:layout_width="80dp"
             android:layout_height="30dp"
-            android:src="@drawable/share"
-            android:background="#1892eb"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerHorizontal="true"/>
+            android:src="@mipmap/share"
+            android:layout_marginTop="12dp"
+            android:background="#1892eb"
+            />
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
