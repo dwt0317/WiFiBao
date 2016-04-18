@@ -43,6 +43,15 @@ public class WifiListActivity extends Activity {
         wifiListView= (ListView) findViewById(R.id.wifiListView);
         settingView = (ImageView) findViewById(R.id.setting);
 
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WifiListActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         //2016/3/23
         //wifiList是一个 ArrayList<WiFi>的实例
 

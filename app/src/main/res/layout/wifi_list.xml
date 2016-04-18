@@ -15,7 +15,7 @@
         android:id="@+id/linearLayout"
         android:weightSum="1">
         <ImageView
-            android:id="@+id/setting"
+            android:id="@+id/home"
             android:layout_height="90px"
             android:layout_width="90px"
             android:layout_marginLeft="20px"
