@@ -39,10 +39,11 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="455px"
-            android:src="@mipmap/sky"
+            android:src="@drawable/sky"
             android:id="@+id/sky"
             android:layout_alignParentTop="true"
-            android:layout_gravity="top" />
+            android:layout_gravity="top"
+            android:layout_alignParentRight="true" />
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="220px"
