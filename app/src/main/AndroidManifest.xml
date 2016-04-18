@@ -40,6 +40,9 @@
         <activity android:name=".activity.BalanceShareActivity">
         </activity>
 
+        <activity android:name=".activity.LoginActivity">
+
+        </activity>
         <activity android:name=".activity.BalanceUseActivity">
         </activity>
         <activity android:name=".activity.FlowUsingActivity">
@@ -60,14 +63,15 @@
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".activity.SignupActivity"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SignupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 
