@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +78,15 @@ public class WifiDetailsActivity extends Activity {
         WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
         WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
 
-
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WifiDetailsActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button button = (Button)findViewById(R.id.use_start);//获取按钮资源
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
