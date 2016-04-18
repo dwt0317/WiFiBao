@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,14 +74,21 @@ public class BalanceShareActivity extends Activity {
         sr.setUser(getUser());
         return sr;
     }
+
+    /**
+     * 本地获取数据
+     * @return
+     */
     private WiFi getWifiAp(){
         WiFi ap= new WiFi();
-        sp = this.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        ap.setObjectId(sp.getString("objectId",""));
         ap.setSSID(sp.getString("SSID",""));
         ap.setPassword(sp.getString("password", ""));
         ap.setUpperLimit(Double.parseDouble(String.valueOf(sp.getFloat("upperLimit", 0))));
         ap.setMaxConnect(sp.getInt("maxConnect", 0));
-        ap.setBSSID(sp.getString("BSSID",""));
+        ap.setBSSID(sp.getString("BSSID", ""));
+        Log.i("BSSID",sp.getString("BSSID", ""));
         return ap;
     }
 

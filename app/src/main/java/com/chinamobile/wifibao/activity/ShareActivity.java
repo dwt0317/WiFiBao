@@ -78,7 +78,7 @@ public class ShareActivity extends Activity {
         } else if (password.length() < 8) {
             Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(ShareActivity.this, "努力中...", Toast.LENGTH_LONG).show();
+            Toast.makeText(ShareActivity.this, "数据同步中...", Toast.LENGTH_LONG).show();
             //上传数据
             ap = new WiFi();
             ap.setSSID(name);
@@ -98,7 +98,7 @@ public class ShareActivity extends Activity {
     private void open(){
         WifiApAdmin wifiAp = new WifiApAdmin(mContext);
         wifiAp.startWifiAp(ap.getSSID(), ap.getPassword());
-        Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "努力开启中...", Toast.LENGTH_SHORT).show();
         //热点信息已经上传成功，在本地保存ap信息
         writeInCache(ap);
         //跳转并销毁页面
