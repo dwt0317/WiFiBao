@@ -15,17 +15,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 
 import java.lang.reflect.Method;
 
+import cn.bmob.v3.BmobUser;
+
 public class ShareActivity extends Activity {
     private Context mContext = null;
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
     private static final String METHOD_IS_WIFI_AP_ENABLED = "isWifiApEnabled";
     private WiFi ap;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class ShareActivity extends Activity {
         setContentView(R.layout.set_share);
         mContext = this;
 
+        //用户
+        user = getUser();
         //如果热点已经打开，跳转下个页面
         isWiFiEnabled();
 
@@ -72,7 +78,7 @@ public class ShareActivity extends Activity {
         } else if (password.length() < 8) {
             Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(ShareActivity.this, "努力中...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareActivity.this, "努力中...", Toast.LENGTH_LONG).show();
             //上传数据
             ap = new WiFi();
             ap.setSSID(name);
@@ -81,7 +87,8 @@ public class ShareActivity extends Activity {
             ap.setMaxConnect(Integer.parseInt(access));
             ap.setBSSID(getLocalMacAddress());
             ap.setState(true);
-            //成功则打开热点
+            ap.setUser(user);
+            //上传热点信息，成功则打开热点
             DatabaseUtil.getInstance().writeApToDatabase(mContext, handler, ap);
         }
     }
@@ -92,7 +99,7 @@ public class ShareActivity extends Activity {
         WifiApAdmin wifiAp = new WifiApAdmin(mContext);
         wifiAp.startWifiAp(ap.getSSID(), ap.getPassword());
         Toast.makeText(mContext, "宝宝努力开启中...", Toast.LENGTH_LONG).show();
-        //保存ap信息
+        //热点信息已经上传成功，在本地保存ap信息
         writeInCache(ap);
         //跳转并销毁页面
         Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
@@ -134,12 +141,26 @@ public class ShareActivity extends Activity {
         return info.getMacAddress();
     }
 
+    /**
+     * 当前登录用户
+     * @return
+     */
+    private User getUser() {
+        //User u=null;
+        //获取当前登录用户,mContext似乎应该换成getApplicationContext,登陆时也应该修改成为之
+        User u = BmobUser.getCurrentUser(mContext, User.class);
+        return u;
+    }
+
     /***
      * 保存wifiap信息
      */
     void writeInCache(WiFi ap){
-        SharedPreferences sp = mContext.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("objectId",ap.getObjectId());
+
         editor.putString("SSID",ap.getBSSID());
         editor.putString("password", ap.getPassword());
         editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
