@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.GoToManager;
 import com.chinamobile.wifibao.utils.usingFlow.WiFiDetailsManager;
 
 import cn.bmob.v3.BmobUser;

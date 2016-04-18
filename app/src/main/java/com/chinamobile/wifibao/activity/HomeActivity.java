@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.*;
 import android.content.Intent;
 import java.util.HashMap;
 import java.util.ArrayList;
 import com.chinamobile.wifibao.R;
-import com.chinamobile.wifibao.utils.GoToManager;
 
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
@@ -65,11 +62,11 @@ public class HomeActivity extends Activity{
                 } else if (position == 1) {
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this, ShareActivity.class);
-                    startActivity(intent);
+                    goToActivity(intent);
                 } else if (position == 2) {
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this, PersonalActivity.class);
-                    GoToManager.getInstance(HomeActivity.this).goToActivity(intent);
+                    goToActivity(intent);
                 }
             }
         });
@@ -142,6 +139,16 @@ public class HomeActivity extends Activity{
 
     }
 
+    private void goToActivity(Intent destIntent){
+        BmobUser bmobUser = BmobUser.getCurrentUser(this);
+        if(bmobUser == null){
+            Intent intent = new Intent();
+            intent.setClass(this,LoginActivity.class);
+            this.startActivity(intent);
+        }else{
+            this.startActivity(destIntent);
+        }
+    }
 
     public void exit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
