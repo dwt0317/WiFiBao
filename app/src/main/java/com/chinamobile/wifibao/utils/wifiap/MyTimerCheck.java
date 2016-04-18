@@ -1,4 +1,4 @@
-package com.chinamobile.wifibao.utils;
+package com.chinamobile.wifibao.utils.wifiap;
 
 /**
  * Created by cdd on 2016/3/16.

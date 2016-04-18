@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="个人信息"
+        android:textSize="22dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:paddingTop="10dip"
+        android:background="#1892eb"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="头像"
+            android:textSize="20sp"
+            android:layout_weight="3"
+
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.2"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="昵称"
+            android:textSize="20sp"
+            android:layout_weight="4"
+
+            />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="小宝"
+            android:layout_weight="1"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.2"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textSize="20sp"
+            android:layout_weight="2"
+            />
+
+        <TextView
+            android:id="@+id/phonenumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="18810545326"
+            android:layout_weight="1"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="地区"
+            android:textSize="20sp"
+            android:layout_weight="4"
+            />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="北京"
+            android:layout_weight="1"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.2"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="150px"
+        android:text="账号"
+        android:paddingTop="80px"
+        android:textSize="20sp"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="流量币余额"
+            android:textSize="20sp"
+            android:layout_weight="2"
+            />
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="102流量币"
+            android:layout_weight="1"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="已分享流量"
+            android:textSize="20sp"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/getflowshared"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="275MB"
+            android:layout_weight="0.8"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="已使用流量"
+            android:textSize="20sp"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/getflowused"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="28MB"
+            android:layout_weight="0.8"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="累计赚钱"
+            android:textSize="20sp"
+            android:layout_weight="4"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9.8元"
+            android:layout_weight="1"
+            android:textSize="20sp"
+
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.2"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="修改密码"
+            android:textSize="20sp"
+            android:layout_weight="6"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow"
+            android:layout_weight="0.2"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+
+

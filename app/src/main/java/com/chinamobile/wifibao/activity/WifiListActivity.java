@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import cn.bmob.v3.Bmob;
 import android.app.Activity;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.WiFiListManager;
+import com.chinamobile.wifibao.utils.usingFlow.WiFiListManager;
 
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -19,23 +18,22 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class WifiListActivity extends Activity {
 
     private int[] icon = {R.mipmap.potrait};//图标
 
-    ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
-    ArrayList<WiFi> wifiList;
-    ArrayList<WiFi>userList;
-    ListView wifiListView;
-    ImageView settingView;
+    private ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
+    private ArrayList<WiFi> wifiList;
+    private ArrayList<WiFi>userList;
+    private ListView wifiListView;
+    private ImageView settingView;
+    private Handler updateListHandler = new Handler();
     public  final static String wifiListSER_KEY = "com.chinamobile.wifibao.ser";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         setContentView(R.layout.wifi_list);
         setViewComponent();
     }
@@ -64,7 +62,33 @@ public class WifiListActivity extends Activity {
 
         WiFiListManager.getInstance(this).setUiHandler(uiHandler);
         WiFiListManager.getInstance(this).getAvailableWiFi();
+
+        wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                //传递参数
+                bundle.putSerializable(wifiListSER_KEY, wifiList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+    private Runnable updateListRunnable = new Runnable() {
+        @Override
+        public void run() {
+            WiFiListManager.getInstance(WifiListActivity.this).getAvailableWiFi();
+            updateWiFiListView();
+            updateListHandler.postDelayed(updateListRunnable,5000);
+        }
+    };
+
+
     public void updateWiFiListView(){
         int size=wifiList.size();
         for (int i = 0; i < size; i++) {
@@ -79,18 +103,6 @@ public class WifiListActivity extends Activity {
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
         wifiListView.setAdapter(saImageItems);
         wifiListView.setTextFilterEnabled(true);
-        wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
-                Bundle bundle=new Bundle();
-                //传递参数
-                bundle.putSerializable(wifiListSER_KEY,wifiList.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
 
     }
 }

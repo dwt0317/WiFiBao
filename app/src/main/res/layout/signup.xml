@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0px">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="注册"
+            android:textSize="22dip"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            android:background="#1892eb" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:layout_centerVertical="true"
+            android:src="@drawable/home"
+            android:background="#1892eb"
+            android:clickable="true"
+            android:id="@+id/home"
+            android:layout_marginLeft="10dp" />
+
+    </RelativeLayout>
+
+    <!-- 信息输入框 -->
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:entries="@array/location"
+            android:clickable="false"
+            android:dropDownWidth="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:spinnerMode="dropdown"
+            android:backgroundTintMode="multiply">
+        </Spinner>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginTop="6dp"
+            android:background="#F2F2F2" >
+        </View>
+
+        <EditText
+            android:id="@+id/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_edittext"
+            android:drawablePadding="6sp"
+            android:singleLine="true"
+            android:hint="请输入您的手机号"
+            android:textColor="#3D3D3D"
+            android:textColorHint="#A3B1CA"
+            android:textSize="15sp"
+            android:editable="true"
+            android:paddingLeft="5dp">
+        </EditText>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginTop="4dp"
+            android:background="#F2F2F2" >
+        </View>
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_edittext"
+            android:drawablePadding="6sp"
+            android:hint="请输入您的昵称"
+            android:textColor="#3D3D3D"
+            android:textColorHint="#A3B1CA"
+            android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:editable="true">
+        </EditText>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginTop="4dp"
+            android:background="#F2F2F2" >
+        </View>
+        <EditText
+            android:id="@+id/RegPwd"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:singleLine="true"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_edittext"
+            android:drawablePadding="6sp"
+            android:hint="请输入您的密码"
+            android:inputType="textPassword"
+            android:textColorHint="#A3B1CA"
+            android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:editable="true">
+        </EditText>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginTop="4dp"
+            android:background="#F2F2F2" >
+        </View>
+        <EditText
+            android:id="@+id/RegPwdAgain"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:singleLine="true"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_edittext"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="6sp"
+            android:hint="请再次输入您的密码"
+            android:inputType="textPassword"
+            android:textColorHint="#A3B1CA"
+            android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:editable="true">
+        </EditText>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginTop="2dp"
+            android:background="#F2F2F2" >
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginTop="2dp"
+            android:background="#F2F2F2" >
+        </View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/RegMail"
+                android:layout_width="111dp"
+                android:layout_height="45dp"
+                android:singleLine="true"
+                android:background="@drawable/bg_edittext"
+                android:drawablePadding="6sp"
+                android:hint="请输入验证码"
+                android:layout_marginTop="4dp"
+                android:inputType="textWebEmailAddress"
+                android:textColorHint="#A3B1CA"
+                android:textSize="15sp"
+                android:paddingLeft="5dp"
+                android:editable="true">
+            </EditText>
+            <Button
+                android:id="@+id/verifyCodeBtn"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:background="#2eb314"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_alignTop="@+id/RegMail"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="18dp">
+            </Button>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/register"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="注  册"
+        android:background="#2eb314"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" >
+    </Button>
+
+
+
+
+
+
+</LinearLayout>

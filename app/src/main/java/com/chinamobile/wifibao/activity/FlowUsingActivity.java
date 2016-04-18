@@ -1,7 +1,6 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,18 +9,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.TrafficMonitor;
-import com.chinamobile.wifibao.utils.FlowUsingManager;
+import com.chinamobile.wifibao.utils.usingFlow.TrafficMonitor;
+import com.chinamobile.wifibao.utils.usingFlow.FlowUsingManager;
 
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -34,7 +31,7 @@ import cn.bmob.v3.datatype.BmobDate;
 public class FlowUsingActivity extends Activity {
     private String flowUsed;
     private TextView flowusingText;
-//    TextView timeuseText;
+    private double flowDiff;
     private Chronometer chronometer;
     private TextView moneyuseText;
     private UseRecord useRecord;
@@ -49,8 +46,6 @@ public class FlowUsingActivity extends Activity {
         setContentView(R.layout.flow_use);
         //接收flowuse值
         flowusingText= (TextView) findViewById(R.id.flowusingText);
-        //接收timeuse值
-//        timeuseText = (TextView) findViewById(R.id.timeuseText);
         //计时器
         chronometer=(Chronometer)findViewById(R.id.chronometer);
         //接收cost值
@@ -66,8 +61,10 @@ public class FlowUsingActivity extends Activity {
                 //更新流量以及已消费金额
                 if(msg.what == 1){
                     flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
+                    flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
                     flowusingText.setText(flowUsed);
                     moneyuseText.setText(computeCost(flowUsed));
+                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
 //                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
@@ -98,16 +95,16 @@ public class FlowUsingActivity extends Activity {
     }
 
 
+    /**
+     * 监测wifi是否处于可用状态
+     */
     private Runnable wifiDetectRunnable  = new Runnable() {
         @Override
         public void run() {
             if(isWiFiActive()){
-                Toast toast = Toast.makeText(FlowUsingActivity.this, "正在连接...请稍候", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
-                wifiDetectHandler.postDelayed(wifiDetectRunnable,1000);
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,2000);
             }else
-                 endUsing();
+                endUsing();
         }
     };
 
@@ -131,8 +128,10 @@ public class FlowUsingActivity extends Activity {
 
 
     private void endUsing(){
+        wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
+        flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
 
         Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
         Bundle bundle=new Bundle();
@@ -145,7 +144,7 @@ public class FlowUsingActivity extends Activity {
         useRecord.setCost(cost);
         useRecord.setFlowUsed(Double.parseDouble(flowUsed));
 
-        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord);
+        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff);
         startActivity(intent);
     }
 }

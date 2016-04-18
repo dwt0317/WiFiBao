@@ -2,17 +2,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <item>
         <shape>
-            <solid android:color="#6E6E6E"/>
-        </shape>
-    </item>
-    <item android:bottom="1dp">
-        <shape>
-            <solid android:color="#d8e6f0"></solid>
-            <padding android:bottom="1dp"></padding>
+            <stroke android:width="3px" android:color="#B7B7B7"/>
+            <solid android:color="#ffffff" />
 
         </shape>
     </item>
+
 
 </layer-list>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:baselineAligned="true">
+    android:baselineAligned="true"
+    android:background="#ffffff">
 
     <FrameLayout
         android:id="@+id/top_layout"
@@ -37,23 +37,32 @@
         android:id="@+id/ad_top"
         android:layout_height="700px"
         android:layout_width="wrap_content"
+        android:layout_marginTop="5px"
         android:background="@drawable/home_ad_top"
         android:text="wenzi"
-        android:adjustViewBounds="true">
+        android:adjustViewBounds="false">
     </ImageView>
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="700px"
+       android:background="@layout/homepageback"
+       android:layout_marginTop="80px"
+       android:layout_marginBottom="100px">
+       <GridView
+           android:id="@+id/gridview1"
+           android:layout_width="fill_parent"
+           android:layout_height="500px"
+           android:layout_weight="1"
+           android:numColumns="4"
+           android:verticalSpacing="120px"
+           android:horizontalSpacing="50px"
+           android:stretchMode="columnWidth"
+           android:gravity="center"
+           android:layout_gravity="center">
+       </GridView>
 
-    <GridView
-        android:id="@+id/gridview1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:numColumns="4"
-        android:verticalSpacing="120px"
-        android:horizontalSpacing="50px"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:layout_marginTop="100px">
-    </GridView>
+   </LinearLayout>
+
 
 
     <LinearLayout

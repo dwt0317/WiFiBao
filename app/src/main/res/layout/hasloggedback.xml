@@ -2,17 +2,19 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <item>
         <shape>
-            <solid android:color="#6E6E6E"/>
+            <solid android:color="#ffffff" />
         </shape>
+
     </item>
-    <item android:bottom="1dp">
+    <!-- layout foreground -->
+    <item  android:right="5px">
+        <!-- show rectangle area -->
         <shape>
-            <solid android:color="#d8e6f0"></solid>
-            <padding android:bottom="1dp"></padding>
-
+            <solid android:color="#d8e6f0" />
         </shape>
     </item>
-
 </layer-list>
+

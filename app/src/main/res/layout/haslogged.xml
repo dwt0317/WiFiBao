@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@layout/hasloggedback">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:orientation="vertical"
+        android:layout_marginLeft="100px">
+
+        <ImageView
+            android:id="@+id/portrait"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:visibility="gone"
+            android:background="@drawable/usericon"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/portraitNotLogin"
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:background="@drawable/setting_notlogin"
+            android:layout_marginLeft="10dp" />
+
+        <LinearLayout
+            android:id="@+id/usernameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:layout_marginTop="60px"
+            android:background="@layout/settingpageback"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请登录"
+                android:textSize="60px"
+                android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:background="@drawable/setting_next"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_wallet" />
+        <TextView
+            android:id="@+id/mywallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的钱包"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"
+            android:textIsSelectable="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_setshare" />
+        <TextView
+            android:id="@+id/setshare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分享设置"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_aboutus" />
+        <TextView
+            android:id="@+id/aboutus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于我们"
+            android:textSize="60px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px">
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_set" />
+        <TextView
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="60px"
+            android:layout_marginLeft="40px"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/logoutLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100px"
+        android:layout_marginTop="80px"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="130px"
+            android:layout_height="130px"
+            android:background="@drawable/setting_logout"/>
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注销"
+            android:textSize="60px"
+            android:layout_marginLeft="40px"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -4,32 +4,35 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.LoginManager;
 
 /**
  * Created by apple on 2016/4/6.
  */
 public class LoginActivity extends Activity {
-    Button loginbutton;
-    CheckBox savePassword;
-    EditText password;
-    AutoCompleteTextView username;
-    SharedPreferences sp;
-    String usernameStr;
-    String passwordStr;
+    private Button loginbutton;
+    private CheckBox savePassword;
+    private EditText password;
+    private AutoCompleteTextView username;
+    private TextView register;
+    private SharedPreferences sp;
+    private String usernameStr;
+    private String passwordStr;
 
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -40,9 +43,10 @@ public class LoginActivity extends Activity {
     private void setViewComponent() {
         setContentView(R.layout.login);
 
+
         username = (AutoCompleteTextView) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-
+        register = (TextView) findViewById(R.id.register);
         sp = this.getSharedPreferences("passwordFile", MODE_PRIVATE);
         savePassword = (CheckBox) findViewById(R.id.savePassword);
         savePassword.setChecked(true);// 默认为记住密码
@@ -80,35 +84,47 @@ public class LoginActivity extends Activity {
                         .toString(), ""));// 自动输入密码
             }
         });
-
-        loginbutton = (Button)findViewById(R.id.loginbutton);//登陆按钮
-        loginbutton.setOnClickListener(new Button.OnClickListener() {//创建监听
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                usernameStr = username.getText().toString();
-                passwordStr = password.getText().toString();
-                if (TextUtils.isEmpty(usernameStr) || TextUtils.isEmpty(passwordStr)) {
-                    Toast.makeText(LoginActivity.this, "用户名或密码不能为空",
+        final Handler uiHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    Toast.makeText(LoginActivity.this, "登陆成功",
                             Toast.LENGTH_SHORT).show();
-                }else if (!((usernameStr.equals("test")) && (passwordStr
-                        .equals("test")))) {                                        //test test
-                    Toast.makeText(LoginActivity.this, "密码错误，请重新输入",
-                            Toast.LENGTH_SHORT).show();
-                } else {
                     if (savePassword.isChecked()) {// 登陆成功才保存密码
                         sp.edit().putString(usernameStr, passwordStr).commit();
                     }
-                    Toast.makeText(LoginActivity.this, "登陆成功，正在获取用户数据……",
-                            Toast.LENGTH_SHORT).show();
-                    // 跳转到另一个Activity
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this,HomeActivity.class);
                     startActivity(intent);
+                }else{
+                    String error = LoginManager.getInstance(LoginActivity.this).getErrorMsg();
+                    Toast.makeText(LoginActivity.this, error,
+                            Toast.LENGTH_SHORT).show();
                 }
+            }
+        };
+        loginbutton = (Button)findViewById(R.id.loginbutton);//登陆按钮
+        loginbutton.setOnClickListener(new Button.OnClickListener() {//创建监听
+            public void onClick(View v) {
+                usernameStr = username.getText().toString();
+                passwordStr = password.getText().toString();
+
+                LoginManager.getInstance(LoginActivity.this).setUiHandler(uiHandler);
+                LoginManager.getInstance(LoginActivity.this).loginByAccount(usernameStr,passwordStr);
 
             }
         });
+
+        register.setOnClickListener(new TextView.OnClickListener(){
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
 }

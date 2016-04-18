@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chinamobile.wifibao" >
+    package="com.chinamobile.wifibao">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -24,25 +24,22 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".activity.TestActivity2"
-            android:label="TestActivity2"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="TestActivity2">
         </activity>
 
         <!--activities for share wifi ap.DON'T REMOVE -->
         <activity android:name=".activity.ShareActivity">
-
         </activity>
         <activity android:name=".activity.CloseApActivity">
         </activity>
+        <activity android:name=".activity.BalanceShareActivity">
+        </activity>
+
         <activity android:name=".activity.BalanceUseActivity">
         </activity>
         <activity android:name=".activity.FlowUsingActivity">
@@ -51,19 +48,26 @@
         <activity android:name=".activity.WifiDetailsActivity">
 
         </activity>
-        <activity android:name=".activity.BalanceShareActivity">
+        <activity android:name=".activity.PersonalActivity">
         </activity>
         <activity
             android:name=".activity.WifiListActivity"
-            android:label="WifiListActivity"
-            >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="WifiListActivity">
+
+        </activity>
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.SignupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".activity.HomeActivity">
         </activity>
     </application>
 

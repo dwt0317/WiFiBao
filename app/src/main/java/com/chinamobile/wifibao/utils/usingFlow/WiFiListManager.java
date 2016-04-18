@@ -1,4 +1,4 @@
-package com.chinamobile.wifibao.utils;
+package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.chinamobile.wifibao.activity.WifiListActivity;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -94,7 +92,7 @@ public class WiFiListManager {
         }
 
         for(WiFi wifi: dbNearbyWiFi){
-            if(scanIDList.contains(wifi.getBSSID())){
+            if(scanIDList.contains(wifi.getBSSID())&&wifi.getState()==true){
                 getWifiList().add(wifi);
             }
         }

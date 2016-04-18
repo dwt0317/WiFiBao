@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.ConnectedIP;
-import com.chinamobile.wifibao.utils.WifiApAdmin;
+import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
 import java.lang.reflect.Method;
@@ -37,7 +37,7 @@ public class CloseApActivity extends Activity{
         setContentView(R.layout.flow_share);
 
         Toast.makeText(mContext,"热点已开启！",Toast.LENGTH_SHORT).show();
-
+        //流量监测
         final TextView showFlow = (TextView) findViewById(R.id.tv11);
         final Handler flowHandle = new Handler() {
             @Override
@@ -51,11 +51,12 @@ public class CloseApActivity extends Activity{
                 }
             }
         };
-        TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
+        final TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
         monitorThread.setHandler(flowHandle);
         monitorThread.setContext(mContext);
+        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare",0.0));
         monitorThread.start();
-
+        //接入监测
         final TextView accessCount = (TextView)findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
             @Override
@@ -94,6 +95,7 @@ public class CloseApActivity extends Activity{
             @Override
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
+                monitorThread.stopService();
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
@@ -130,7 +132,7 @@ public class CloseApActivity extends Activity{
                     break;
                 }else {
                     mess.arg1 = cp.getConnectedIpCount();
-                    Log.i("ip:", String.valueOf(mess.arg1));
+                    //Log.i("ip:", String.valueOf(mess.arg1));
                     handler.sendMessage(mess);
                 }
                 try {
