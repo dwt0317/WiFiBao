@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,11 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Method;
+
+import cn.bmob.v3.BmobRealTimeData;
+import cn.bmob.v3.listener.ValueEventListener;
 
 /**
  * Created by cdd on 2016/3/16.
@@ -46,15 +53,15 @@ public class CloseApActivity extends Activity{
                 String sR = (String) msg.obj;
                 showFlow.setText(sR);
                 if (msg.arg1 == 0) {
-                    WifiApAdmin.closeWifiAp(mContext);
-                    Toast.makeText(mContext, "超出上限，正在关闭热点！", Toast.LENGTH_LONG).show();
+                    //WifiApAdmin.closeWifiAp(mContext);
+                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
                 }
             }
         };
-        final TrafficMonitorService monitorThread = TrafficMonitorService.getInstance();
+        final TrafficMonitorService monitorThread = new TrafficMonitorService();
         monitorThread.setHandler(flowHandle);
         monitorThread.setContext(mContext);
-        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare",0.0));
+        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
         monitorThread.start();
         //接入监测
         final TextView accessCount = (TextView)findViewById(R.id.tv21);
@@ -66,10 +73,25 @@ public class CloseApActivity extends Activity{
                 accessCount.setText(count);
             }
         };
-        accessListenerThread listenerThread=new accessListenerThread();
+        final AccessListenerThread listenerThread=new AccessListenerThread();
         listenerThread.setHandler(accessHandle);
         listenerThread.setContext(mContext);
         listenerThread.start();
+
+        //收入监测
+        final TextView benefit = (TextView)findViewById(R.id.tv31);
+        final Handler benefitHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String count = String.valueOf(msg.arg1);
+                benefit.setText(count);
+            }
+        };
+        final BenefitPullThread pullThread = new BenefitPullThread();
+        pullThread.setHandler(benefitHandle);
+        pullThread.setContext(mContext);
+        pullThread.start();
 
         //返回HomeActivity
         ImageView home = (ImageView)findViewById(R.id.imageView7);
@@ -96,6 +118,7 @@ public class CloseApActivity extends Activity{
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
                 monitorThread.stopService();
+                pullThread.stopThread();
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
@@ -106,7 +129,10 @@ public class CloseApActivity extends Activity{
         });
     }//end onCreate
 
-    private class accessListenerThread extends Thread{
+    /**
+     * 介入监听线程
+     */
+    private class AccessListenerThread extends Thread{
         private Handler handler;
         private Context context;
         private static final int WIFI_AP_STATE_ENABLING = 12;
@@ -155,12 +181,98 @@ public class CloseApActivity extends Activity{
             }
             return apState;
         }
+    }//end accessListenerThread
+
+    /**
+     * 数据库获得已得收入,实时更新
+     */
+    public class BenefitPullThread extends Thread{
+        private boolean doStop = false;
+        private Context context;
+        private Handler handler;
+
+        //private static BenefitThread bt;
+        //private BenefitThread(){}
+
+        public void setDoStop(boolean doStop) {
+            this.doStop = doStop;
+        }
+
+        public void setContext(Context context) {
+            this.context = context;
+        }
+        public void setHandler(Handler handler) {
+            this.handler = handler;
+        }
+        //关闭线程
+        public void stopThread(){
+            setDoStop(true);
+        }
+        @Override
+        public void run() {
+            while(!doStop){
+//                int benefit = pullBenefit();
+//                Message mess = new Message();
+//                mess.arg1 = benefit;
+//                handler.sendMessage(mess);//异步不可以这样
+
+                try {
+                    Thread.currentThread().sleep(2000);
+                } catch (InterruptedException e) {
+                    Log.e("cdd:", "Thread ex", e);
+                }
+            }
+        }
+
+        /**
+         * 数据库获得已得收入，已使用者为准，不已本地分享为准
+         */
+        private int pullBenefit(){
+            final String tableName = "UseRecord";
+            final BmobRealTimeData rtd = new BmobRealTimeData();
+
+            rtd.start(context, new ValueEventListener() {
+                @Override
+                public void onDataChange(JSONObject data) {
+
+                }
+
+                @Override
+                public void onConnectCompleted() {
+                    if(rtd.isConnected()){
+                        // 监听表更新
+                        rtd.subTableUpdate(tableName);
+                    }
+                }
+            });
+
+            return 1;
+        }
+    }//end BenefitPullThread
+
+    /**
+     * 从本地缓存中读取热点信息
+     * @return
+     */
+    private WiFi getWifiAp(){
+        SharedPreferences sp;
+        WiFi ap= new WiFi();
+        sp = this.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        ap.setObjectId(sp.getString("objectId",""));
+        ap.setSSID(sp.getString("SSID",""));
+        ap.setPassword(sp.getString("password", ""));
+        ap.setUpperLimit(Double.parseDouble(String.valueOf(sp.getFloat("upperLimit", 0))));
+        ap.setMaxConnect(sp.getInt("maxConnect", 0));
+        ap.setBSSID(sp.getString("BSSID",""));
+        return ap;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stop = true;
+        //应当在这里结束所有监测线程
+        stop = true;//接入监测
+        //TrafficMonitorService.getInstance().setStop(true);//流量监测
     }
 
     @Override
