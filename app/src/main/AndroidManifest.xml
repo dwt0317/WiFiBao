@@ -32,6 +32,11 @@
             android:label="TestActivity2">
         </activity>
 
+        <activity android:name=".activity.WelcomeActivity">
+        </activity>
+
+        <activity android:name=".activity.PasswordModifyActivity">
+        </activity>
         <!--activities for share wifi ap.DON'T REMOVE -->
         <activity android:name=".activity.ShareActivity">
         </activity>
@@ -63,10 +68,6 @@
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.SignupActivity"
