@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="48dp"
@@ -9,8 +11,9 @@
         android:orientation="horizontal">
         <ImageView
             android:layout_width="200px"
-            android:layout_height="180px"
-            android:background="@drawable/goback" />
+            android:layout_height="150px"
+            android:background="@drawable/goback"
+            android:layout_gravity="center_vertical" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,14 +27,14 @@
         android:layout_height="800px"
         android:background="#1892eb"
         android:orientation="vertical"
-        android:layout_marginTop="10px">
+        android:layout_marginTop="5px">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的余额"
-            android:textSize="75px"
+            android:textSize="90px"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="250px"
+            android:layout_marginTop="200px"
             android:textColor="#ffffff" />
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,15 +46,16 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ebbd98"
                 android:text="102"
-                android:textSize="120px"/>
+                android:textSize="200px"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:text="流量币"
-                android:textSize="70px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50px" />
+                android:textSize="80px"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginLeft="50px"
+                android:layout_marginBottom="20px" />
         </LinearLayout>
 
     </LinearLayout>
@@ -63,9 +67,9 @@
         <ImageView
             android:layout_width="150px"
              android:layout_height="150px"
-            android:background="@drawable/mywallet_bankcard"
             android:layout_gravity="center"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.2"
+            android:background="@drawable/mywallet_bankcard" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
