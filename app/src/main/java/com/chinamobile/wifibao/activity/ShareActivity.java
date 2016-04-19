@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
@@ -61,6 +62,16 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 checkOrDo(openHandle);
+            }
+        });
+
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShareActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 
