@@ -31,18 +31,18 @@ public class PersonalActivity extends Activity {
         setContentView(R.layout.personal_info);
         mContext = this;
 
-        BmobUser.loginByAccount(mContext, "cdd", "123", new LogInListener<User>() {
-
-            @Override
-            public void done(User user, BmobException e) {
-                if (user != null) {
-                    Log.i("fdf:", user.getObjectId());
-                    showUserInfo();
-                } else {
-                    Log.i("fdf:", "err");
-                }
-            }
-        });
+//        BmobUser.loginByAccount(mContext, "cdd", "123", new LogInListener<User>() {
+//
+//            @Override
+//            public void done(User user, BmobException e) {
+//                if (user != null) {
+//                    Log.i("fdf:", user.getObjectId());
+//                    showUserInfo();
+//                } else {
+//                    Log.i("fdf:", "err");
+//                }
+//            }
+//        });
 
 
         //showUserInfo();

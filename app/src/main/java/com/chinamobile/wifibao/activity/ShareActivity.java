@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
@@ -50,7 +51,7 @@ public class ShareActivity extends Activity {
                 if (msg.arg1 == 1) {
                     open();
                 }else {
-                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -61,6 +62,16 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 checkOrDo(openHandle);
+            }
+        });
+
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShareActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -79,7 +90,7 @@ public class ShareActivity extends Activity {
         } else if (password.length() < 8) {
             Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(ShareActivity.this, "数据同步中...", Toast.LENGTH_LONG).show();
+            Toast.makeText(ShareActivity.this, "数据同步中...", Toast.LENGTH_SHORT).show();
             //上传数据
             ap = new WiFi();
             ap.setSSID(name);
@@ -95,7 +106,7 @@ public class ShareActivity extends Activity {
         }
     }
     /**
-     * 打开热点
+     * 打开热点，并跳转页面
      */
     private void open(){
         WifiApAdmin wifiAp = new WifiApAdmin(mContext);
