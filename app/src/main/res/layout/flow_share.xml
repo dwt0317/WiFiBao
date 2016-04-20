@@ -154,7 +154,7 @@
             android:id="@+id/tv31"
             android:layout_toRightOf="@+id/tv3"
             android:layout_below="@+id/tv21"
-            android:text="7"
+            android:text="0"
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>

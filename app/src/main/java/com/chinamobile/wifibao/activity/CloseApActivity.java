@@ -22,28 +22,30 @@ import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobRealTimeData;
 import cn.bmob.v3.listener.ValueEventListener;
 
 /**
  * Created by cdd on 2016/3/16.
  */
-public class CloseApActivity extends Activity{
+public class CloseApActivity extends Activity {
     private Context mContext = null;
     private boolean stop = false;
 
 
     @Override
-    public void onCreate(Bundle saveInstanceState){
+    public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         mContext = this;
         setContentView(R.layout.flow_share);
 
-        Toast.makeText(mContext,"热点已开启！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "热点已开启！", Toast.LENGTH_SHORT).show();
         //流量监测
         final TextView showFlow = (TextView) findViewById(R.id.tv11);
         final Handler flowHandle = new Handler() {
@@ -64,7 +66,7 @@ public class CloseApActivity extends Activity{
         monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
         monitorThread.start();
         //接入监测
-        final TextView accessCount = (TextView)findViewById(R.id.tv21);
+        final TextView accessCount = (TextView) findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -73,28 +75,30 @@ public class CloseApActivity extends Activity{
                 accessCount.setText(count);
             }
         };
-        final AccessListenerThread listenerThread=new AccessListenerThread();
+        final AccessListenerThread listenerThread = new AccessListenerThread();
         listenerThread.setHandler(accessHandle);
         listenerThread.setContext(mContext);
         listenerThread.start();
 
         //收入监测
-        final TextView benefit = (TextView)findViewById(R.id.tv31);
+        final TextView benefit = (TextView) findViewById(R.id.tv31);
         final Handler benefitHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String count = String.valueOf(msg.arg1);
-                benefit.setText(count);
+                double be = Double.parseDouble((String)msg.obj);
+                double beOld = Double.parseDouble(benefit.getText().toString());
+                benefit.setText(String.valueOf(be+beOld));
             }
         };
-        final BenefitPullThread pullThread = new BenefitPullThread();
-        pullThread.setHandler(benefitHandle);
-        pullThread.setContext(mContext);
-        pullThread.start();
+//        final BenefitPullThread pullThread = new BenefitPullThread();
+//        pullThread.setHandler(benefitHandle);
+//        pullThread.setContext(mContext);
+//        pullThread.start();
+        pullBenefit(benefitHandle);
 
         //返回HomeActivity
-        ImageView home = (ImageView)findViewById(R.id.imageView7);
+        ImageView home = (ImageView) findViewById(R.id.imageView7);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,22 +107,22 @@ public class CloseApActivity extends Activity{
             }
         });
         //refresh
-        ImageView refresh = (ImageView)findViewById(R.id.refresh);
+        ImageView refresh = (ImageView) findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //线程会自动刷新的
-                Toast.makeText(mContext,"正在刷新",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "正在刷新", Toast.LENGTH_SHORT).show();
             }
         });
         //close wifi ap
-        Button stopBt = (Button)findViewById(R.id.share_stop);
+        Button stopBt = (Button) findViewById(R.id.share_stop);
         stopBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
                 monitorThread.stopService();
-                pullThread.stopThread();
+                //pullThread.stopThread();
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
@@ -132,7 +136,7 @@ public class CloseApActivity extends Activity{
     /**
      * 介入监听线程
      */
-    private class AccessListenerThread extends Thread{
+    private class AccessListenerThread extends Thread {
         private Handler handler;
         private Context context;
         private static final int WIFI_AP_STATE_ENABLING = 12;
@@ -142,6 +146,7 @@ public class CloseApActivity extends Activity{
         public void setHandler(Handler handler) {
             this.handler = handler;
         }
+
         public void setContext(Context context) {
             this.context = context;
         }
@@ -149,14 +154,14 @@ public class CloseApActivity extends Activity{
         @Override
         public void run() {
             ConnectedIP cp = ConnectedIP.getInstance();
-            while(true){
-                if(stop) break;
+            while (true) {
+                if (stop) break;
                 Message mess = new Message();
-                if(getWiFiApState()!=WIFI_AP_STATE_ENABLING && getWiFiApState()!=WIFI_AP_STATE_ENABLED){
+                if (getWiFiApState() != WIFI_AP_STATE_ENABLING && getWiFiApState() != WIFI_AP_STATE_ENABLED) {
                     mess.arg1 = 0;
                     handler.sendMessage(mess);
                     break;
-                }else {
+                } else {
                     mess.arg1 = cp.getConnectedIpCount();
                     //Log.i("ip:", String.valueOf(mess.arg1));
                     handler.sendMessage(mess);
@@ -175,7 +180,7 @@ public class CloseApActivity extends Activity{
             try {
                 String name = METHOD_GET_WIFI_AP_STATE;
                 Method method = WifiManager.class.getMethod(name);
-                apState =  (int)method.invoke(wifiManager);
+                apState = (int) method.invoke(wifiManager);
             } catch (Exception e) {
                 Log.e("cdd:", "SecurityException", e);
             }
@@ -186,7 +191,7 @@ public class CloseApActivity extends Activity{
     /**
      * 数据库获得已得收入,实时更新
      */
-    public class BenefitPullThread extends Thread{
+    private class BenefitPullThread extends Thread {
         private boolean doStop = false;
         private Context context;
         private Handler handler;
@@ -201,70 +206,88 @@ public class CloseApActivity extends Activity{
         public void setContext(Context context) {
             this.context = context;
         }
+
         public void setHandler(Handler handler) {
             this.handler = handler;
         }
+
         //关闭线程
-        public void stopThread(){
+        public void stopThread() {
             setDoStop(true);
         }
+
         @Override
         public void run() {
-            while(!doStop){
+            while (!doStop) {
 //                int benefit = pullBenefit();
 //                Message mess = new Message();
 //                mess.arg1 = benefit;
 //                handler.sendMessage(mess);//异步不可以这样
-
+//                pullBenefit(handle);
                 try {
-                    Thread.currentThread().sleep(2000);
+                    Thread.currentThread().sleep(6000);
                 } catch (InterruptedException e) {
                     Log.e("cdd:", "Thread ex", e);
                 }
             }
         }
 
-        /**
-         * 数据库获得已得收入，已使用者为准，不已本地分享为准
-         */
-        private int pullBenefit(){
-            final String tableName = "UseRecord";
-            final BmobRealTimeData rtd = new BmobRealTimeData();
-
-            rtd.start(context, new ValueEventListener() {
-                @Override
-                public void onDataChange(JSONObject data) {
-
-                }
-
-                @Override
-                public void onConnectCompleted() {
-                    if(rtd.isConnected()){
-                        // 监听表更新
-                        rtd.subTableUpdate(tableName);
-                    }
-                }
-            });
-
-            return 1;
-        }
     }//end BenefitPullThread
 
     /**
      * 从本地缓存中读取热点信息
+     *
      * @return
      */
-    private WiFi getWifiAp(){
+    private WiFi getWifiAp() {
         SharedPreferences sp;
-        WiFi ap= new WiFi();
-        sp = this.getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
-        ap.setObjectId(sp.getString("objectId",""));
-        ap.setSSID(sp.getString("SSID",""));
+        WiFi ap = new WiFi();
+        sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        ap.setObjectId(sp.getString("objectId", ""));
+        ap.setSSID(sp.getString("SSID", ""));
         ap.setPassword(sp.getString("password", ""));
         ap.setUpperLimit(Double.parseDouble(String.valueOf(sp.getFloat("upperLimit", 0))));
         ap.setMaxConnect(sp.getInt("maxConnect", 0));
-        ap.setBSSID(sp.getString("BSSID",""));
+        ap.setBSSID(sp.getString("BSSID", ""));
         return ap;
+    }
+
+    /**
+     * 数据库获得已得收入，已使用者为准，不已本地分享为准
+     */
+    private int pullBenefit(final Handler handler) {
+        final String tableName = "UseRecord";
+        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        final BmobRealTimeData rtd = new BmobRealTimeData();
+        final String objId = getWifiAp().getObjectId();
+
+        rtd.start(CloseApActivity.this, new ValueEventListener() {
+            @Override
+            public void onDataChange(JSONObject arg0) {
+                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
+                    JSONObject data = arg0.optJSONObject("data");
+                    try {
+                        String flowUsed = data.getString("flowUsed");
+                        Log.i("flowUsed:", flowUsed);
+                        Message mess = new Message();
+                        mess.obj = flowUsed;
+                        handler.sendMessage(mess);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectCompleted() {
+                if (rtd.isConnected()) {
+                    // 监听表更新
+                    rtd.subTableUpdate(tableName);
+                }
+            }
+        });
+
+        return 1;
     }
 
     @Override
@@ -277,10 +300,10 @@ public class CloseApActivity extends Activity{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(true);
             return true;
         }
-        return super.onKeyDown(keyCode,event);
+        return super.onKeyDown(keyCode, event);
     }
 }
