@@ -98,7 +98,7 @@ public class CloseApActivity extends Activity {
         pullBenefit(benefitHandle);
 
         //返回HomeActivity
-        ImageView home = (ImageView) findViewById(R.id.imageView7);
+        ImageView home = (ImageView) findViewById(R.id.gohome);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
