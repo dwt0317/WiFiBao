@@ -83,6 +83,7 @@ public class Home2Activity extends Activity {
         setListener(mywallet,MywalletActivity.class);
         setListener(hall,MobileServiceActivity.class);
         setListener(usehistory,UseRecordActivity.class);
+        setListener(manual,ManualActivity.class);
 
      //   setListener(hall,MobileServiceActivity.class);
     }
