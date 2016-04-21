@@ -22,8 +22,8 @@ import cn.bmob.v3.listener.UpdateListener;
 public class DatabaseUtil {
     private static DatabaseUtil du;
 
-    private boolean savaSuccess;
-    private String apObjectId;
+    //private boolean savaSuccess;
+    //private String apObjectId;
 
     private DatabaseUtil() {
     }
@@ -34,6 +34,12 @@ public class DatabaseUtil {
         return du;
     }
 
+    /**
+     * 写入热点信息
+     * @param context
+     * @param handler
+     * @param wifiAp
+     */
     public void writeApToDatabase(final Context context, final Handler handler, final WiFi wifiAp) {
         if(wifiAp == null){
             Message message = new Message();
@@ -60,8 +66,8 @@ public class DatabaseUtil {
                     wifiAp.save(context, new SaveListener() {
                         @Override
                         public void onSuccess() {
-                            apObjectId = wifiAp.getObjectId();
-                            Log.i("DatabaseUtil添加数据成功,", apObjectId);
+                            //apObjectId = wifiAp.getObjectId();
+                            Log.i("DatabaseUtil添加数据成功,", wifiAp.getObjectId());
                             Message message = new Message();
                             message.arg1 = 1;
                             handler.sendMessage(message);
@@ -128,25 +134,35 @@ public class DatabaseUtil {
 
     }
 
-    public boolean writeShareToDatabase(Context context, final ShareRecord shareRecord) {
-        savaSuccess = false;
+    /**
+     * 分享记录写入
+     * @param context
+     * @param shareRecord
+     * @return
+     */
+    public void writeShareRecordToDatabase(Context context, final Handler handler, final ShareRecord shareRecord) {
+        //savaSuccess = false;
         if (shareRecord != null) {
             shareRecord.save(context, new SaveListener() {
                 @Override
                 public void onSuccess() {
                     Log.i("DatabaseUtil添加数据成功,", shareRecord.getObjectId());
-                    savaSuccess = true;
+                    Message mess = new Message();
+                    mess.arg1=1;
+                    handler.sendMessage(mess);
                 }
 
                 @Override
                 public void onFailure(int i, String s) {
-                    Log.i("DatabaseUtil error,", "添加数据失败!!!!");
-                    savaSuccess = false;
+                    Log.i("DatabaseUtil error,", s);
+                    Message mess = new Message();
+                    mess.arg1=0;
+                    handler.sendMessage(mess);
                 }
             });
 
         }
 
-        return savaSuccess;
+        //return savaSuccess;//异步操作这样做没有效果
     }
 }

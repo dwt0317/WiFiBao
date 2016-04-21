@@ -91,10 +91,7 @@ public class CloseApActivity extends Activity {
                 benefit.setText(String.valueOf(be+beOld));
             }
         };
-//        final BenefitPullThread pullThread = new BenefitPullThread();
-//        pullThread.setHandler(benefitHandle);
-//        pullThread.setContext(mContext);
-//        pullThread.start();
+        //获取收益
         pullBenefit(benefitHandle);
 
         //返回HomeActivity
@@ -122,10 +119,10 @@ public class CloseApActivity extends Activity {
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
                 monitorThread.stopService();
-                //pullThread.stopThread();
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
+                intent.putExtra("bene", benefit.getText().toString());
                 startActivity(intent);
                 overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
                 CloseApActivity.this.finish();
@@ -190,6 +187,7 @@ public class CloseApActivity extends Activity {
 
     /**
      * 数据库获得已得收入,实时更新
+     * 暂不使用
      */
     private class BenefitPullThread extends Thread {
         private boolean doStop = false;
@@ -254,6 +252,8 @@ public class CloseApActivity extends Activity {
 
     /**
      * 数据库获得已得收入，已使用者为准，不已本地分享为准
+     * 以热点id为标识，获取一个热点的收益
+     * 暂时未使用id
      */
     private int pullBenefit(final Handler handler) {
         final String tableName = "UseRecord";
@@ -267,10 +267,10 @@ public class CloseApActivity extends Activity {
                 if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
                     JSONObject data = arg0.optJSONObject("data");
                     try {
-                        String flowUsed = data.getString("flowUsed");
-                        Log.i("flowUsed:", flowUsed);
+                        String cost = data.getString("cost");
+                        Log.i("cost:", cost);
                         Message mess = new Message();
-                        mess.obj = flowUsed;
+                        mess.obj = cost;
                         handler.sendMessage(mess);
                     } catch (JSONException e) {
                         e.printStackTrace();
