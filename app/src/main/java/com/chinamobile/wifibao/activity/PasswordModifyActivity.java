@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
-import com.chinamobile.wifibao.utils.SignupManager;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.UpdateListener;
@@ -40,6 +37,8 @@ public class PasswordModifyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 validInput();
+            }
+
         });
 
     }
@@ -91,4 +90,4 @@ public class PasswordModifyActivity extends Activity {
 
 }
 
-}
+
