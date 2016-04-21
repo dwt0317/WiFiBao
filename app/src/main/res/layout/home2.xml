@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <FrameLayout
+        android:id="@+id/top_layout"
+        android:layout_height="200px"
+        android:layout_width="match_parent"
+        android:background="#1892eb">
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_height="130px"
+            android:layout_width="130px"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/home_setting"
+            android:layout_marginLeft="20px" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="热点宝"
+            android:id="@+id/appname"
+            android:textColor="#fcf7f7"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textIsSelectable="false">
+        </TextView>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ad_top"
+        android:layout_height="700px"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10px"
+        android:background="@drawable/home_ad_top"
+        android:adjustViewBounds="false">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20px">
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="600px"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="300px"
+                android:layout_height="300px"
+                android:background="@drawable/home2_use"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用网络"
+                android:textSize="60px"
+                android:layout_gravity="center_horizontal"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="600px"
+            android:layout_toRightOf="@+id/layout1"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="300px"
+                android:layout_height="300px"
+                android:background="@drawable/home2_share"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享网络"
+                android:textSize="60px"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="400px">
+        <LinearLayout
+            android:id="@+id/layout3"
+            android:layout_width="533px"
+            android:layout_height="400px"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_userinfo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人信息"
+                android:textSize="60px"
+                android:layout_gravity="center_horizontal"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout4"
+            android:layout_width="533px"
+            android:layout_height="400px"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_toRightOf="@+id/layout3"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_hall"
+                android:layout_gravity="center"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="营业厅"
+                android:textSize="60px"
+                android:layout_gravity="center_horizontal"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout5"
+            android:layout_width="533px"
+            android:layout_height="400px"
+            android:layout_toRightOf="@+id/layout4"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_mywallet"
+                android:layout_gravity="center"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="60px"
+                android:layout_gravity="center_horizontal"
+                android:textIsSelectable="true"
+                android:text="我的钱包" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout6"
+            android:layout_width="wrap_content"
+            android:layout_height="400px"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_usehistory"
+                android:layout_gravity="center"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用记录"
+                android:textSize="60px"
+                android:layout_gravity="center"
+                android:textIsSelectable="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout7"
+            android:layout_width="wrap_content"
+            android:layout_height="400px"
+            android:layout_weight="1"
+            android:layout_toRightOf="@+id/layout6"
+            android:orientation="vertical"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_sharehistory"
+                android:layout_gravity="center"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享记录"
+                android:textSize="60px"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout8"
+            android:layout_width="wrap_content"
+            android:layout_height="400px"
+            android:layout_weight="1"
+            android:layout_toRightOf="@+id/layout7"
+            android:orientation="vertical"
+            android:background="@drawable/home2_around">
+            <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:background="@drawable/home2_manual"
+                android:layout_gravity="center"
+                android:layout_marginTop="60px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产品手册"
+                android:textSize="60px"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
