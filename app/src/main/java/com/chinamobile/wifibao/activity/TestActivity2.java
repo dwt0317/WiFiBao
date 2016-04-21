@@ -168,7 +168,7 @@ public class TestActivity2 extends AppCompatActivity {
     public void writeConnectionPool(){
         ConnectionPool conn = new ConnectionPool();
         WiFi wifi = new WiFi();
-        wifi.setObjectId("cTgRKKKO");
+        wifi.setObjectId("c429a1b401");
         User user = new User();
         user.setObjectId("2im5888A");
         conn.setUser(user);
