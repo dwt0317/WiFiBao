@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.UseRecord;
+import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.usingFlow.TrafficMonitor;
 import com.chinamobile.wifibao.utils.usingFlow.FlowUsingManager;
@@ -26,6 +27,7 @@ import com.chinamobile.wifibao.utils.usingFlow.FlowUsingManager;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 
 /**
@@ -81,6 +83,7 @@ public class FlowUsingActivity extends Activity {
         useRecord=new UseRecord();
         useRecord.setWiFi(wifi);
         useRecord.setStartTime(new BmobDate(new Date()));
+        useRecord.setUser(BmobUser.getCurrentUser(this,User.class));
 
         wifiDetectHandler.postDelayed(wifiDetectRunnable,200);
         //ImageView refresh = (ImageView)findViewById(R.id.refresh)
