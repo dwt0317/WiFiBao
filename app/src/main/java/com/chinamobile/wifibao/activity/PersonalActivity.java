@@ -2,6 +2,7 @@ package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -51,7 +52,13 @@ public class PersonalActivity extends Activity {
 
     private void showUserInfo() {
         BmobUser u =  BmobUser.getCurrentUser(mContext);
-
+        if(u == null){
+            Toast.makeText(PersonalActivity.this, "未登录！", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(PersonalActivity.this, Home2Activity.class);
+            startActivity(intent);
+            return;
+        }
         //String str=u.getUsername();
         String obectid=u.getObjectId();
         //String username=u.getUsername();
@@ -75,7 +82,7 @@ public class PersonalActivity extends Activity {
                 //Log.i("success", str);
                 //获得数据的objectId信息
                 String objectid=String.valueOf(object.getObjectId());
-                Toast.makeText(mContext, objectid, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, objectid, Toast.LENGTH_SHORT).show();
                 ((TextView)findViewById(R.id.getflowused)).setText(getflowused+"MB");
                 ((TextView)findViewById(R.id.username)).setText(username);
                 ((TextView)findViewById(R.id.phonenumber)).setText(phonenumber);

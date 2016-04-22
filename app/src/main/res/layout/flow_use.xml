@@ -4,32 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190px"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="正在使用"
-            android:textSize="22dip"
-            android:textColor="#FFFFFF"
-            android:paddingLeft="140dip"
-            android:paddingRight="50dip"
-            android:paddingTop="12dip"
-            android:background="#1892eb"
-            android:layout_alignParentBottom="true" />
-
+        android:layout_height="48dp"
+        android:background="#1892eb"
+        android:gravity="fill_horizontal|center|start"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:weightSum="1">
         <ImageView
-            android:layout_width="90px"
-            android:layout_height="90px"
-            android:layout_marginTop="12dip"
-            android:layout_marginLeft="20px"
-            android:background="@mipmap/home"
-            android:id="@+id/homeView" />
+            android:id="@+id/home"
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/home" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="正在使用"
+            android:id="@+id/appname"
+            android:textColor="#fcf7f7"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="104dp"
+            />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="350dp"
@@ -111,17 +113,6 @@
             <!--android:paddingTop="7sp"-->
             <!--android:paddingBottom="7sp"/>-->
 
-        <Chronometer
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chronometer"
-            android:layout_toRightOf="@+id/timeuseView"
-            android:layout_below="@+id/flowusingText"
-            android:textSize="16dp"
-            android:paddingTop="7sp"
-            android:paddingBottom="7sp"
-             />
-
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -146,11 +137,36 @@
             android:layout_height="wrap_content"
             android:id="@+id/moneyuseText"
             android:layout_toRightOf="@+id/moneyuseView"
-            android:layout_below="@+id/chronometer"
             android:text=""
             android:textSize="16dp"
             android:paddingTop="7sp"
-            android:paddingBottom="7sp"/>
+            android:paddingBottom="7sp"
+            android:layout_below="@+id/flowusingText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/useUnit"
+            android:text="MB"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/flowusingText"
+            android:layout_toRightOf="@+id/flowusingText"
+            android:layout_toEndOf="@+id/flowusingText"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/costUnit"
+            android:text="流量币"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/moneyuseText"
+            android:layout_toRightOf="@+id/moneyuseText"
+            android:layout_toEndOf="@+id/moneyuseText"
+            android:layout_marginLeft="10dp" />
 
 
 
