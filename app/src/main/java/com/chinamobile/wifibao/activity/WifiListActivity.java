@@ -48,7 +48,7 @@ public class WifiListActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WifiListActivity.this,HomeActivity.class);
+                Intent intent = new Intent(WifiListActivity.this,Home2Activity.class);
                 startActivity(intent);
             }
         });

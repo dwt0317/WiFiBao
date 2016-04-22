@@ -78,13 +78,12 @@ public class Home2Activity extends Activity {
         manual = (LinearLayout)findViewById(R.id.layout8);
 
         setListener(use, WifiListActivity.class);
-        setListener(share,ShareActivity.class);
-        setListener(userinfo,PersonalActivity.class);
-        setListener(mywallet,MywalletActivity.class);
-        setListener(hall,MobileServiceActivity.class);
-        setListener(usehistory,UseRecordActivity.class);
+        setLoginListener(share, ShareActivity.class);
+        setLoginListener(userinfo, PersonalActivity.class);
+        setLoginListener(mywallet, MywalletActivity.class);
+        setLoginListener(hall, MobileServiceActivity.class);
+        setLoginListener(usehistory,UseRecordActivity.class);
 
-     //   setListener(hall,MobileServiceActivity.class);
     }
 
    private void setListener(LinearLayout layout,final Class page ){
@@ -94,6 +93,17 @@ public class Home2Activity extends Activity {
                 Intent intent = new Intent();
                 intent.setClass(Home2Activity.this, page);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void setLoginListener(LinearLayout layout,final Class page){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Home2Activity.this, page);
+                goToActivity(intent);
             }
         });
     }
@@ -148,6 +158,17 @@ public class Home2Activity extends Activity {
                     startActivity(intent);
                 }
             });
+        }
+    }
+
+    private void goToActivity(Intent destIntent){
+        BmobUser bmobUser = BmobUser.getCurrentUser(this);
+        if(bmobUser == null){
+            Intent intent = new Intent();
+            intent.setClass(this,LoginActivity.class);
+            this.startActivity(intent);
+        }else{
+            this.startActivity(destIntent);
         }
     }
 
