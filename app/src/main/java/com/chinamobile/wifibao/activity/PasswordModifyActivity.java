@@ -3,6 +3,7 @@ package com.chinamobile.wifibao.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,6 @@ public class PasswordModifyActivity extends Activity {
             public void onClick(View v) {
                 validInput();
             }
-
         });
 
 
@@ -71,11 +71,12 @@ public class PasswordModifyActivity extends Activity {
             //password2.setError("请输入确认密码！");
             //return false;
         } else if (!newPassword1.equals(newPassword2)) {
-            Toast.makeText(PasswordModifyActivity.this, "两次输入新密码不一致！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PasswordModifyActivity.this, "两次输入新密码不一致！" + newPassword1 + " " + newPassword2, Toast.LENGTH_SHORT).show();
             //password2.setError("两次输入新密码不一致！");
             //return false;
         } else {
-            modify();
+            MyTask task = new MyTask();
+            task.execute();
         }
 
 
@@ -87,9 +88,11 @@ public class PasswordModifyActivity extends Activity {
                 Log.i("bmob", "密码修改成功：");
                 Toast.makeText(PasswordModifyActivity.this, "密码修改成功！ ",
                         Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent();
                 intent.setClass(PasswordModifyActivity.this, HomeActivity.class);
                 startActivity(intent);
+
             }
 
             @Override
@@ -101,6 +104,33 @@ public class PasswordModifyActivity extends Activity {
             }
         });
     }
+
+    private class MyTask extends AsyncTask<Integer, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            modify();
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+
+
+
 
 
 }
