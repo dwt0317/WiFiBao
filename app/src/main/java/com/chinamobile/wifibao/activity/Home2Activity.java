@@ -77,10 +77,14 @@ public class Home2Activity extends Activity {
         sharehistory = (LinearLayout)findViewById(R.id.layout7);
         manual = (LinearLayout)findViewById(R.id.layout8);
 
-        setListener(use, FlowUsingActivity.class);
+        setListener(use, WifiListActivity.class);
         setListener(share,ShareActivity.class);
         setListener(userinfo,PersonalActivity.class);
         setListener(mywallet,MywalletActivity.class);
+        setListener(hall,MobileServiceActivity.class);
+        setListener(usehistory,UseRecordActivity.class);
+        setListener(manual,ManualActivity.class);
+
      //   setListener(hall,MobileServiceActivity.class);
     }
 

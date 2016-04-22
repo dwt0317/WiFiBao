@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/top_layout"
+        android:layout_height="200px"
+        android:layout_width="match_parent"
+        android:background="#1892eb">
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_height="130px"
+            android:layout_width="130px"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/home_setting"
+            android:layout_marginLeft="20px" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="产品手册"
+            android:id="@+id/appname"
+            android:textColor="#fcf7f7"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textIsSelectable="false">
+        </TextView>
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#1892eb"
+        android:text="Version: 热点宝 1.0.1"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#1892eb"
+        android:text="功能介绍"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="40dp" />
+
+    <View
+        android:layout_width="330dp"
+        android:layout_height="2dip"
+        android:layout_gravity="center_horizontal"
+        android:background="#FF909090" />
+
+    <TextView
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:textColor="#1892eb"
+        android:text="Q1:如何分享流量？\n
+    在功能页中选择分享网络，设置WiFi的账号密码及限制，确认分享即可。我们会实时反馈分享的流量使用情况，您可以随时选择关闭并自动进行结算。\r\n
+Q2:如何使用流量？\r\n
+    在功能页中选择使用网络，会显示当前可用WiFi，可以查看这些WiFi的信息并选择一个接入，接入后可以看到本次连接的流量使用情况，并在断开后结算。\r\n
+Q3:是如何计费的？\r\n
+    WiFi宝有一套计费方案，并且支持充值，查看当前余额或者消费信息详情在我的钱包中可见。\r\n
+Q4:分享前想查询手机的剩余流量\r\n
+    我们提供了营业厅功能方便您查看手机套餐剩余流量及相关信息。\r\n"
+        android:textSize="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="#2baf2b"
+
+            android:layout_marginTop="5dp"
+
+            android:text="投诉"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:textSize="18sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="#2baf2b"
+
+            android:layout_marginTop="5dp"
+
+            android:text="意见反馈"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -68,6 +68,11 @@ public class HomeActivity extends Activity{
                     intent.setClass(HomeActivity.this, PersonalActivity.class);
                     goToActivity(intent);
                 }
+                else if (position == 4) {
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this, UseRecordActivity.class);
+                    goToActivity(intent);
+                }
             }
         });
 
