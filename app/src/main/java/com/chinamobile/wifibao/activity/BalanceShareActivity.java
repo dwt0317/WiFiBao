@@ -51,7 +51,7 @@ public class BalanceShareActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BalanceShareActivity.this,HomeActivity.class);
+                Intent intent = new Intent(BalanceShareActivity.this,Home2Activity.class);
                 startActivity(intent);
             }
         });

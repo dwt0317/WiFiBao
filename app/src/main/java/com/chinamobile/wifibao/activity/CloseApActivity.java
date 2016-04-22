@@ -99,7 +99,7 @@ public class CloseApActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CloseApActivity.this, HomeActivity.class);
+                Intent intent = new Intent(CloseApActivity.this, Home2Activity.class);
                 startActivity(intent);
             }
         });

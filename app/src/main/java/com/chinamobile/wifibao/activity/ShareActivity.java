@@ -70,7 +70,7 @@ public class ShareActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShareActivity.this, HomeActivity.class);
+                Intent intent = new Intent(ShareActivity.this, Home2Activity.class);
                 startActivity(intent);
             }
         });
