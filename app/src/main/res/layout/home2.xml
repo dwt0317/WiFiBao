@@ -6,7 +6,7 @@
     android:background="#ffffff">
     <FrameLayout
         android:id="@+id/top_layout"
-        android:layout_height="200px"
+        android:layout_height="48dp"
         android:layout_width="match_parent"
         android:background="#1892eb">
         <ImageView
