@@ -45,13 +45,14 @@ public class UseRecordActivity extends Activity {
 
     private void setViewComponent() {
         recordListView= (ListView) findViewById(R.id.useListView);
+        updateRecordListView();
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UseRecordActivity.this,HomeActivity.class);
+                Intent intent = new Intent(UseRecordActivity.this,Home2Activity.class);
                 startActivity(intent);
             }
         });
@@ -75,12 +76,7 @@ public class UseRecordActivity extends Activity {
 //        UseRecordManager.getInstance(this).queryUseRecord(BmobUser.getCurrentUser(UseRecordActivity.this,User.class));
     }
 
-    private void updateRecordListView(){
-
-    }
-
-
-    public void updateWiFiListView(){
+    public void updateRecordListView(){
         //int size=recordList.size();
         int size=3;
         for (int i = 0; i < size; i++) {
