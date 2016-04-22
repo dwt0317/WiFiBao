@@ -46,7 +46,7 @@ public class WifiDetailsActivity extends Activity {
         wifiname.setText(wifi.getSSID());
 
         shareuserText = (TextView) findViewById(R.id.shareuserText);
-//        shareuserText.setText(wifi.getUser().getUsername());
+        shareuserText.setText(wifi.getUser().getUsername());
 
         //接收网络类型
         TextView tyepText = (TextView) findViewById(R.id.tyepText);
@@ -59,22 +59,22 @@ public class WifiDetailsActivity extends Activity {
         maxflowText.setText(String.valueOf(wifi.getUpperLimit()));
         //接收接入人数
         TextView maxconnectText = (TextView) findViewById(R.id.maxconnectText);
-        maxconnectText.setText(wifi.getMaxConnect());
+        maxconnectText.setText(wifi.getMaxConnect().toString());
 
-        Handler uiHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if(msg.what == 1){
-                    shareuserText.setText(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
-                }else{
+//        Handler uiHandler = new Handler(){
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                if(msg.what == 1){
+//                    shareuserText.setText(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
+//                }else{
+//
+//                }
+//            }
+//        };
 
-                }
-            }
-        };
-
-        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
-        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
+//        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
+//        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);

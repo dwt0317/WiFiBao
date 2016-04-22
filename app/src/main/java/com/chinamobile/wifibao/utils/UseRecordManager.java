@@ -42,6 +42,7 @@ public class UseRecordManager {
     public void queryUseRecord(User user){
         BmobQuery<UseRecord> bmobQuery = new BmobQuery<UseRecord>();
 //        bmobQuery.addWhereEqualTo("objectId","661e74889d");
+        bmobQuery.include("WiFi");
         bmobQuery.findObjects(mContext, new FindListener<UseRecord>() {
             @Override
             public void onSuccess(List<UseRecord> recordList) {

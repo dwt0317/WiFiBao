@@ -166,14 +166,53 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/maxconnectText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maxconnectText"
             android:layout_toRightOf="@+id/maxconnectView"
             android:layout_below="@+id/maxflowText"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/flowUnit"
+            android:text="MB"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/maxflowText"
+            android:layout_toRightOf="@+id/maxflowText"
+            android:layout_toEndOf="@+id/maxflowText"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/connUnit"
+            android:text="人"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/maxconnectText"
+            android:layout_toRightOf="@+id/maxconnectText"
+            android:layout_toEndOf="@+id/maxconnectText"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sigUnit"
+            android:text="dBm"
+            android:textSize="15dp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:layout_alignTop="@+id/sigstrText"
+            android:layout_toRightOf="@+id/sigstrText"
+            android:layout_toEndOf="@+id/sigstrText"
+            android:layout_marginLeft="10dp" />
 
     </RelativeLayout>
 
