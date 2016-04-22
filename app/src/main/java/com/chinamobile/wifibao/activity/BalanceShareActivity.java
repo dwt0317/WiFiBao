@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.ShareRecord;
@@ -39,9 +42,10 @@ public class BalanceShareActivity extends Activity {
         //显示已分享流量
         Intent intent = getIntent();
         TextView tv = (TextView)findViewById(R.id.textview51);
-
         tv.setText(intent.getStringExtra("flow"));//这里带有单位MB
-
+        //显示已获得收益
+        TextView tv1 = (TextView)findViewById(R.id.textview61);
+        tv1.setText(intent.getStringExtra("bene"));
         //返回HomeActivity
         home = (ImageView) findViewById(R.id.imageView8);
         home.setOnClickListener(new View.OnClickListener() {
@@ -51,8 +55,9 @@ public class BalanceShareActivity extends Activity {
                 startActivity(intent);
             }
         });
-        shareRecord = getShareRecord(Double.parseDouble("20"));
-        //还没有获取热点信息
+        //上传分享收益记录
+        shareRecord = getShareRecord(Double.parseDouble("20"),0.0);
+        //已可获取热点信息
         sycData(mContext,shareRecord);
     }
 
@@ -63,10 +68,10 @@ public class BalanceShareActivity extends Activity {
         return u;
     }
 
-    private ShareRecord getShareRecord(Double flow) {
+    private ShareRecord getShareRecord(Double flow,Double income) {
         ShareRecord sr=new ShareRecord();
         sr.setWiFi(getWifiAp());
-        sr.setIncome(0.0);
+        sr.setIncome(income);
         sr.setStartTime(new BmobDate(new Date()));
         sr.setEndTime(new BmobDate(new Date()));
         sr.setFlowShared(flow);
@@ -92,15 +97,29 @@ public class BalanceShareActivity extends Activity {
         return ap;
     }
 
-    private boolean sycData(Context context, ShareRecord shareRecord){
-        boolean success= false;
-        if(shareRecord == null)
-            return success;
+    private void sycData(Context context, ShareRecord shareRecord){
+        if(shareRecord == null){
+            Toast.makeText(mContext,"数据异常",Toast.LENGTH_SHORT).show();
+        }
+
+
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.arg1 == 1) {
+                    Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        };
 
         DatabaseUtil du = DatabaseUtil.getInstance();
-        success = du.writeShareToDatabase(context, shareRecord);
+        du.writeShareRecordToDatabase(context, handler, shareRecord);
 
-        return success;
     }
 
 }
