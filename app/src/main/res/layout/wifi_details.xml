@@ -5,33 +5,34 @@
     android:layout_height="match_parent"
     android:background="#ffffffff"
     android:weightSum="1">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="190px"
-            android:text="详细信息"
-            android:textSize="22dip"
-            android:textColor="#FFFFFF"
-            android:paddingLeft="140dip"
-            android:paddingRight="50dip"
-            android:paddingTop="12dip"
-            android:background="#1892eb"
-            />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#1892eb"
+        android:gravity="fill_horizontal|center|start"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:weightSum="1">
         <ImageView
-            android:layout_height="90px"
             android:id="@+id/home"
-            android:layout_width="90px"
-            android:layout_marginTop="12dip"
-            android:layout_marginLeft="20px"
-            android:background="@mipmap/home"
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/home" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="详细信息"
+            android:id="@+id/appname"
+            android:textColor="#fcf7f7"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="104dp"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
@@ -85,7 +86,6 @@
             android:id="@+id/shareuserText"
             android:layout_toEndOf="@+id/shareuserView"
             android:layout_toRightOf="@+id/shareuserView"
-            android:text="user1"
             android:textSize="15dp"
             android:layout_marginTop="20sp"
             android:paddingTop="10sp"
@@ -108,7 +108,6 @@
             android:id="@+id/tyepText"
             android:layout_toRightOf="@+id/typeView"
             android:layout_below="@+id/shareuserText"
-            android:text="蜂窝4G"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
@@ -130,7 +129,6 @@
             android:id="@+id/sigstrText"
             android:layout_toRightOf="@+id/sigstrView"
             android:layout_below="@+id/tyepText"
-            android:text="^^^^^^"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
@@ -152,7 +150,6 @@
             android:id="@+id/maxflowText"
             android:layout_toRightOf="@+id/maxflowView"
             android:layout_below="@+id/sigstrText"
-            android:text="150 M"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
@@ -160,7 +157,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/curconnectView"
+            android:id="@+id/maxconnectView"
             android:paddingLeft="90sp"
             android:layout_below="@+id/maxflowView"
             android:paddingTop="10sp"
@@ -171,10 +168,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/curconnectText"
-            android:layout_toRightOf="@+id/curconnectView"
+            android:id="@+id/maxconnectText"
+            android:layout_toRightOf="@+id/maxconnectView"
             android:layout_below="@+id/maxflowText"
-            android:text="5 人"
             android:textSize="15dp"
             android:paddingTop="10sp"
             android:paddingBottom="10sp"/>
@@ -194,7 +190,7 @@
         android:textSize="20sp"
         android:layout_marginTop="50dip"
         android:layout_alignBottom="@+id/tyepText"
-        android:layout_toRightOf="@+id/curconnectText"
-        android:layout_toEndOf="@+id/curconnectText" />
+        android:layout_toRightOf="@+id/maxconnectText"
+        android:layout_toEndOf="@+id/maxconnectText" />
 
 </LinearLayout>

@@ -4,40 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="190px"
-            android:text="结算"
-            android:textSize="22dip"
-            android:textColor="#FFFFFF"
-            android:paddingLeft="155dip"
-            android:paddingRight="50dip"
-            android:paddingTop="10dip"
-            android:background="#1892eb"
-            />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#1892eb"
+        android:gravity="fill_horizontal|center|start"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:weightSum="1">
         <ImageView
-            android:layout_height="90px"
-            android:layout_width="90px"
-            android:layout_marginTop="12dip"
-            android:layout_marginLeft="20px"
             android:id="@+id/home"
-            android:background="@mipmap/home"
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/home" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="结算"
+            android:id="@+id/appname"
+            android:textColor="#fcf7f7"
+            android:textSize="22dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="120dp"
             />
         <ImageView
-            android:layout_width="80dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
             android:src="@mipmap/share"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="115dp"
             android:background="#1892eb"
             />
-    </RelativeLayout>
+    </LinearLayout>
+
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"

@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
                         sp.edit().putString(usernameStr, passwordStr).commit();
                     }
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this,HomeActivity.class);
+                    intent.setClass(LoginActivity.this,Home2Activity.class);
                     startActivity(intent);
                 }else{
                     String error = LoginManager.getInstance(LoginActivity.this).getErrorMsg();

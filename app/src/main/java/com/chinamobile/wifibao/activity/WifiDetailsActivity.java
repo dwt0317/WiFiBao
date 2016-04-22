@@ -42,25 +42,24 @@ public class WifiDetailsActivity extends Activity {
         //Bundle bundle = this.getIntent().getExtras();
         final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.wifiListSER_KEY);
        //接收ssid值
-        TextView tV1 = (TextView) findViewById(R.id.wifiname);
-        tV1.setText(wifi.getSSID());
+        TextView wifiname = (TextView) findViewById(R.id.wifiname);
+        wifiname.setText(wifi.getSSID());
 
         shareuserText = (TextView) findViewById(R.id.shareuserText);
 //        shareuserText.setText(wifi.getUser().getUsername());
 
         //接收网络类型
-        TextView tV3 = (TextView) findViewById(R.id.tyepText);
-        tV3.setText(wifi.getWiFitype());
+        TextView tyepText = (TextView) findViewById(R.id.tyepText);
+        tyepText.setText(wifi.getWiFitype());
         //获取wifi信号强度
-        TextView tV4 = (TextView) findViewById(R.id.sigstrText);
-        tV4.setText(String.valueOf(WiFiDetailsManager.getInstance(this).getWiFiLevel(wifi)));
+        TextView sigstrText = (TextView) findViewById(R.id.sigstrText);
+        sigstrText.setText(String.valueOf(WiFiDetailsManager.getInstance(this).getWiFiLevel(wifi)));
         //接收流量上限
-        TextView tV5 = (TextView) findViewById(R.id.maxflowText);
-        tV5.setText(String.valueOf(wifi.getUpperLimit()));
-        //tV5.setText("999");
+        TextView maxflowText = (TextView) findViewById(R.id.maxflowText);
+        maxflowText.setText(String.valueOf(wifi.getUpperLimit()));
         //接收接入人数
-        TextView tV6 = (TextView) findViewById(R.id.curconnectText);
-        //tV6.setText(wifi.getCurConnect());
+        TextView maxconnectText = (TextView) findViewById(R.id.maxconnectText);
+        maxconnectText.setText(wifi.getMaxConnect());
 
         Handler uiHandler = new Handler(){
             @Override
@@ -82,7 +81,7 @@ public class WifiDetailsActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WifiDetailsActivity.this,HomeActivity.class);
+                Intent intent = new Intent(WifiDetailsActivity.this,Home2Activity.class);
                 startActivity(intent);
             }
         });
