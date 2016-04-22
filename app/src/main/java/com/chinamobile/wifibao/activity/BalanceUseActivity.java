@@ -3,6 +3,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,15 @@ public class BalanceUseActivity extends Activity {
         TextView savetextView = (TextView) findViewById(R.id.saveText);
         savetextView.setText(String.valueOf(df.format(save)));
 
+        //返回HomeActivity
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BalanceUseActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 //    public boolean dispatchKeyEvent(KeyEvent event) {
