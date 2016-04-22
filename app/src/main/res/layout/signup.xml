@@ -11,24 +11,24 @@
         android:padding="0px">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="190px"
+            android:layout_height="48dp"
             android:text="注册"
-            android:textSize="22dip"
+            android:textSize="22dp"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:textColor="#FFFFFF"
             android:background="#1892eb" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="90px"
+            android:layout_height="90px"
             android:layout_gravity="left"
             android:layout_centerVertical="true"
             android:src="@drawable/home"
             android:background="#1892eb"
             android:clickable="true"
             android:id="@+id/home"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="22dp" />
 
     </RelativeLayout>
 
