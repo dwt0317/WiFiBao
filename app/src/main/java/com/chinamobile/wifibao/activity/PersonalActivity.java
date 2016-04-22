@@ -45,7 +45,7 @@ public class PersonalActivity extends Activity {
 //        });
 
 
-        //showUserInfo();
+        showUserInfo();
 
     }
 

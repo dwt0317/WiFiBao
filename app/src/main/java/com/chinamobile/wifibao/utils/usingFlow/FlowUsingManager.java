@@ -72,7 +72,7 @@ public class FlowUsingManager {
                 endDetectHandler.removeCallbacks(endDetectRunnable);
                 endDetectHandler.removeMessages(0);
                 disconnectWiFi(curWiFi);
-                Toast.makeText(mContext,  "结算成功 \n", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext,  "结算成功", Toast.LENGTH_LONG).show();
             }else if(endFinish()==0){
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
                 toast.show();
