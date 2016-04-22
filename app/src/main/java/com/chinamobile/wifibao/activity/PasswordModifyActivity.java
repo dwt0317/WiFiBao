@@ -21,18 +21,19 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class PasswordModifyActivity extends Activity {
     private Context mContext = null;
-    private Button modifyButton = (Button) findViewById(R.id.modify);
-    private EditText password1 = (EditText)findViewById(R.id.newPassword1);
-    private EditText password2 = (EditText)findViewById(R.id.newPassword2);
-    private EditText password = (EditText)findViewById(R.id.oldPassword);
-    private String oldPassword = password.getText().toString().trim();
-    private String newPassword1 = password1.getText().toString().trim();
-    private String newPassword2 = password2.getText().toString().trim();
+    private Button modifyButton = null;
+    private EditText password1 = null;
+    private EditText password2 = null;
+    private EditText password = null;
+    private String oldPassword = "123";
+    private String newPassword1;
+    private String newPassword2 ;
 
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.passwordmodify);
 
+        modifyButton = (Button) findViewById(R.id.modify);
         modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,13 +42,25 @@ public class PasswordModifyActivity extends Activity {
 
         });
 
+
     }
 
 
     private void validInput() {
-
-        if (oldPassword == null || oldPassword.equals("")) {
-            Toast.makeText(PasswordModifyActivity.this, "请输入旧密码!", Toast.LENGTH_SHORT).show();
+        password1 = (EditText) findViewById(R.id.newPassword1);
+        password2 = (EditText) findViewById(R.id.newPassword2);
+        password = (EditText) findViewById(R.id.oldPassword);
+        oldPassword = password.getText().toString().trim();
+        newPassword1 = password1.getText().toString().trim();
+        newPassword2 = password2.getText().toString().trim();
+        /*
+        Toast.makeText(PasswordModifyActivity.this,
+                oldPassword + " " + newPassword1 + " " + newPassword2,
+                Toast.LENGTH_SHORT).show();
+        */
+        if (oldPassword.isEmpty()) {
+            System.out.print(oldPassword);
+            Toast.makeText(PasswordModifyActivity.this, "请输入旧密码!"+ oldPassword, Toast.LENGTH_SHORT).show();
 
         } else if (newPassword1 == null || newPassword1.equals("")) {
             Toast.makeText(PasswordModifyActivity.this, "请输入新密码！", Toast.LENGTH_SHORT).show();
@@ -64,6 +77,7 @@ public class PasswordModifyActivity extends Activity {
         } else {
             modify();
         }
+
 
     }
     private void modify() {
@@ -87,6 +101,7 @@ public class PasswordModifyActivity extends Activity {
             }
         });
     }
+
 
 }
 
