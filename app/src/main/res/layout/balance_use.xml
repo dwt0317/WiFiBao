@@ -26,6 +26,7 @@
             android:layout_width="90px"
             android:layout_marginTop="12dip"
             android:layout_marginLeft="20px"
+            android:id="@+id/home"
             android:background="@mipmap/home"
             />
         <ImageView
