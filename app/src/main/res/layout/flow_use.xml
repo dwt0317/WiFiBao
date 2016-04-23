@@ -51,8 +51,8 @@
         android:paddingTop="20px">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/cellular"
             android:id="@+id/flowiconView"
@@ -60,7 +60,8 @@
             android:layout_marginStart="41dp"
             android:layout_alignTop="@+id/flowusingView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="3dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,14 +85,15 @@
             android:paddingBottom="7sp"/>
 
         <ImageView
-            android:layout_width="33dp"
-            android:layout_height="33dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/time"
             android:id="@+id/timeiconView"
             android:layout_alignTop="@+id/timeuseView"
             android:layout_alignLeft="@+id/flowiconView"
-            android:layout_alignStart="@+id/flowiconView" />
+            android:layout_alignStart="@+id/flowiconView"
+            android:layout_marginTop="3dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,26 +104,28 @@
             android:paddingBottom="7sp"
             android:text="已使用时间："
             android:textSize="16dp" />
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/timeuseText"-->
-            <!--android:layout_toRightOf="@+id/timeuseView"-->
-            <!--android:layout_below="@+id/flowusingText"-->
-            <!--android:text="05:32"-->
-            <!--android:textSize="16dp"-->
-            <!--android:paddingTop="7sp"-->
-            <!--android:paddingBottom="7sp"/>-->
+
+        <Chronometer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chronometer"
+            android:layout_toRightOf="@+id/timeuseView"
+            android:layout_below="@+id/flowusingText"
+            android:textSize="16dp"
+            android:paddingTop="7sp"
+            android:paddingBottom="7sp"
+            />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="#FFFFFF"
             android:src="@drawable/dollar"
             android:id="@+id/moneyiconView"
             android:layout_below="@+id/timeuseView"
             android:layout_alignLeft="@+id/timeiconView"
-            android:layout_alignStart="@+id/timeiconView" />
+            android:layout_alignStart="@+id/timeiconView"
+            android:layout_marginTop="3dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,18 +141,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/moneyuseText"
             android:layout_toRightOf="@+id/moneyuseView"
+            android:layout_below="@+id/chronometer"
             android:text=""
             android:textSize="16dp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:layout_below="@+id/flowusingText" />
+             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/useUnit"
             android:text="MB"
             android:textSize="15dp"
-            android:paddingTop="10sp"
+            android:paddingTop="8dp"
             android:paddingBottom="10sp"
             android:layout_alignTop="@+id/flowusingText"
             android:layout_toRightOf="@+id/flowusingText"
@@ -161,7 +166,7 @@
             android:id="@+id/costUnit"
             android:text="流量币"
             android:textSize="15dp"
-            android:paddingTop="10sp"
+            android:paddingTop="8dp"
             android:paddingBottom="10sp"
             android:layout_alignTop="@+id/moneyuseText"
             android:layout_toRightOf="@+id/moneyuseText"

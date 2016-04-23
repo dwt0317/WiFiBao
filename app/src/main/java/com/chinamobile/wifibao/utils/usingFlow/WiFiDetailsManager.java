@@ -49,28 +49,28 @@ public class WiFiDetailsManager {
     }
 
 
-    public void queryUser(WiFi wifi){
-        User user = wifi.getUser();
-        BmobQuery<User> query = new BmobQuery<User>();
-        query.getObject(mContext, user.getObjectId(), new GetListener<User>() {
-            public void onSuccess(User object) {
-                selectedUser = object;
-                Message msg = new Message();
-                msg.what = 1;
-                getUiHandler().sendMessage(msg);
-                // TODO Auto-generated method stub
-                Log.i("bmob", "query user successfully");
-            }
-
-            @Override
-            public void onFailure(int code, String arg0) {
-                Log.e("bmob", "query user error");
-                Toast toast = Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-                toast.show();
-            }
-        });
-    }
+//    public void queryUser(WiFi wifi){
+//        User user = wifi.getUser();
+//        BmobQuery<User> query = new BmobQuery<User>();
+//        query.getObject(mContext, user.getObjectId(), new GetListener<User>() {
+//            public void onSuccess(User object) {
+//                selectedUser = object;
+//                Message msg = new Message();
+//                msg.what = 1;
+//                getUiHandler().sendMessage(msg);
+//                // TODO Auto-generated method stub
+//                Log.i("bmob", "query user successfully");
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String arg0) {
+//                Log.e("bmob", "query user error");
+//                Toast toast = Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+//                toast.show();
+//            }
+//        });
+//    }
 
     private void isExceedingConnLimit(WiFi wifi, final Handler handler){
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
