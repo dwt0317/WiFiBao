@@ -50,6 +50,7 @@ public class ShareRecordManager {
         BmobQuery<ShareRecord> bmobQuery = new BmobQuery<ShareRecord>();
 
         //bmobQuery.include("WiFi");
+        bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.findObjects(mContext, new FindListener<ShareRecord>() {
             @Override
             public void onSuccess(List<ShareRecord> recordList) {
@@ -63,6 +64,9 @@ public class ShareRecordManager {
 
             @Override
             public void onError(int code, String msg) {
+                Message mess = new Message();
+                mess.what = 0;
+                getUiHandler().sendMessage(mess);
                 Log.e("bomb", "read useRecord fail");
                 Toast toast = Toast.makeText(mContext, code+" " +msg, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
