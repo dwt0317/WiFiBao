@@ -47,7 +47,7 @@ public class UseRecordManager {
             @Override
             public void onSuccess(List<UseRecord> recordList) {
                 useRecordList= new ArrayList<UseRecord>(recordList);
-                separateRecords();
+//                separateRecords();
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);

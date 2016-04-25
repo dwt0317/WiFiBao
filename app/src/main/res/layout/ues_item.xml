@@ -12,7 +12,7 @@ android:background="@drawable/shape">
         android:textColor="#808080"
         android:text="周一"
         android:textSize="18sp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp" />
 
     <TextView
@@ -23,7 +23,7 @@ android:background="@drawable/shape">
         android:text="04-22"
         android:textSize="18sp"
         android:layout_below="@+id/weekView"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="8dp"
          />
 

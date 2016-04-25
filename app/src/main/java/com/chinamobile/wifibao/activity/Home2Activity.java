@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +25,8 @@ public class Home2Activity extends Activity {
     private TextView username;
     private LinearLayout usernameLayout;
     private LinearLayout logoutLayout;
+    private LinearLayout aboutusLayout;
+    private LinearLayout mywalletLayout;
 
     private LinearLayout use;
     private LinearLayout share;
@@ -129,6 +132,8 @@ public class Home2Activity extends Activity {
         username = (TextView) setting_content.findViewById(R.id.username);
         usernameLayout = (LinearLayout) setting_content.findViewById(R.id.usernameLayout);
         logoutLayout = (LinearLayout) setting_content.findViewById(R.id.logoutLayout);
+        aboutusLayout=(LinearLayout) setting_content.findViewById(R.id.aboutusLayout);
+        mywalletLayout=(LinearLayout) setting_content.findViewById(R.id.mywalletLayout);
 
         BmobUser bmobUser = BmobUser.getCurrentUser(this);
         if (bmobUser == null) {
@@ -153,9 +158,25 @@ public class Home2Activity extends Activity {
             });
             logoutLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    BmobUser.logOut(Home2Activity.this);
+                    if (BmobUser.getCurrentUser(Home2Activity.this)!=null){
+                        BmobUser.logOut(Home2Activity.this);
+                        Intent intent = new Intent();
+                        intent.setClass(Home2Activity.this, Home2Activity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+            mywalletLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(Home2Activity.this, HomeActivity.class);
+                    intent.setClass(Home2Activity.this, MywalletActivity.class);
+                    goToActivity(intent);
+                }
+            });
+            aboutusLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(Home2Activity.this, ManualActivity.class);
                     startActivity(intent);
                 }
             });

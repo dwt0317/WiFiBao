@@ -19,7 +19,9 @@ import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.utils.UseRecordManager;
 import com.chinamobile.wifibao.utils.usingFlow.WiFiListManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import cn.bmob.v3.BmobUser;
@@ -33,7 +35,7 @@ public class UseRecordActivity extends Activity {
     private ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
 
     private ListView recordListView;
-    private ArrayList<UseRecord> recordList;
+    private ArrayList<UseRecord> useRecordList;
     private HashMap<String,Integer> recordsSepByMonth;
 
     @Override
@@ -45,48 +47,47 @@ public class UseRecordActivity extends Activity {
 
     private void setViewComponent() {
         recordListView= (ListView) findViewById(R.id.useListView);
-        updateRecordListView();
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UseRecordActivity.this,Home2Activity.class);
+                Intent intent = new Intent(UseRecordActivity.this, Home2Activity.class);
                 startActivity(intent);
             }
         });
 
 
-//        Handler uiHandler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                if(msg.what == 1){
-//                    recordList = UseRecordManager.getInstance(UseRecordActivity.this).getUseRecordList();
+        Handler uiHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    useRecordList = UseRecordManager.getInstance(UseRecordActivity.this).getUseRecordList();
 //                    recordsSepByMonth =  UseRecordManager.getInstance(UseRecordActivity.this).getRecordsSepByMonth();
-//                    updateRecordListView();
-//                }else{
-//                    Toast.makeText(UseRecordActivity.this, "Please wait..", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        };
-//
-//        UseRecordManager.getInstance(this).setUiHandler(uiHandler);
-//        UseRecordManager.getInstance(this).queryUseRecord(BmobUser.getCurrentUser(UseRecordActivity.this,User.class));
+                    if(useRecordList.size()!=0)
+                        updateRecordListView();
+                }else{
+                    Toast.makeText(UseRecordActivity.this, "Please wait..", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        UseRecordManager.getInstance(this).setUiHandler(uiHandler);
+        UseRecordManager.getInstance(this).queryUseRecord(BmobUser.getCurrentUser(UseRecordActivity.this, User.class));
     }
 
-    public void updateRecordListView(){
-        //int size=recordList.size();
-        int size=3;
+    private void updateRecordListView(){
+        int size=useRecordList.size();
         for (int i = 0; i < size; i++) {
+            UseRecord item = useRecordList.get(i);
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("week", "周 一");
-            map.put("date", "04-22");
+            map.put("week", getWeek(item));
+            map.put("date", formatDate(item.getStartTime().getDate()));
             map.put("Image", icon[0]);
-            //map.put("money", recordList.get(i).getMoney());
-            map.put("money","+6.8 流量币");
-            map.put("wifi", "Wifi 2");
+            map.put("money","-"+item.getCost().toString()+" 流量币");
+            map.put("wifi", item.getWiFi().getSSID());
             Item.add(map);
         }
         SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.ues_item, new String[]{"week", "date","Image","money","wifi"},
@@ -94,5 +95,27 @@ public class UseRecordActivity extends Activity {
         recordListView.setAdapter(saImageItems);
         recordListView.setTextFilterEnabled(true);
 
+    }
+
+    private String getWeek(UseRecord useRecord){
+        Date date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try{
+            date = sdf.parse(useRecord.getStartTime().getDate());
+            SimpleDateFormat weekdf = new SimpleDateFormat("EEEE");
+            String week = weekdf.format(date);
+            return week;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String formatDate(String date){
+        String fdate="";
+        String[] tmp =date.split(" ");
+        String[] tmp2=tmp[0].split("-");
+        fdate=tmp2[1]+"-"+tmp2[2];
+        return fdate;
     }
 }

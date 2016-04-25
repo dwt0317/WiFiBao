@@ -26,22 +26,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textColor="#696969"
-        android:text="你的流量分享专家"
+        android:text="您的网络分享专家"
         android:textSize="22dp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/share_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#7cb342"
-        android:height="30dip"
-        android:width="90dip"
-        android:layout_gravity="center"
-        android:text="开始体验"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:layout_marginTop="110dp"/>
+    <!--<Button-->
+        <!--android:id="@+id/share_submit"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#7cb342"-->
+        <!--android:height="30dip"-->
+        <!--android:width="90dip"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:text="开始体验"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:textSize="20sp"-->
+        <!--android:layout_marginTop="110dp"/>-->
 
 
 
