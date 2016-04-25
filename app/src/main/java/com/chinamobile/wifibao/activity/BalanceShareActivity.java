@@ -42,10 +42,12 @@ public class BalanceShareActivity extends Activity {
         //显示已分享流量
         Intent intent = getIntent();
         TextView tv = (TextView)findViewById(R.id.textview51);
-        tv.setText(intent.getStringExtra("flow"));//这里带有单位MB
+        String flow = intent.getStringExtra("flow");
+        tv.setText(flow);//这里带有单位MB
         //显示已获得收益
         TextView tv1 = (TextView)findViewById(R.id.textview61);
-        tv1.setText(intent.getStringExtra("bene"));
+        String bene = intent.getStringExtra("bene");
+        tv1.setText(bene);
         //返回HomeActivity
         home = (ImageView) findViewById(R.id.imageView8);
         home.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +58,8 @@ public class BalanceShareActivity extends Activity {
             }
         });
         //上传分享收益记录
-        shareRecord = getShareRecord(Double.parseDouble("20"),0.0);
+        String f = flow.substring(0, flow.indexOf("MB"));
+        shareRecord = getShareRecord(Double.parseDouble(f),Double.parseDouble(bene));
         //已可获取热点信息
         sycData(mContext,shareRecord);
     }
