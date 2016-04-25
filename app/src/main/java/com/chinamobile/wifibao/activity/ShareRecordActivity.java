@@ -1,9 +1,9 @@
 package com.chinamobile.wifibao.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,12 +17,16 @@ import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.utils.ShareRecordManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import cn.bmob.v3.BmobUser;
-
-public class ShareRecordActivity extends AppCompatActivity {
+/**
+ * Created by cdd on 2016/4/24.
+ */
+public class ShareRecordActivity extends Activity {
 
     private int[] icon = {R.mipmap.potrait};//图标
     private ArrayList<HashMap<String, Object>> Item = new ArrayList<HashMap<String, Object>>();
@@ -36,6 +40,7 @@ public class ShareRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_record);
 
+        Toast.makeText(ShareRecordActivity.this, "Please wait..", Toast.LENGTH_SHORT).show();
         setViewComponent();
 
         //返回HomeActivity
@@ -76,24 +81,20 @@ public class ShareRecordActivity extends AppCompatActivity {
 
 
     public void updateRecordListView(){
-        int size;
+        int size=0;
         if(recordList != null){
             size=recordList.size();
-        }else{
-            size = 0;
         }
 
-        ShareRecord sr;
-        //int size=3;
+        ShareRecord sr;;
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             sr = recordList.get(i);
-            map.put("week", "周 一");
-            map.put("date", "04-22");
+            map.put("week", getWeek(sr));
+            map.put("date", formatDate(sr.getStartTime().getDate()));
             map.put("Image", icon[0]);
-            //map.put("money", recordList.get(i).getMoney());
-            map.put("money",sr.getIncome());
-            map.put("wifi", "Wifi 2");
+            map.put("money",sr.getIncome()+"流量币");
+            map.put("wifi", "热点:"+sr.getWiFi().getSSID());
             Item.add(map);
         }
         SimpleAdapter saImageItems = new SimpleAdapter(this, Item, R.layout.share_item, new String[]{"week", "date","Image","money","wifi"},
@@ -101,5 +102,26 @@ public class ShareRecordActivity extends AppCompatActivity {
         recordListView.setAdapter(saImageItems);
         recordListView.setTextFilterEnabled(true);
 
+    }
+
+    private String getWeek(ShareRecord record){
+        Date date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try{
+            date = sdf.parse(record.getStartTime().getDate());
+            SimpleDateFormat weekdf = new SimpleDateFormat("EEEE");
+            String week = weekdf.format(date);
+            return week;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+    private String formatDate(String date){
+        String fdate="";
+        String[] tmp =date.split(" ");
+        String[] tmp2=tmp[0].split("-");
+        fdate=tmp2[1]+"-"+tmp2[2];
+        return fdate;
     }
 }

@@ -49,13 +49,13 @@ public class ShareRecordManager {
     public void queryShareRecord(User user){
         BmobQuery<ShareRecord> bmobQuery = new BmobQuery<ShareRecord>();
 
-        //bmobQuery.include("WiFi");
+        bmobQuery.include("WiFi");
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.findObjects(mContext, new FindListener<ShareRecord>() {
             @Override
             public void onSuccess(List<ShareRecord> recordList) {
                 shareRecordList= new ArrayList<ShareRecord>(recordList);
-                separateRecords();
+                //separateRecords();
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
@@ -76,7 +76,7 @@ public class ShareRecordManager {
     }
 
     private  void separateRecords(){
-        ArrayList<String> months = new ArrayList<String>();
+        //ArrayList<String> months = new ArrayList<String>();
         for(int i=0;i<shareRecordList.size();i++){
             ShareRecord item = shareRecordList.get(i);
             String dateStr = item.getStartTime().getDate();
