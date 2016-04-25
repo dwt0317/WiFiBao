@@ -23,8 +23,16 @@ import com.chinamobile.wifibao.utils.WiFiApGradeUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
+
+/**
+ * Created by cdd on 2016/3/16.
+ * modified by cdd on 2016/4/25
+ * 缓存的wifi热点信息可以用于，后面条件查询数据库；目前缓存热点开启时间，在上传热点分享信息可以用到。
+ */
 
 public class ShareActivity extends Activity {
     private Context mContext = null;
@@ -174,14 +182,14 @@ public class ShareActivity extends Activity {
 
         editor.putString("objectId",ap.getObjectId());
 
-        editor.putString("SSID",ap.getBSSID());
+        editor.putString("SSID", ap.getBSSID());
         editor.putString("password", ap.getPassword());
         editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
         editor.putInt("maxConnect", ap.getMaxConnect());
         editor.putString("BSSID", ap.getBSSID());
         editor.putBoolean("state", ap.getState());
         //记录开始时间
-        //
+        editor.putLong("startTime",(new Date()).getTime());
         editor.commit();
     }
 

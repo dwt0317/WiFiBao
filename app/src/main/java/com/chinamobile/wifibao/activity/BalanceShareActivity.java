@@ -72,7 +72,9 @@ public class BalanceShareActivity extends Activity {
         ShareRecord sr=new ShareRecord();
         sr.setWiFi(getWifiAp());
         sr.setIncome(income);
-        sr.setStartTime(new BmobDate(new Date()));
+        sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        long time = sp.getLong("startTime",0L);
+        sr.setStartTime(new BmobDate(new Date(time)));
         sr.setEndTime(new BmobDate(new Date()));
         sr.setFlowShared(flow);
 
