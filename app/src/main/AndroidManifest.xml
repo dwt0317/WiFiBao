@@ -57,6 +57,10 @@
         <activity android:name=".activity.UseRecordActivity">
 
         </activity>
+        <activity android:name=".activity.ShareRecordActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".activity.FlowUsingActivity">
 
         </activity>
