@@ -107,8 +107,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:layout_above="@+id/passwordtext"
-            android:layout_alignLeft="@+id/maxsharetext"
-            android:layout_alignStart="@+id/maxsharetext" />
+            android:layout_toRightOf="@id/apname" />
 
 
         <ImageView
@@ -131,7 +130,7 @@
             android:layout_below="@+id/apname"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="密 码 设 置 : "
+            android:text="密 码 设 置 :"
             android:textSize="16sp" />
         <EditText
             android:layout_width="wrap_content"
@@ -170,12 +169,13 @@
             android:layout_alignLeft="@+id/password"
             android:layout_alignStart="@+id/password" />
         <EditText
-            android:layout_width="50sp"
+            android:layout_width="40sp"
             android:layout_height="wrap_content"
             android:id="@+id/maxsharetext"
             android:numeric="integer"
             android:layout_toRightOf="@+id/maxshare"
             android:text="12"
+            android:gravity="end"
             android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -218,12 +218,14 @@
             android:layout_toLeftOf="@+id/maxsharetext"
             android:layout_toStartOf="@+id/maxsharetext" />
         <EditText
-            android:layout_width="50sp"
+            android:layout_width="40sp"
             android:layout_height="wrap_content"
             android:id="@+id/maxaccesstext"
             android:layout_toRightOf="@+id/maxaccess"
             android:layout_below="@+id/maxsharetext"
             android:text="8"
+            android:gravity="right"
+            android:inputType="number"
             android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>

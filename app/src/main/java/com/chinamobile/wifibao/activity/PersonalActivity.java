@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +46,22 @@ public class PersonalActivity extends Activity {
 //                }
 //            }
 //        });
-
+        ImageView home = (ImageView)findViewById(R.id.gotohome);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalActivity.this, Home2Activity.class);
+                startActivity(intent);
+            }
+        });
+        LinearLayout modify = (LinearLayout)findViewById(R.id.modifypass);
+        modify.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(PersonalActivity.this,PasswordModifyActivity.class);
+                startActivity(intent);
+            }
+        });
 
         showUserInfo();
 
