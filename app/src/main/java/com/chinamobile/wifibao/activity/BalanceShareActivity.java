@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,17 @@ public class BalanceShareActivity extends Activity {
         shareRecord = getShareRecord(Double.parseDouble(f),Double.parseDouble(bene));
         //已可获取热点信息
         sycData(mContext,shareRecord);
+        //Button返回
+        Button balance_return = (Button)findViewById(R.id.balance_return);
+        balance_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BalanceShareActivity.this,ShareActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private User getUser() {
