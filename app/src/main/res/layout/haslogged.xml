@@ -63,8 +63,9 @@
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
-            android:background="@drawable/setting_wallet"
-            android:clickable="false" />
+            android:clickable="false"
+            android:background="@drawable/setting_wallet"/>
+
         <TextView
             android:id="@+id/mywallet"
             android:clickable="false"
@@ -73,8 +74,7 @@
             android:text="我的钱包"
             android:textSize="60px"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40px"
-            android:textIsSelectable="true"/>
+            android:layout_marginLeft="40px"/>
     </LinearLayout>
 
     <LinearLayout
@@ -96,6 +96,7 @@
             android:textSize="60px"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="40px" />
+
     </LinearLayout>
 
     <LinearLayout
