@@ -72,6 +72,7 @@ public class Home2Activity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
             exit();
             return false;
         }

@@ -165,7 +165,7 @@ public class ImageCycleView extends LinearLayout {
 	private void startImageTimerTask() {
 		stopImageTimerTask();
 		// 图片每3秒滚动一次
-		mHandler.postDelayed(mImageTimerTask, 3000);
+		mHandler.postDelayed(mImageTimerTask, 5000);
 	}
 
 	/**

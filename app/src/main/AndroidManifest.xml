@@ -85,14 +85,17 @@
 
         </activity>
         <activity
-            android:name=".activity.Home2Activity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.Home2Activity">
         </activity>
         <activity
             android:name=".activity.SignupActivity">
         </activity>
         <activity
             android:name=".activity.MywalletActivity">
+
+        </activity>
+        <activity
+            android:name=".activity.MobileServiceActivity">
 
         </activity>
 
