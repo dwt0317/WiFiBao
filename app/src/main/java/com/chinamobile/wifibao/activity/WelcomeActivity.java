@@ -14,7 +14,7 @@ import java.util.TimerTask;
  * Created by lab on 2016/4/19.
  */
 public class WelcomeActivity extends Activity {
-    private final int SKIP_DELAY_TIME = 3000;
+    private final int SKIP_DELAY_TIME = 2000;
 
 
     public void onCreate(Bundle saveInstanceState) {
