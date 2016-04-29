@@ -95,7 +95,9 @@
             android:layout_alignBottom="@+id/textview6"
             android:layout_alignLeft="@+id/iv1"
             android:layout_alignStart="@+id/iv1"
-            android:layout_below="@+id/iv1" />
+            android:layout_below="@+id/iv1"
+            android:layout_alignRight="@+id/iv1"
+            android:layout_alignEnd="@+id/iv1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
