@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,10 +43,12 @@ public class BalanceShareActivity extends Activity {
         //显示已分享流量
         Intent intent = getIntent();
         TextView tv = (TextView)findViewById(R.id.textview51);
-        tv.setText(intent.getStringExtra("flow"));//这里带有单位MB
+        String flow = intent.getStringExtra("flow");
+        tv.setText(flow);//这里带有单位MB
         //显示已获得收益
         TextView tv1 = (TextView)findViewById(R.id.textview61);
-        tv1.setText(intent.getStringExtra("bene"));
+        String bene = intent.getStringExtra("bene");
+        tv1.setText(bene);
         //返回HomeActivity
         home = (ImageView) findViewById(R.id.imageView8);
         home.setOnClickListener(new View.OnClickListener() {
@@ -56,9 +59,21 @@ public class BalanceShareActivity extends Activity {
             }
         });
         //上传分享收益记录
-        shareRecord = getShareRecord(Double.parseDouble("20"),0.0);
+        String f = flow.substring(0, flow.indexOf("MB"));
+        shareRecord = getShareRecord(Double.parseDouble(f),Double.parseDouble(bene));
         //已可获取热点信息
         sycData(mContext,shareRecord);
+        //Button返回
+        Button balance_return = (Button)findViewById(R.id.balance_return);
+        balance_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BalanceShareActivity.this,ShareActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private User getUser() {
@@ -72,7 +87,9 @@ public class BalanceShareActivity extends Activity {
         ShareRecord sr=new ShareRecord();
         sr.setWiFi(getWifiAp());
         sr.setIncome(income);
-        sr.setStartTime(new BmobDate(new Date()));
+        sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
+        long time = sp.getLong("startTime",0L);
+        sr.setStartTime(new BmobDate(new Date(time)));
         sr.setEndTime(new BmobDate(new Date()));
         sr.setFlowShared(flow);
 

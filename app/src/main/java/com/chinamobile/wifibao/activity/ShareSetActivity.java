@@ -1,5 +1,5 @@
 package com.chinamobile.wifibao.activity;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,10 +8,12 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,13 +36,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 
-/**
- * Created by cdd on 2016/3/16.
- * modified by cdd on 2016/4/25
- * 缓存的wifi热点信息可以用于，后面条件查询数据库；目前缓存热点开启时间，在上传热点分享信息可以用到。
- */
-
-public class ShareActivity extends Activity {
+public class ShareSetActivity extends FragmentActivity {
     private Context mContext = null;
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
     private static final String METHOD_IS_WIFI_AP_ENABLED = "isWifiApEnabled";
@@ -49,79 +45,79 @@ public class ShareActivity extends Activity {
 
 
     // 顶部菜单2个Linearlayout
-    private LinearLayout ll_data;
-    private LinearLayout ll_wifi;
+     private LinearLayout ll_data;
+     private LinearLayout ll_wifi;
 
 
-    // 顶部菜单2个ImageView
+     // 顶部菜单2个ImageView
 
 
-    // 顶部菜单2个菜单标题
-    private TextView tv_data;
-    private TextView tv_wifi;
+     // 顶部菜单2个菜单标题
+     private TextView tv_data;
+     private TextView tv_wifi;
 
 
-    // 中间内容区域
-    private ViewPager viewPager;
+     // 中间内容区域
+     private ViewPager viewPager;
 
-    // ViewPager适配器ContentAdapter
-    private ContentAdapter adapter;
+     // ViewPager适配器ContentAdapter
+     private ContentAdapter adapter;
 
-    private List<View> views;
-    private View page_01;
-    private View page_02;
+     private List<View> views;
+     private View page_01;
+     private View page_02;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_share_main);
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.set_share_main);
 
-        // 初始化控件
-        initView();
-        // 初始化顶部按钮事件
-        initEvent();
+         // 初始化控件
+         initView();
+         // 初始化顶部按钮事件
+         initEvent();
 
-        mContext = this;
+         mContext = this;
 
-        //用户
-        user = getUser();
-        //如果热点已经打开，跳转下个页面
-        isWiFiEnabled();
+         //用户
+         user = getUser();
+         //如果热点已经打开，跳转下个页面
+         isWiFiEnabled();
 
-        final Handler openHandle = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg.arg1 == 1) {
-                    open();
-                }else {
-                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
+         final Handler openHandle = new Handler() {
+             @Override
+             public void handleMessage(Message msg) {
+                 super.handleMessage(msg);
+                 if (msg.arg1 == 1) {
+                     open();
+                 }else {
+                     Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
+                 }
+             }
+         };
 
-        //点击打开热点
+         //点击打开热点
 
-        Button shareButton = (Button)page_01.findViewById(R.id.share_submit);
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkOrDo(openHandle);
-            }
-        });
+         Button shareButton = (Button)page_01.findViewById(R.id.share_submit);
+         shareButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 checkOrDo(openHandle);
+             }
+         });
 
 
-        //返回HomeActivity
-        ImageView home = (ImageView) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ShareActivity.this, Home2Activity.class);
-                startActivity(intent);
-            }
-        });
+         //返回HomeActivity
+         ImageView home = (ImageView) findViewById(R.id.home);
+         home.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(ShareSetActivity.this, Home2Activity.class);
+                 startActivity(intent);
+             }
+         });
 
-    }
+     }
 
 
 
@@ -138,9 +134,9 @@ public class ShareActivity extends Activity {
         if (name.isEmpty() || password.isEmpty()) {
             Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
         } else if (password.length() < 8) {
-            Toast.makeText(ShareActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareSetActivity.this, "密码长度不能小于8！", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(ShareActivity.this, "数据同步中...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareSetActivity.this, "数据同步中...", Toast.LENGTH_SHORT).show();
             //上传数据
             ap = new WiFi();
             ap.setSSID(name);
@@ -165,12 +161,12 @@ public class ShareActivity extends Activity {
         //热点信息已经上传成功，在本地保存ap信息
         writeInCache(ap);
         //跳转并销毁页面
-        Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
+        Intent intent = new Intent(ShareSetActivity.this, CloseApActivity.class);
         intent.putExtra("maxshare",ap.getUpperLimit());
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
-        ShareActivity.this.finish();
+        ShareSetActivity.this.finish();
     }
 
     /***
@@ -184,10 +180,10 @@ public class ShareActivity extends Activity {
             Method method = WifiManager.class.getMethod(name);
             boolean result = (boolean) method.invoke(wifiManager);
             if (result) {
-                Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
+                Intent intent = new Intent(ShareSetActivity.this, CloseApActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
-                ShareActivity.this.finish();
+                ShareSetActivity.this.finish();
             }
         } catch (Exception e) {
             Log.e("cdd:", "SecurityException", e);
@@ -308,7 +304,7 @@ public class ShareActivity extends Activity {
     }
 
 
-    class MyListener implements View.OnClickListener {
+    class MyListener implements OnClickListener {
         @Override
         public void onClick(View v) {
             // 在每次点击后将所有的顶部按钮(ImageView,TextView)颜色改为灰色，然后根据点击着色
@@ -369,4 +365,6 @@ public class ShareActivity extends Activity {
 
         }
     }
+
+
 }

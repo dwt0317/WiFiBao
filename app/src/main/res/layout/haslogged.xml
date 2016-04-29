@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80px"
         android:orientation="vertical"
-        android:layout_marginLeft="100px">
+        android:layout_marginLeft="100px"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/portrait"
@@ -42,6 +43,7 @@
                 android:layout_gravity="center" />
             <ImageView
                 android:id="@+id/next"
+                android:clickable="false"
                 android:layout_width="100px"
                 android:layout_height="100px"
                 android:background="@drawable/setting_next"
@@ -52,55 +54,65 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/mywalletLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100px"
-        android:layout_marginTop="80px">
+        android:layout_marginTop="80px"
+        android:clickable="true">
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
-            android:background="@drawable/setting_wallet" />
+            android:clickable="false"
+            android:background="@drawable/setting_wallet"/>
+
         <TextView
             android:id="@+id/mywallet"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的钱包"
             android:textSize="60px"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40px"
-            android:textIsSelectable="true"/>
+            android:layout_marginLeft="40px"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100px"
-        android:layout_marginTop="80px">
+        android:layout_marginTop="80px"
+        android:clickable="true">
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
             android:background="@drawable/setting_setshare" />
         <TextView
             android:id="@+id/setshare"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分享设置"
             android:textSize="60px"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="40px" />
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/aboutusLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100px"
-        android:layout_marginTop="80px">
+        android:layout_marginTop="80px"
+        android:clickable="true">
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
             android:background="@drawable/setting_aboutus" />
         <TextView
             android:id="@+id/aboutus"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="关于我们"
@@ -112,13 +124,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100px"
-        android:layout_marginTop="80px">
+        android:layout_marginTop="80px"
+        android:clickable="true">
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
             android:background="@drawable/setting_set" />
         <TextView
             android:id="@+id/set"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置"
@@ -134,13 +148,14 @@
         android:layout_marginLeft="100px"
         android:layout_marginTop="80px"
         android:visibility="gone"
-        >
+        android:clickable="true">
 
         <ImageView
             android:layout_width="130px"
             android:layout_height="130px"
             android:background="@drawable/setting_logout"/>
         <TextView
+            android:clickable="false"
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

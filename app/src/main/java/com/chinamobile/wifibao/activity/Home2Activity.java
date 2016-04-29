@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,10 +14,21 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.cycleImage.ADInfo;
+import com.chinamobile.wifibao.utils.cycleImage.ImageCycleView;
+
+import java.util.ArrayList;
 
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
+
+import com.chinamobile.wifibao.utils.cycleImage.ImageCycleView.ImageCycleViewListener;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class Home2Activity extends Activity {
     private ImageView portrait;
@@ -24,6 +36,8 @@ public class Home2Activity extends Activity {
     private TextView username;
     private LinearLayout usernameLayout;
     private LinearLayout logoutLayout;
+    private LinearLayout aboutusLayout;
+    private LinearLayout mywalletLayout;
 
     private LinearLayout use;
     private LinearLayout share;
@@ -34,18 +48,31 @@ public class Home2Activity extends Activity {
     private LinearLayout sharehistory;
     private LinearLayout manual;
 
+    private ImageCycleView mAdView;
+    private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
+    private String[] imageUrls = {
+            "drawable://" + R.drawable.home_ad_0,
+            "drawable://" + R.drawable.home_ad_1,
+            "drawable://" + R.drawable.home_ad_2,
+            "drawable://" + R.drawable.home_ad_3
+
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home2);
         setViewComponent();
+        initImageLoader();
+        initCycleImage();
     }
 
     private long exitTime = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
             exit();
             return false;
         }
@@ -83,7 +110,8 @@ public class Home2Activity extends Activity {
         setLoginListener(mywallet, MywalletActivity.class);
         setLoginListener(hall, MobileServiceActivity.class);
         setLoginListener(usehistory,UseRecordActivity.class);
-        setListener(manual,ManualActivity.class);
+        setLoginListener(sharehistory,ShareRecordActivity.class);
+        setLoginListener(manual,ManualActivity.class);
 
     }
 
@@ -129,6 +157,8 @@ public class Home2Activity extends Activity {
         username = (TextView) setting_content.findViewById(R.id.username);
         usernameLayout = (LinearLayout) setting_content.findViewById(R.id.usernameLayout);
         logoutLayout = (LinearLayout) setting_content.findViewById(R.id.logoutLayout);
+        aboutusLayout=(LinearLayout) setting_content.findViewById(R.id.aboutusLayout);
+        mywalletLayout=(LinearLayout) setting_content.findViewById(R.id.mywalletLayout);
 
         BmobUser bmobUser = BmobUser.getCurrentUser(this);
         if (bmobUser == null) {
@@ -153,9 +183,25 @@ public class Home2Activity extends Activity {
             });
             logoutLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    BmobUser.logOut(Home2Activity.this);
+                    if (BmobUser.getCurrentUser(Home2Activity.this)!=null){
+                        BmobUser.logOut(Home2Activity.this);
+                        Intent intent = new Intent();
+                        intent.setClass(Home2Activity.this, Home2Activity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+            mywalletLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(Home2Activity.this, HomeActivity.class);
+                    intent.setClass(Home2Activity.this, MywalletActivity.class);
+                    goToActivity(intent);
+                }
+            });
+            aboutusLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(Home2Activity.this, ManualActivity.class);
                     startActivity(intent);
                 }
             });
@@ -172,5 +218,67 @@ public class Home2Activity extends Activity {
             this.startActivity(destIntent);
         }
     }
+
+    /**
+     * ImageCycleListener
+     */
+    private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener() {
+        @Override
+        public void onImageClick(ADInfo info, int position, View imageView) {
+            Toast.makeText(Home2Activity.this, "content: "+info.getContent(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            ImageLoader.getInstance().displayImage(imageURL, imageView);// 使用ImageLoader对图片进行加装！
+        }
+    };
+
+    /**
+     * 初始化轮播广告
+     */
+    private void initCycleImage(){
+        for(int i=0;i < imageUrls.length; i ++){
+            ADInfo info = new ADInfo();
+            info.setUrl(imageUrls[i]);
+            info.setContent("ad " + i);
+            infos.add(info);
+        }
+        mAdView = (ImageCycleView) findViewById(R.id.ad_top);
+        mAdView.setImageResources(infos, mAdCycleViewListener);
+    }
+
+    private void initImageLoader(){
+        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.drawable.icon_empty) // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.icon_error) // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+                .build(); // 创建配置过得DisplayImageOption对象
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(options)
+                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.startImageCycle();
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAdView.pushImageCycle();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdView.pushImageCycle();
+    }
+
+
+
 
 }

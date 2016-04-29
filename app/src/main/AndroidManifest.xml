@@ -33,13 +33,22 @@
         </activity>
 
         <activity android:name=".activity.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".activity.PasswordModifyActivity">
         </activity>
         <!--activities for share wifi ap.DON'T REMOVE -->
         <activity android:name=".activity.ShareActivity">
+
         </activity>
+        <activity android:name=".activity.ShareSetActivity">
+
+        </activity>
+
         <activity android:name=".activity.CloseApActivity">
         </activity>
         <activity android:name=".activity.BalanceShareActivity">
@@ -55,6 +64,9 @@
 
         </activity>
         <activity android:name=".activity.UseRecordActivity">
+
+        </activity>
+        <activity android:name=".activity.ShareRecordActivity">
 
         </activity>
         <activity android:name=".activity.FlowUsingActivity">
@@ -78,23 +90,20 @@
 
         </activity>
         <activity
-            android:name=".activity.Home2Activity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".activity.Home2Activity">
+        </activity>
+        <activity
+            android:name=".activity.SignupActivity">
+        </activity>
+        <activity
+            android:name=".activity.MywalletActivity">
 
         </activity>
         <activity
-            android:name=".activity.SignupActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".activity.MywalletActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.MobileServiceActivity">
 
         </activity>
+
     </application>
 
 </manifest>
