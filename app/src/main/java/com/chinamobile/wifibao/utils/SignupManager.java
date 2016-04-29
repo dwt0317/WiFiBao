@@ -8,9 +8,11 @@ import android.util.Log;
 import com.chinamobile.wifibao.bean.User;
 
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.VerifySMSCodeListener;
 
 /**
@@ -60,7 +62,7 @@ public class SignupManager {
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
-                Log.i("bmob", ""+user.getUsername()+"一键注册登陆成功");
+                Log.i("bmob", "" + user.getUsername() + "一键注册登陆成功");
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
@@ -69,13 +71,39 @@ public class SignupManager {
             @Override
             public void onFailure(int code, String error) {
                 // TODO Auto-generated method stub
-                Log.e("bmob",error);
+                Log.e("bmob", error);
                 errorMsg = error;
                 Message msg = new Message();
                 msg.what = 0;
                 getUiHandler().sendMessage(msg);
             }
         });
+    }
+    //修改密码
+    public void modifyPassword( String  oldPassword, String newPassword){
+
+        BmobUser.updateCurrentUserPassword(mContext, oldPassword, newPassword,
+                new UpdateListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.i("bmob", "密码修改成功：");
+                        Message msg = new Message();
+                        msg.what = 1;
+                        getUiHandler().sendMessage(msg);
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+
+                        Log.i("bmob", "密码修改失败：" + s + "(" + i + ")");
+                        errorMsg = s;
+                        Message msg = new Message();
+                        msg.what = 0;
+                        getUiHandler().sendMessage(msg);
+
+                    }
+                });
+
     }
 
     public void verifySMSCode(String phoneNumber, String verifyCode){
