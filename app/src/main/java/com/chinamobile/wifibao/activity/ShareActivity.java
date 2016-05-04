@@ -302,8 +302,8 @@ public class ShareActivity extends Activity {
          tv_data.setTextColor(0xff1B940A);
          tv_wifi.setTextColor(0xff1B940A);
          **/
-        tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border,null));
-        tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border,null));
+        tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border));
+        tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border));
         ;
     }
 
@@ -318,13 +318,13 @@ public class ShareActivity extends Activity {
                 case R.id.ll_data:
                     //tv_data.setTextColor(0xff1B940A);
                     //tv_data.setBackgroundColor(Color.WHITE);
-                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
                     viewPager.setCurrentItem(0);
                     break;
                 case R.id.ll_wifi:
                     //tv_wifi.setTextColor(0xff1B940A);
                     //tv_wifi.setBackgroundColor(Color.WHITE);
-                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
                     viewPager.setCurrentItem(1);
                     break;
                 default:
