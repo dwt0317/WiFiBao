@@ -58,6 +58,7 @@ public class BalanceUseActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BalanceUseActivity.this,HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

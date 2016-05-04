@@ -69,6 +69,7 @@ public class BalanceShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BalanceShareActivity.this,ShareActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

@@ -82,6 +82,7 @@ public class WifiDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WifiDetailsActivity.this,Home2Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

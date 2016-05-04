@@ -23,6 +23,7 @@ public class ManualActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setClass(ManualActivity.this, Home2Activity.class);
                 startActivity(intent);
             }
