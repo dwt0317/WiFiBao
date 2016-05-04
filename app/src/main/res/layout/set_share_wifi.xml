@@ -5,67 +5,14 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="分享设置"
-            android:textSize="22dp"
-            android:textColor="#FFFFFF"
-            android:textAlignment="center"
-            android:paddingTop="10dip"
-            android:background="#1892eb"
-            />
-
-        <ImageView
-            android:id="@+id/home"
-            android:layout_height="22dp"
-            android:layout_width="22dp"
-            android:layout_marginTop="12dip"
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/home"
-            />
-
-    </RelativeLayout>
-
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="350dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:src="@drawable/signal"/>
+        android:src="@mipmap/wifi"/>
 
-    <RadioGroup
-        android:id="@+id/share"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="100sp"
-        android:paddingTop="20dp">
 
-        <RadioButton
-            android:drawableLeft="@drawable/wlan"
-            android:id="@+id/wifi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="   WiFi分享"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:checked="false" />
-
-        <RadioButton
-            android:drawableLeft="@drawable/flow"
-            android:id="@+id/cellular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="   流量分享"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:checked="true" />
-    </RadioGroup>
 
     <RelativeLayout
         android:orientation="vertical"
@@ -130,7 +77,7 @@
             android:layout_below="@+id/apname"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="密 码 设 置 :"
+            android:text="热 点 密 码 :"
             android:textSize="16sp" />
         <EditText
             android:layout_width="wrap_content"
@@ -143,13 +90,13 @@
             android:paddingBottom="7sp"
             android:password="true"
             android:layout_below="@+id/apname"
-             />
+            />
 
         <ImageView
-            android:layout_width="23dp"
+            android:layout_width="22dp"
             android:layout_height="27dp"
             android:background="#FFFFFF"
-            android:src="@drawable/cellular"
+            android:src="@drawable/men"
             android:id="@+id/imageView3"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
@@ -163,7 +110,7 @@
             android:id="@+id/maxshare"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="最大分享流量:"
+            android:text="最多接入人数:"
             android:textSize="16sp"
             android:layout_below="@+id/imageView2"
             android:layout_alignLeft="@+id/password"
@@ -186,49 +133,12 @@
             android:layout_height="wrap_content"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
-            android:text="M"
+            android:text="人"
             android:textSize="16sp"
             android:layout_below="@+id/passwordtext"
             android:layout_toRightOf="@+id/maxsharetext"
             android:layout_toEndOf="@+id/maxsharetext" />
 
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="27dp"
-            android:background="#FFFFFF"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/men"
-            android:id="@+id/imageView6"
-            android:layout_alignBottom="@+id/maxaccess"
-            android:layout_alignRight="@+id/imageView3"
-            android:layout_alignEnd="@+id/imageView3"
-            android:layout_alignTop="@+id/maxaccess" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/maxaccess"
-            android:layout_marginLeft="90sp"
-            android:paddingTop="7sp"
-            android:paddingBottom="7sp"
-            android:text="最多接入人数:"
-            android:textSize="16sp"
-            android:layout_below="@+id/maxshare"
-            android:layout_toLeftOf="@+id/maxsharetext"
-            android:layout_toStartOf="@+id/maxsharetext" />
-        <EditText
-            android:layout_width="40sp"
-            android:layout_height="wrap_content"
-            android:id="@+id/maxaccesstext"
-            android:layout_toRightOf="@+id/maxaccess"
-            android:layout_below="@+id/maxsharetext"
-            android:text="8"
-            android:gravity="right"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:paddingTop="7sp"
-            android:paddingBottom="7sp"/>
 
     </RelativeLayout>
 
@@ -244,11 +154,7 @@
         android:text="确认分享"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:layout_marginTop="50dp"/>
-
-
-
-
+        android:layout_marginTop="75dp"/>
 
 
 </LinearLayout>

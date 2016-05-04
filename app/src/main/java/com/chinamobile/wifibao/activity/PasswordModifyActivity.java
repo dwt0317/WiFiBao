@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.bean.User;
+import com.chinamobile.wifibao.utils.SignupManager;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.UpdateListener;
@@ -21,7 +25,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by lab on 2016/4/19.
  */
 public class PasswordModifyActivity extends Activity {
-    private Context mContext = null;
+    private Context mContext = PasswordModifyActivity.this;
     private Button modifyButton = null;
     private EditText password1 = null;
     private EditText password2 = null;
@@ -75,59 +79,34 @@ public class PasswordModifyActivity extends Activity {
             //password2.setError("两次输入新密码不一致！");
             //return false;
         } else {
-            MyTask task = new MyTask();
-            task.execute();
+
+
+
+            final Handler modifyHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    if (msg.what == 1) {
+                        Toast.makeText(mContext, "修改成功！",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, HomeActivity.class);
+                        startActivity(intent);
+                    } else {
+                        String error = SignupManager.getInstance(mContext).getErrorMsg();
+                        Toast.makeText(mContext, error,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+            SignupManager.getInstance(mContext).setUiHandler(modifyHandler);
+            SignupManager.getInstance(mContext).modifyPassword(oldPassword, newPassword1);
         }
 
 
     }
-    private void modify() {
-        BmobUser.updateCurrentUserPassword(mContext, oldPassword, newPassword1, new UpdateListener() {
-            @Override
-            public void onSuccess() {
-                Log.i("bmob", "密码修改成功：");
-                Toast.makeText(PasswordModifyActivity.this, "密码修改成功！ ",
-                        Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent();
-                intent.setClass(PasswordModifyActivity.this, HomeActivity.class);
-                startActivity(intent);
 
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
-                Log.i("bmob", "密码修改失败：" + s + "(" + i + ")");
-                Toast.makeText(PasswordModifyActivity.this, "密码修改失败！",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private class MyTask extends AsyncTask<Integer, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Integer... params) {
-            modify();
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
 
 
 
