@@ -6,8 +6,8 @@
     android:background="#FFFFFF">
 
     <ImageView
-        android:layout_width="350dp"
-        android:layout_height="160dp"
+        android:layout_width="300dp"
+        android:layout_height="140dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:src="@mipmap/wifi"/>
@@ -19,7 +19,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="35dp"
-        android:paddingTop="30dp">
+        android:paddingTop="5dp">
 
         <ImageView
             android:layout_width="20dp"
@@ -46,10 +46,11 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp" />
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="70sp"
             android:layout_height="wrap_content"
             android:id="@+id/apnametext"
             android:text="hello"
+            android:gravity="center"
             android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -80,11 +81,12 @@
             android:text="热 点 密 码 :"
             android:textSize="16sp" />
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="70sp"
             android:layout_height="wrap_content"
             android:id="@+id/passwordtext"
             android:layout_toRightOf="@+id/password"
             android:text="12345678"
+            android:gravity="center"
             android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
@@ -120,9 +122,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/maxsharetext"
             android:numeric="integer"
+            android:inputType="number"
             android:layout_toRightOf="@+id/maxshare"
             android:text="12"
-            android:gravity="end"
+            android:maxLength="8"
+            android:gravity="center"
             android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
