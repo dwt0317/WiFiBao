@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.ConnectedIP;
+import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
 
@@ -119,6 +120,7 @@ public class CloseApActivity extends Activity {
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
                 monitorThread.stopService();
+                DatabaseUtil.getInstance().deletefromConnetionPool(mContext);
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());

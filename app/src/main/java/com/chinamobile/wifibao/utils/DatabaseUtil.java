@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -10,9 +11,11 @@ import com.chinamobile.wifibao.bean.ShareRecord;
 import com.chinamobile.wifibao.bean.WiFi;
 
 
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -187,21 +190,24 @@ public class DatabaseUtil {
         final ConnectionPool cp = new ConnectionPool();
         cp.setWiFi(wifiAp);
         cp.setMaxConnect(wifiAp.getMaxConnect());
+        cp.setCurConnect(0);
+        cp.setFlowUsed(0.0);
+        cp.setCost(0.0);
+        cp.setUser(wifiAp.getUser());
 
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
         //query.include("WiFi");
-
         query.addWhereEqualTo("WiFi", wifiAp);
-
+        query.addWhereEqualTo("User", wifiAp.getUser());
         query.setLimit(10);
 
         query.findObjects(context, new FindListener<ConnectionPool>() {
             @Override
             public void onSuccess(final List<ConnectionPool> object) {
                 final int len = object.size();
-                Log.i("DatabaseU obj: ",String.valueOf(len));
+                Log.i("DatabaseU obj: ", String.valueOf(len));
                 //数据库中不存在该wifi对应的connetionpool信息
-                if(len == 0){
+                if (len == 0) {
                     cp.save(context, new SaveListener() {
                         @Override
                         public void onSuccess() {
@@ -225,23 +231,26 @@ public class DatabaseUtil {
                 //数据库中存在wifi对应的ConnectionPool，保存id
                 cp.setObjectId(object.get(0).getObjectId());
                 final Message message = new Message();
-                message.what=0;
+                message.what = 0;
                 //数据库中存在记录，更新记录，不必插入
                 for (final ConnectionPool obj : object) {
                     //修改状态
                     obj.setMaxConnect(wifiAp.getMaxConnect());
-                    obj.update(context,obj.getObjectId(), new UpdateListener() {
+                    obj.setCurConnect(0);
+                    obj.setFlowUsed(0.0);
+                    obj.setCost(0.0);
+                    obj.update(context, obj.getObjectId(), new UpdateListener() {
                         @Override
                         public void onSuccess() {
                             Log.i("update succ", "!");
-                            message.what+=1;
+                            message.what += 1;
                             //异步，不要再外面判断
-                            if(message.what == len){
-                                Log.i("message what: ",String.valueOf(message.what));
+                            if (message.what == len) {
+                                Log.i("message what: ", String.valueOf(message.what));
                                 message.arg1 = 1;
                                 handler.sendMessage(message);
-                            }else if(obj.equals(object.get(len-1))){//到最后一个
-                                Log.i("message what: ",String.valueOf(message.what));
+                            } else if (obj.equals(object.get(len - 1))) {//到最后一个
+                                Log.i("message what: ", String.valueOf(message.what));
                                 message.arg1 = 0;
                                 handler.sendMessage(message);
                             }
@@ -270,6 +279,41 @@ public class DatabaseUtil {
                 handler.sendMessage(message);
             }
         });
-
+        writeConnectionPoolInCache(cp, context);
     }
+
+    /***
+     * 删除连接池记录
+     * @param context
+     */
+    public void deletefromConnetionPool(Context context){
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("ConnectionPoolIFNO", context.MODE_PRIVATE);
+        String objId = sp.getString("ConnetctionPoolId", "");
+        ConnectionPool cp = new ConnectionPool();
+        cp.setObjectId(objId);
+        cp.delete(context, new DeleteListener() {
+            @Override
+            public void onSuccess() {
+                Log.i("bmob","删除成功");
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                Log.i("bmob","删除失败："+msg);
+            }
+        });
+    }
+
+    /***
+     * 本地缓存
+     * @param cp
+     * @param context
+     */
+    private void writeConnectionPoolInCache(ConnectionPool cp, Context context){
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("ConnectionPoolIFNO", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("ConnetctionPoolId",cp.getObjectId());
+        editor.commit();
+    }
+
 }
