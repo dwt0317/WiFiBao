@@ -85,7 +85,7 @@ public class WiFiListManager {
     private void readDBNearbyWiFi(double[] userLoc){
         BmobQuery<ConnectionPool> bmobQuery = new BmobQuery<ConnectionPool>();
 //        bmobQuery.addWhereNear("location", userPoint);
-//        bmobQuery.include("user");
+        bmobQuery.include("user");
         bmobQuery.include("WiFi");
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
         bmobQuery.findObjects(mContext, new FindListener<ConnectionPool>() {
