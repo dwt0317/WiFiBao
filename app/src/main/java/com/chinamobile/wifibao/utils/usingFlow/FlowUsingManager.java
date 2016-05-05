@@ -78,7 +78,7 @@ public class FlowUsingManager {
                 toast.show();
                 endDetectHandler.postDelayed(endDetectRunnable,2000);
             }else{
-                Toast.makeText(mContext,  "上传结算数据失败,请稍候再试 \n"+errorMsg, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext,  "上传结算数据失败,请稍候再试 \n"+errorMsg, Toast.LENGTH_LONG).show();
             }
         }
     };

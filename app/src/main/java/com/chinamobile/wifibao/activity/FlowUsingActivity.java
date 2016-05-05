@@ -111,7 +111,7 @@ public class FlowUsingActivity extends Activity {
         @Override
         public void run() {
             if(isWiFiActive()){
-                wifiDetectHandler.postDelayed(wifiDetectRunnable,2000);
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,5000);
             }else
                 endUsing();
         }
