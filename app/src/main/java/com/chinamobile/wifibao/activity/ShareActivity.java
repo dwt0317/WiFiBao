@@ -117,6 +117,7 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShareActivity.this, Home2Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -171,6 +172,7 @@ public class ShareActivity extends Activity {
         Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
         intent.putExtra("maxshare",ap.getUpperLimit());
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
         ShareActivity.this.finish();
@@ -238,6 +240,10 @@ public class ShareActivity extends Activity {
         editor.putLong("startTime",(new Date()).getTime());
         editor.commit();
     }
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -352,13 +358,13 @@ public class ShareActivity extends Activity {
                     //iv_home.setImageResource(R.drawable.tab_weixin_pressed);
                     //tv_data.setTextColor(0xff1B940A);
                     //tv_data.setBackgroundColor(Color.WHITE);
-                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
 
                     break;
                 case 1:
                     //iv_address.setImageResource(R.drawable.tab_address_pressed);
                     //tv_wifi.setTextColor(0xff1B940A);
-                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
 
                     break;
 

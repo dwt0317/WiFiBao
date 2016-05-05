@@ -22,6 +22,7 @@ import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
+import com.chinamobile.wifibao.activity.ShareActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,24 +49,29 @@ public class CloseApActivity extends Activity {
 
         Toast.makeText(mContext, "热点已开启！", Toast.LENGTH_SHORT).show();
         //流量监测
+        final String apId = getWifiAp().getObjectId();
         final TextView showFlow = (TextView) findViewById(R.id.tv11);
         final Handler flowHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String sR = (String) msg.obj;
-                showFlow.setText(sR);
-                if (msg.arg1 == 0) {
-                    //WifiApAdmin.closeWifiAp(mContext);
-                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
-                }
+//                String sR = (String) msg.obj;
+//                showFlow.setText(sR);
+//                if (msg.arg1 == 0) {
+//                    //WifiApAdmin.closeWifiAp(mContext);
+//                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
+//                }
+                double be = Double.parseDouble((String)msg.obj);
+                double beOld = Double.parseDouble(showFlow.getText().toString());
+                showFlow.setText(String.valueOf(be+beOld)+" MB");
             }
         };
-        final TrafficMonitorService monitorThread = new TrafficMonitorService();
-        monitorThread.setHandler(flowHandle);
-        monitorThread.setContext(mContext);
-        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
-        monitorThread.start();
+        pullFlowUsed(flowHandle,apId);
+//        final TrafficMonitorService monitorThread = new TrafficMonitorService();
+//        monitorThread.setHandler(flowHandle);
+//        monitorThread.setContext(mContext);
+//        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
+//        monitorThread.start();
         //接入监测
         final TextView accessCount = (TextView) findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
@@ -92,7 +98,7 @@ public class CloseApActivity extends Activity {
                 benefit.setText(String.valueOf(be+beOld));
             }
         };
-        final String apId = getWifiAp().getObjectId();
+
         pullBenefit(benefitHandle,apId);
 
         //返回HomeActivity
@@ -119,7 +125,7 @@ public class CloseApActivity extends Activity {
             @Override
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
-                monitorThread.stopService();
+//                monitorThread.stopService();
                 DatabaseUtil.getInstance().deletefromConnetionPool(mContext);
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
@@ -257,9 +263,9 @@ public class CloseApActivity extends Activity {
      * 以热点id为标识，获取一个热点的收益
      * 暂时未使用id
      */
-    private int pullBenefit(final Handler handler,final String apId) {
+    private int pullFlowUsed(final Handler handler,final String apId) {
         final String tableName = "ConnectionPool";
-        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         final BmobRealTimeData rtd = new BmobRealTimeData();
 
         rtd.start(CloseApActivity.this, new ValueEventListener() {
@@ -269,6 +275,45 @@ public class CloseApActivity extends Activity {
                     JSONObject data = arg0.optJSONObject("data");
                     try {
                         String flow = data.getString("flowUsed");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if (apId.equalsIgnoreCase(id)) {
+                            Log.i("bomb:", flow);
+                            Message mess = new Message();
+                            mess.obj = flow;
+                            handler.sendMessage(mess);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectCompleted() {
+                if (rtd.isConnected()) {
+                    // 监听表更新
+                    rtd.subTableUpdate(tableName);
+                }
+            }
+        });
+
+        return 1;
+    }
+
+
+    private int pullBenefit(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        final BmobRealTimeData rtd = new BmobRealTimeData();
+
+        rtd.start(CloseApActivity.this, new ValueEventListener() {
+            @Override
+            public void onDataChange(JSONObject arg0) {
+                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
+                    JSONObject data = arg0.optJSONObject("data");
+                    try {
+                        String flow = data.getString("cost");
                         String id = data.getJSONObject("WiFi").getString("objectId");
                         if(apId.equalsIgnoreCase(id)){
                             Log.i("cost:", flow);
@@ -306,7 +351,8 @@ public class CloseApActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true);
+//            moveTaskToBack(true);
+//            return true;
             return true;
         }
         return super.onKeyDown(keyCode, event);

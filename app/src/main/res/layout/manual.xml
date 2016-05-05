@@ -35,7 +35,7 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/logo" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:textColor="#666666"
             android:text="Version: 热点宝 1.0.1"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal" />
@@ -53,19 +53,21 @@
             android:layout_height="wrap_content"
             android:textColor="#1892eb"
             android:text="功能介绍"
-            android:textSize="22dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp" />
+            android:layout_marginLeft="20dp" />
 
         <View
             android:layout_width="330dp"
-            android:layout_height="2dip"
+            android:layout_height="1dip"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
             android:background="#FF909090" />
 
         <ScrollView
             android:id="@+id/SCROLLER_ID"
+            android:layout_marginTop="2dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
@@ -76,15 +78,15 @@
                 android:layout_height="wrap_content"
                 android:textColor="#1892eb"
                 android:text="Q1:如何分享流量？\n
-    在功能页中选择分享网络，设置WiFi的账号密码及限制，确认分享即可。我们会实时反馈分享的流量使用情况，您可以随时选择关闭并自动进行结算。\n
+    在功能页中选择分享网络，设置WiFi的账号密码及限制，确认分享即可。我们会实时反馈分享的流量使用情况，您可以随时选择关闭并自动进行结算。\n\n
 Q2:如何使用流量？\n
-    在功能页中选择使用网络，会显示当前可用WiFi，可以查看这些WiFi的信息并选择一个接入，接入后可以看到本次连接的流量使用情况，并在断开后结算。\n
+    在功能页中选择使用网络，会显示当前可用WiFi，可以查看这些WiFi的信息并选择一个接入，接入后可以看到本次连接的流量使用情况，并在断开后结算。\n\n
 Q3:是如何计费的？\n
-    WiFi宝有一套计费方案，并且支持充值和提现，查看当前余额或者消费信息详情在我的钱包中可见。\n
+    WiFi宝有一套计费方案，并且支持充值和提现，查看当前余额或者消费信息详情在我的钱包中可见。\n\n
 Q4:分享前想查询手机的剩余流量\n
     我们提供了营业厅功能方便您查看手机套餐剩余流量及相关信息。\n
 "
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal" />
         </ScrollView>
@@ -94,31 +96,29 @@ Q4:分享前想查询手机的剩余流量\n
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="bottom"
-        android:layout_weight="1.2"
->
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="0dp"
             android:text="检查更新"
             android:textColor="#666666"
             android:layout_weight="1"
             android:background="@drawable/around"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="0dp"
             android:text="意见反馈"
             android:textColor="#666666"
             android:layout_weight="1"
             android:background="@drawable/around"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
