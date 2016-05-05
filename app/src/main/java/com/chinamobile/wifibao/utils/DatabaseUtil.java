@@ -55,6 +55,7 @@ public class DatabaseUtil {
         query.addWhereEqualTo("password", wifiAp.getPassword());
         query.addWhereEqualTo("upperLimit", wifiAp.getUpperLimit());
         query.addWhereEqualTo("maxConnect", wifiAp.getMaxConnect());
+        query.addWhereEqualTo("user", wifiAp.getUser());
 
         query.setLimit(10);
 
