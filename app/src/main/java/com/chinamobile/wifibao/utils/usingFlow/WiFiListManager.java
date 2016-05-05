@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.chinamobile.wifibao.bean.ConnectionPool;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
@@ -56,15 +57,43 @@ public class WiFiListManager {
     }
 
 
+//    private void readDBNearbyWiFi(double[] userLoc){
+//        BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
+////        bmobQuery.addWhereNear("location", userPoint);
+//        bmobQuery.include("user");
+//        bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
+//        bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
+//            @Override
+//            public void onSuccess(List<WiFi> object) {
+//                dbNearbyWiFi = new ArrayList<WiFi>(object);
+//                compareWiFiList();
+//                Message msg = new Message();
+//                msg.what = 1;
+//                getUiHandler().sendMessage(msg);
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                Log.e("wifi", "read wifi fail");
+//                Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+//                toast.show();
+//            }
+//        });
+//    }
+
     private void readDBNearbyWiFi(double[] userLoc){
-        BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
+        BmobQuery<ConnectionPool> bmobQuery = new BmobQuery<ConnectionPool>();
 //        bmobQuery.addWhereNear("location", userPoint);
-        bmobQuery.include("user");
+//        bmobQuery.include("user");
+        bmobQuery.include("WiFi");
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
-        bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
+        bmobQuery.findObjects(mContext, new FindListener<ConnectionPool>() {
             @Override
-            public void onSuccess(List<WiFi> object) {
-                dbNearbyWiFi = new ArrayList<WiFi>(object);
+            public void onSuccess(List<ConnectionPool> object) {
+                for(int i=0;i<object.size();i++){
+                    dbNearbyWiFi.add(object.get(i).getWiFi());
+                }
                 compareWiFiList();
                 Message msg = new Message();
                 msg.what = 1;
@@ -80,6 +109,8 @@ public class WiFiListManager {
             }
         });
     }
+
+
 
     private void compareWiFiList(){
         String wserviceName = Context.WIFI_SERVICE;

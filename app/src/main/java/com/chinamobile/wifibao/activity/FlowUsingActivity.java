@@ -93,7 +93,7 @@ public class FlowUsingActivity extends Activity {
             public void onClick(View v) {
                 uiHandler.removeMessages(1);
                 uiHandler.removeMessages(0);
-                endUsing();
+                endUsing(1);
             }
         });
     }
@@ -113,7 +113,7 @@ public class FlowUsingActivity extends Activity {
             if(isWiFiActive()){
                 wifiDetectHandler.postDelayed(wifiDetectRunnable,5000);
             }else
-                endUsing();
+                endUsing(0);
         }
     };
 
@@ -141,7 +141,8 @@ public class FlowUsingActivity extends Activity {
     }
 
 
-    private void endUsing(){
+    private void endUsing(int flag){
+
         wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
@@ -158,7 +159,9 @@ public class FlowUsingActivity extends Activity {
         useRecord.setCost(cost);
         useRecord.setFlowUsed(Double.parseDouble(flowUsed));
 
-        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff);
+
+        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff,flag);
+
         startActivity(intent);
     }
 }
