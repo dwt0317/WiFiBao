@@ -62,6 +62,13 @@
         android:layout_gravity="center_horizontal"
         android:background="#FF909090" />
 
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+
     <TextView
         android:layout_width="330dp"
         android:layout_height="wrap_content"
@@ -77,6 +84,7 @@ Q4:分享前想查询手机的剩余流量\r\n
         android:textSize="15dp"
         android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal" />
+    </ScrollView>
 
     <LinearLayout
         android:orientation="horizontal"
