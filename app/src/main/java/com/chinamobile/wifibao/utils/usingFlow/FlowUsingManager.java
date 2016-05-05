@@ -51,14 +51,19 @@ public class FlowUsingManager {
     }
 
 
-    public void disconnect(WiFi wifi,UseRecord useRecord,double flowDiff){
+    public void disconnect(WiFi wifi,UseRecord useRecord,double flowDiff,int flag){
 //        disconnectWiFi(wifi);
+
         curWiFi=wifi;
-        useInfoFlag= balanceFlag=useRecordFlag=curConnectFlag=0;
         errorMsg="";
+        useInfoFlag= balanceFlag=useRecordFlag=curConnectFlag=0;
+        if(flag == 1){
+            updateCurConnet(wifi);
+        }else{
+            curConnectFlag=1;
+        }
         updateUseInfo(wifi, flowDiff);
         updateUseRecord(wifi, useRecord);
-        updateCurConnet(wifi);
         updateUserBalance(wifi, useRecord);
         endDetectHandler.postDelayed(endDetectRunnable,100);
     }
