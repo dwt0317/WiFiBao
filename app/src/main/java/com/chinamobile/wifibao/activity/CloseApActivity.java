@@ -80,7 +80,7 @@ public class CloseApActivity extends Activity {
         listenerThread.setContext(mContext);
         listenerThread.start();
 
-        //收入监测
+        //收入监测,获取收益
         final TextView benefit = (TextView) findViewById(R.id.tv31);
         final Handler benefitHandle = new Handler() {
             @Override
@@ -91,8 +91,8 @@ public class CloseApActivity extends Activity {
                 benefit.setText(String.valueOf(be+beOld));
             }
         };
-        //获取收益
-        pullBenefit(benefitHandle);
+        final String apId = getWifiAp().getObjectId();
+        pullBenefit(benefitHandle,apId);
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.gohome);
@@ -255,11 +255,10 @@ public class CloseApActivity extends Activity {
      * 以热点id为标识，获取一个热点的收益
      * 暂时未使用id
      */
-    private int pullBenefit(final Handler handler) {
-        final String tableName = "UseRecord";
+    private int pullBenefit(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
         Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         final BmobRealTimeData rtd = new BmobRealTimeData();
-        final String objId = getWifiAp().getObjectId();
 
         rtd.start(CloseApActivity.this, new ValueEventListener() {
             @Override
@@ -267,11 +266,15 @@ public class CloseApActivity extends Activity {
                 if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
                     JSONObject data = arg0.optJSONObject("data");
                     try {
-                        String cost = data.getString("cost");
-                        Log.i("cost:", cost);
-                        Message mess = new Message();
-                        mess.obj = cost;
-                        handler.sendMessage(mess);
+                        String flow = data.getString("flowUsed");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if(apId.equalsIgnoreCase(id)){
+                            Log.i("cost:", flow);
+                            Message mess = new Message();
+                            mess.obj = flow;
+                            handler.sendMessage(mess);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

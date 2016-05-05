@@ -152,7 +152,10 @@ public class ShareActivity extends Activity {
             ap.setState(true);
             ap.setUser(user);
             //上传热点信息，成功则打开热点
-            DatabaseUtil.getInstance().writeApToDatabase(mContext, handler, ap);
+            DatabaseUtil util = DatabaseUtil.getInstance();
+            util.writeApToDatabase(mContext, handler, ap);
+            //ConnectPool
+            util.writeApToPool(mContext, handler, ap);
         }
     }
     /**
@@ -216,6 +219,7 @@ public class ShareActivity extends Activity {
     }
 
     /***
+     * 数据库同步后，objectId存在
      * 保存wifiap信息
      */
     void writeInCache(WiFi ap){
