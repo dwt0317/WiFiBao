@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -38,6 +39,14 @@
             android:background="#1892eb"
             />
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/balance"
+        android:background="#FFFFFF"
+        android:id="@+id/imageView9"
+        android:layout_centerHorizontal="true" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
@@ -95,7 +104,9 @@
             android:layout_alignBottom="@+id/textview6"
             android:layout_alignLeft="@+id/iv1"
             android:layout_alignStart="@+id/iv1"
-            android:layout_below="@+id/iv1" />
+            android:layout_below="@+id/iv1"
+            android:layout_alignRight="@+id/iv1"
+            android:layout_alignEnd="@+id/iv1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -191,14 +202,19 @@
             android:layout_alignLeft="@+id/textview71"
             android:layout_alignStart="@+id/textview71" />
 
-        <ImageView
-            android:layout_width="900dp"
-            android:layout_height="270dp"
-            android:src="@drawable/balance"
-            android:background="#FFFFFF"
-            android:id="@+id/imageView9"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/balance_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2baf2b"
+        android:height="30dip"
+        android:width="90dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dip"
+        android:text="返回"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
 </LinearLayout>

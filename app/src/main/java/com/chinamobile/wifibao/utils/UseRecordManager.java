@@ -14,6 +14,7 @@ import com.chinamobile.wifibao.bean.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -28,7 +29,7 @@ public class UseRecordManager {
     private Handler uiHandler;
     private String errorMsg;
     private  ArrayList<UseRecord> useRecordList;
-    private HashMap<String,Integer> recordsSepByMonth = new HashMap<String,Integer>();
+    private LinkedHashMap<String,Integer> recordsSepByMonth = new LinkedHashMap<String,Integer>();
 
     public static synchronized UseRecordManager getInstance(Context context)
     {
@@ -116,11 +117,11 @@ public class UseRecordManager {
         return useRecordList;
     }
 
-    public HashMap<String, Integer> getRecordsSepByMonth() {
+    public LinkedHashMap<String, Integer> getRecordsSepByMonth() {
         return recordsSepByMonth;
     }
 
-    public void setRecordsSepByMonth(HashMap<String, Integer> recordsSepByMonth) {
+    public void setRecordsSepByMonth(LinkedHashMap<String, Integer> recordsSepByMonth) {
         this.recordsSepByMonth = recordsSepByMonth;
     }
 }

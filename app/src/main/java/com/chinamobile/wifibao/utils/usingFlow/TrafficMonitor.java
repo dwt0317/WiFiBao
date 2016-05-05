@@ -53,7 +53,7 @@ public class TrafficMonitor {
             alert.setMessage("Your device does not support traffic stat monitoring.");
             alert.show();
         } else {
-            mHandler.postDelayed(mRunnable, 1000);
+            mHandler.postDelayed(mRunnable, 100);
         }
     }
 
@@ -87,7 +87,7 @@ public class TrafficMonitor {
     }
 
     public void refreshTraffic(){
-        uiHandler.postDelayed(mRunnable, 2000);
+        uiHandler.postDelayed(mRunnable, 5000);
     }
 
 

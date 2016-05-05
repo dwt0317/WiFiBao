@@ -8,25 +8,31 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
+import com.chinamobile.wifibao.utils.ContentAdapter;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.WiFiApGradeUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by cdd on 2016/3/16.
@@ -41,10 +47,40 @@ public class ShareActivity extends Activity {
     private WiFi ap;
     private User user;
 
+
+    // 顶部菜单2个Linearlayout
+    private LinearLayout ll_data;
+    private LinearLayout ll_wifi;
+
+
+    // 顶部菜单2个ImageView
+
+
+    // 顶部菜单2个菜单标题
+    private TextView tv_data;
+    private TextView tv_wifi;
+
+
+    // 中间内容区域
+    private ViewPager viewPager;
+
+    // ViewPager适配器ContentAdapter
+    private ContentAdapter adapter;
+
+    private List<View> views;
+    private View page_01;
+    private View page_02;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_share);
+        setContentView(R.layout.set_share_main);
+
+        // 初始化控件
+        initView();
+        // 初始化顶部按钮事件
+        initEvent();
+
         mContext = this;
 
         //用户
@@ -65,13 +101,15 @@ public class ShareActivity extends Activity {
         };
 
         //点击打开热点
-        Button shareButton = (Button)findViewById(R.id.share_submit);
+
+        Button shareButton = (Button)page_01.findViewById(R.id.share_submit);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkOrDo(openHandle);
             }
         });
+
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);
@@ -85,14 +123,18 @@ public class ShareActivity extends Activity {
 
     }
 
+
+
+
+    //功能实现
     /**
      * 非法输入
      */
     private void checkOrDo(Handler handler) {
-        String name = ((EditText) findViewById(R.id.apnametext)).getText().toString().trim();
-        String password = ((EditText) findViewById(R.id.passwordtext)).getText().toString().trim();
-        String share = ((EditText) findViewById(R.id.maxsharetext)).getText().toString().trim();
-        String access = ((EditText) findViewById(R.id.maxaccesstext)).getText().toString().trim();
+        String name = ((EditText) page_01.findViewById(R.id.apnametext)).getText().toString().trim();
+        String password = ((EditText) page_01.findViewById(R.id.passwordtext)).getText().toString().trim();
+        String share = ((EditText) page_01.findViewById(R.id.maxsharetext)).getText().toString().trim();
+        String access = ((EditText) page_01.findViewById(R.id.maxaccesstext)).getText().toString().trim();
         if (name.isEmpty() || password.isEmpty()) {
             Toast.makeText(mContext, "wifi名称或者密码不能为空！", Toast.LENGTH_SHORT).show();
         } else if (password.length() < 8) {
@@ -196,5 +238,135 @@ public class ShareActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    //初始化
+    private void initEvent() {
+        // 设置按钮监听
+        ll_data.setOnClickListener(new MyListener());
+        ll_wifi.setOnClickListener(new MyListener());
+
+
+        //设置ViewPager滑动监听
+        viewPager.addOnPageChangeListener(new MyPageListener());
+    }
+
+    private void initView() {
+
+        // 顶部菜单2个Linearlayout
+        this.ll_data = (LinearLayout) findViewById(R.id.ll_data);
+        this.ll_wifi = (LinearLayout) findViewById(R.id.ll_wifi);
+
+
+        // 顶部菜单2个ImageView
+
+
+        // 顶部菜单2个菜单标题
+        this.tv_data = (TextView) findViewById(R.id.set_data);
+        this.tv_wifi = (TextView) findViewById(R.id.set_wifi);
+
+
+        // 中间内容区域ViewPager
+        this.viewPager = (ViewPager) findViewById(R.id.set_content);
+
+        // 适配器
+        //View page_01 = View.inflate(ShareSetActivity.this, R.layout.set_share_data, null);
+        //View page_02 = View.inflate(ShareSetActivity.this, R.layout.set_share_wifi, null);
+
+
+        views = new ArrayList<View>();
+        LayoutInflater myInflater = getLayoutInflater();
+        page_01 = myInflater.inflate(R.layout.set_share_data, null);
+        page_02 = myInflater.inflate(R.layout.set_share_wifi, null);
+        views.add(page_01);
+        views.add(page_02);
+
+
+        this.adapter = new ContentAdapter(views);
+        viewPager.setAdapter(adapter);
+
+    }
+
+
+
+    private void restartTop() {
+        // ImageView置为灰色
+
+        //iv_home.setImageResource(R.drawable.tab_weixin_normal);
+        //iv_address.setImageResource(R.drawable.tab_address_normal);
+        //iv_friend.setImageResource(R.drawable.tab_find_frd_normal);
+        //iv_setting.setImageResource(R.drawable.tab_settings_normal);
+
+        // TextView置为白色
+        /**
+         tv_data.setTextColor(0xff1B940A);
+         tv_wifi.setTextColor(0xff1B940A);
+         **/
+        tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border));
+        tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border));
+        ;
+    }
+
+
+    class MyListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // 在每次点击后将所有的顶部按钮(ImageView,TextView)颜色改为灰色，然后根据点击着色
+            restartTop();
+            // TetxView置为绿色，页面随之跳转
+            switch (v.getId()) {
+                case R.id.ll_data:
+                    //tv_data.setTextColor(0xff1B940A);
+                    //tv_data.setBackgroundColor(Color.WHITE);
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
+                    viewPager.setCurrentItem(0);
+                    break;
+                case R.id.ll_wifi:
+                    //tv_wifi.setTextColor(0xff1B940A);
+                    //tv_wifi.setBackgroundColor(Color.WHITE);
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
+                    viewPager.setCurrentItem(1);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+    class MyPageListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+            restartTop();
+            //当前view被选择的时候,改变底部菜单图片，文字颜色
+            switch (arg0) {
+                case 0:
+                    //iv_home.setImageResource(R.drawable.tab_weixin_pressed);
+                    //tv_data.setTextColor(0xff1B940A);
+                    //tv_data.setBackgroundColor(Color.WHITE);
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+
+                    break;
+                case 1:
+                    //iv_address.setImageResource(R.drawable.tab_address_pressed);
+                    //tv_wifi.setTextColor(0xff1B940A);
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 }

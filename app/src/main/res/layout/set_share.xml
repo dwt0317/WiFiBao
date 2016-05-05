@@ -57,7 +57,7 @@
             android:checked="false" />
 
         <RadioButton
-            android:drawableLeft="@drawable/cellular"
+            android:drawableLeft="@drawable/flow"
             android:id="@+id/cellular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

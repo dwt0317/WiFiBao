@@ -96,6 +96,7 @@ public class LoginActivity extends Activity {
                     }
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this,Home2Activity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else{
                     String error = LoginManager.getInstance(LoginActivity.this).getErrorMsg();
@@ -120,6 +121,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this,SignupActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

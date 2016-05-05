@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="设置"
+            android:textSize="22dp"
+            android:textColor="#FFFFFF"
+            android:textAlignment="center"
+            android:paddingLeft="50dip"
+            android:paddingTop="12dip"
+            android:background="#1892eb"
+            />
+
+        <ImageView
+            android:id="@+id/gotohome"
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:layout_marginTop="12dip"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/home"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:text="功能设置"
+            android:textSize="20sp"
+            android:textColor="#ff1d8deb"
+            android:layout_weight="3"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="登陆时间提醒"
+            android:textSize="18sp"
+            android:layout_weight="2.5"
+
+            />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="right"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:src="@drawable/mywallet_details"
+            android:layout_weight="0.3"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="登陆短信提醒"
+            android:textSize="18sp"
+            android:layout_weight="2"
+            />
+
+        <TextView
+            android:id="@+id/phonenumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="right"
+            android:layout_weight="1.5"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:src="@drawable/mywallet_details"
+            android:layout_weight="0.3"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="清除缓存"
+            android:textSize="18sp"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:src="@drawable/mywallet_details"
+            android:layout_weight="0.3"
+            />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="消息设置"
+        android:textColor="#ff1d8deb"
+        android:paddingTop="60px"
+        android:paddingLeft="10dp"
+        android:textSize="20sp"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="推送消息通知"
+            android:textSize="18sp"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_weight="1.2"
+            android:gravity="right"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:src="@drawable/mywallet_details"
+            android:layout_weight="0.3"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/around"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="夜间防骚扰设置"
+            android:textSize="18sp"
+            android:layout_weight="2.5"
+            />
+
+        <TextView
+            android:id="@+id/getflowshared"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="18sp"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:src="@drawable/mywallet_details"
+            android:layout_weight="0.3"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/shuoming"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="开启该功能可总动屏蔽23:00-8:00的消息"
+        android:layout_weight="1"
+        android:textSize="18sp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        />
+
+</LinearLayout>
+
+
