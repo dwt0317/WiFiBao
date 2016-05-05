@@ -66,8 +66,8 @@ public class DatabaseUtil {
             @Override
             public void onSuccess(final List<WiFi> object) {
                 final int len = object.size();
-                Log.i("DatabaseU obj: ",String.valueOf(len));
-                if(len == 0){
+                Log.i("DatabaseU obj: ", String.valueOf(len));
+                if (len == 0) {
                     wifiAp.save(context, new SaveListener() {
                         @Override
                         public void onSuccess() {
@@ -90,24 +90,25 @@ public class DatabaseUtil {
                 }
                 //数据库中存在，保存id
                 wifiAp.setObjectId(object.get(0).getObjectId());
+
                 final Message message = new Message();
-                message.what=0;
+                message.what = 0;
                 //数据库中存在记录，更新记录，不必插入
                 for (final WiFi obj : object) {
                     //修改状态
                     obj.setState(true);
-                    obj.update(context,obj.getObjectId(), new UpdateListener() {
+                    obj.update(context, obj.getObjectId(), new UpdateListener() {
                         @Override
                         public void onSuccess() {
                             Log.i("update succ", "!");
-                            message.what+=1;
+                            message.what += 1;
                             //异步，不要再外面判断
-                            if(message.what == len){
-                                Log.i("message what: ",String.valueOf(message.what));
+                            if (message.what == len) {
+                                Log.i("message what: ", String.valueOf(message.what));
                                 message.arg1 = 1;
                                 handler.sendMessage(message);
-                            }else if(obj.equals(object.get(len-1))){
-                                Log.i("message what: ",String.valueOf(message.what));
+                            } else if (obj.equals(object.get(len - 1))) {
+                                Log.i("message what: ", String.valueOf(message.what));
                                 message.arg1 = 0;
                                 handler.sendMessage(message);
                             }
@@ -211,8 +212,9 @@ public class DatabaseUtil {
                     cp.save(context, new SaveListener() {
                         @Override
                         public void onSuccess() {
-                            //apObjectId = wifiAp.getObjectId();
-                            Log.i("DatabaseUtil添加数据成功,", cp.getObjectId());
+                            String objId = wifiAp.getObjectId();
+                            Log.i("DatabaseUtil添加数据成功,", objId);
+                            writeConnectionPoolIdInCache(objId, context);
                             Message message = new Message();
                             message.arg1 = 1;
                             handler.sendMessage(message);
@@ -230,6 +232,8 @@ public class DatabaseUtil {
                 }
                 //数据库中存在wifi对应的ConnectionPool，保存id
                 cp.setObjectId(object.get(0).getObjectId());
+                writeConnectionPoolIdInCache(object.get(0).getObjectId(), context);
+
                 final Message message = new Message();
                 message.what = 0;
                 //数据库中存在记录，更新记录，不必插入
@@ -279,7 +283,7 @@ public class DatabaseUtil {
                 handler.sendMessage(message);
             }
         });
-        writeConnectionPoolInCache(cp, context);
+
     }
 
     /***
@@ -306,13 +310,13 @@ public class DatabaseUtil {
 
     /***
      * 本地缓存
-     * @param cp
+     * @param id
      * @param context
      */
-    private void writeConnectionPoolInCache(ConnectionPool cp, Context context){
+    private void writeConnectionPoolIdInCache(String id, Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("ConnectionPoolIFNO", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("ConnetctionPoolId",cp.getObjectId());
+        editor.putString("ConnetctionPoolId",id);
         editor.commit();
     }
 
