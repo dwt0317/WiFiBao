@@ -213,7 +213,6 @@ public class DatabaseUtil {
                         public void onSuccess() {
                             //apObjectId = wifiAp.getObjectId();
                             Log.i("DatabaseUtil添加数据成功,", cp.getObjectId());
-                            writeConnectionPoolInCache(cp, context);
                             Message message = new Message();
                             message.arg1 = 1;
                             handler.sendMessage(message);
@@ -280,7 +279,7 @@ public class DatabaseUtil {
                 handler.sendMessage(message);
             }
         });
-
+        writeConnectionPoolInCache(cp, context);
     }
 
     /***

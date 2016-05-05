@@ -88,17 +88,34 @@ public class ShareActivity extends Activity {
         //如果热点已经打开，跳转下个页面
         isWiFiEnabled();
 
-        final Handler openHandle = new Handler() {
+        final Handler writePoolHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.arg1 == 1) {
+                    //写wifi和Pool都成功，才开启
                     open();
                 }else {
                     Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
                 }
             }
         };
+
+        final Handler openHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.arg1 == 1) {
+                    //ConnectPool
+                    DatabaseUtil util = DatabaseUtil.getInstance();
+                    util.writeApToPool(mContext, writePoolHandle, ap);
+                }else {
+                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+
 
         //点击打开热点
 
@@ -156,7 +173,7 @@ public class ShareActivity extends Activity {
             DatabaseUtil util = DatabaseUtil.getInstance();
             util.writeApToDatabase(mContext, handler, ap);
             //ConnectPool
-            util.writeApToPool(mContext, handler, ap);
+            //util.writeApToPool(mContext, handler, ap);
         }
     }
     /**
