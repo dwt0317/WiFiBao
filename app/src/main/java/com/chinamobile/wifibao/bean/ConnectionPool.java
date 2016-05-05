@@ -10,7 +10,7 @@ public class ConnectionPool extends BmobObject {
     private WiFi WiFi;
     private Double cost;
     private Double flowUsed;
-    private User user;
+    private String username;
     private Integer maxConnect;
     private Integer curConnect;
 
@@ -38,13 +38,6 @@ public class ConnectionPool extends BmobObject {
         this.flowUsed = flowUsed;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Integer getMaxConnect() {
         return maxConnect;
@@ -60,5 +53,13 @@ public class ConnectionPool extends BmobObject {
 
     public void setCurConnect(Integer curConnect) {
         this.curConnect = curConnect;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
