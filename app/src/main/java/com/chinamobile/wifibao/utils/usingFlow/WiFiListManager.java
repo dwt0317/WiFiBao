@@ -92,6 +92,7 @@ public class WiFiListManager {
             public void onSuccess(List<ConnectionPool> connectionList) {
                 for(int i=0;i<connectionList.size();i++){
                     WiFi wifi = connectionList.get(i).getWiFi();
+                    wifi.setCurConnect(connectionList.get(i).getCurConnect());
 //                    wifi.setUser(connectionList.get(i).getUser());
                     dbNearbyWiFi.add(wifi);
                 }

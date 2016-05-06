@@ -165,6 +165,7 @@ public class ShareActivity extends Activity {
             ap.setPassword(password);
             ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
             ap.setMaxConnect(Integer.parseInt(access));
+            ap.setCurConnect(0);
             ap.setScore(WiFiApGradeUtil.getGrade(ap));
             ap.setBSSID(getLocalMacAddress());
             ap.setState(true);

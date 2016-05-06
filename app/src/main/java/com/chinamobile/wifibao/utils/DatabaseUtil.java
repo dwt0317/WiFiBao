@@ -213,6 +213,7 @@ public class DatabaseUtil {
                         public void onSuccess() {
                             //apObjectId = wifiAp.getObjectId();
                             Log.i("DatabaseUtil添加数据成功,", cp.getObjectId());
+                            writeConnectionPoolInCache(cp, context);
                             Message message = new Message();
                             message.arg1 = 1;
                             handler.sendMessage(message);
@@ -230,6 +231,7 @@ public class DatabaseUtil {
                 }
                 //数据库中存在wifi对应的ConnectionPool，保存id
                 cp.setObjectId(object.get(0).getObjectId());
+                writeConnectionPoolInCache(cp, context);
                 final Message message = new Message();
                 message.what = 0;
                 //数据库中存在记录，更新记录，不必插入
@@ -279,7 +281,7 @@ public class DatabaseUtil {
                 handler.sendMessage(message);
             }
         });
-        writeConnectionPoolInCache(cp, context);
+
     }
 
     /***

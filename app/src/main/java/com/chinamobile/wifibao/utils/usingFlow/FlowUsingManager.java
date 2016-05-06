@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -60,6 +62,7 @@ public class FlowUsingManager {
         if(flag == 1){
             updateCurConnet(wifi);
         }else{
+            Toast.makeText(mContext,  "分享者已断开WiFi", Toast.LENGTH_LONG).show();
             curConnectFlag=1;
         }
         updateUseInfo(wifi, flowDiff);
@@ -83,8 +86,11 @@ public class FlowUsingManager {
                 toast.show();
                 endDetectHandler.postDelayed(endDetectRunnable,2000);
             }else{
+                disconnectWiFi(curWiFi);
 //                Toast.makeText(mContext,  "上传结算数据失败,请稍候再试 \n"+errorMsg, Toast.LENGTH_LONG).show();
             }
+            deleteWiFiConfig(curWiFi.getSSID());
+
         }
     };
 
@@ -104,11 +110,19 @@ public class FlowUsingManager {
         String SSID = wifi.getSSID();
         WifiManager wifiManager = (WifiManager) getmContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.disconnect();
+//        deleteWiFiConfig(SSID);
+    }
+
+    private void deleteWiFiConfig(String SSID){
+        WifiManager wifiManager = (WifiManager) getmContext().getSystemService(Context.WIFI_SERVICE);
+        SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences("WiFiInfo", mContext.MODE_PRIVATE);
+        String wifiSSID = sp.getString("WiFiSSID", "");
+
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs)
         {
-            if (existingConfig.SSID.equals("\""+SSID+"\"")){
+            if (existingConfig.SSID.equals("\""+wifiSSID+"\"")){
                 wifiManager.removeNetwork(existingConfig.networkId);
             }
         }
@@ -144,8 +158,9 @@ public class FlowUsingManager {
             public void onSuccess(List<ConnectionPool> object) {
                 ConnectionPool conn = object.get(0);
                 conn.setFlowUsed(trafficDiff);
-                double cost = trafficDiff * 0.00005;
+                double cost = trafficDiff * 0.05;
                 conn.setCost(cost);
+                conn.setCurConnect(conn.getCurConnect());
                 conn.update(mContext, conn.getObjectId(), new UpdateListener() {
                     @Override
                     public void onSuccess() {
@@ -158,7 +173,7 @@ public class FlowUsingManager {
                         useInfoFlag=2;
                         errorMsg+=msg+" ";
                         Log.e("bmob", "流量花费更新失败：" + msg);
-                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
                 Log.i("bomb", "写入cost和flow成功 " + trafficDiff);
@@ -169,7 +184,7 @@ public class FlowUsingManager {
                 errorMsg+=msg+" ";
                 useInfoFlag=2;
                 Log.e("bomb", "写入cost和flow失败");
-                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -218,7 +233,7 @@ public class FlowUsingManager {
                     public void onFailure(int code, String msg) {
                         curConnectFlag=2;
                         Log.e("bmob", "修改已接入人数失败" + msg);
-                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

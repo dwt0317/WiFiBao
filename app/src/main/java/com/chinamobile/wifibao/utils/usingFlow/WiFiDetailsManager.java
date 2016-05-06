@@ -1,6 +1,7 @@
 package com.chinamobile.wifibao.utils.usingFlow;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -123,7 +124,7 @@ public class WiFiDetailsManager {
         List<ScanResult> results = wifiManager.getScanResults();
 
         for (ScanResult result : results) {
-            if(result.BSSID.equals(wifi.getBSSID()))
+            if(result.BSSID.toLowerCase().equals(wifi.getBSSID().toLowerCase()))
                 return result.level;
         }
         return 0;
@@ -160,12 +161,14 @@ public class WiFiDetailsManager {
         conf.preSharedKey = "\""+ networkPass +"\"";
 
         enableWiFi();
-        if(wifiManager.getConnectionInfo().getBSSID().equals(BSSID))
-        {
-            Toast toast=Toast.makeText(mContext, "您已接入此WiFi", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-            toast.show();
-            return false;
+        if(wifiManager.getConnectionInfo().getBSSID()!=null){
+            if(wifiManager.getConnectionInfo().getBSSID().equals(BSSID))
+            {
+                Toast toast=Toast.makeText(mContext, "您已接入此WiFi", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+                toast.show();
+                return false;
+            }
         }
 
 
@@ -224,8 +227,8 @@ public class WiFiDetailsManager {
             @Override
             public void onSuccess(List<ConnectionPool> object) {
                 ConnectionPool conn = object.get(0);
-                conn.setCurConnect(conn.getCurConnect() + 1);
-                Log.i("bomb", "写入cost和flow成功 ");
+                conn.setCurConnect(1);
+                Log.i("bomb", "写入curConnt ");
             }
             @Override
             public void onError(int code, String msg) {
@@ -266,7 +269,12 @@ public class WiFiDetailsManager {
             return false;
     }
 
-
+    public void writeWiFitoCache(WiFi wifi, Context context){
+        SharedPreferences sp = context.getApplicationContext().getSharedPreferences("WiFiInfo", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("WiFiSSID",wifi.getSSID());
+        editor.commit();
+    }
 
 
     public Context getmContext() {

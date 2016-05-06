@@ -59,7 +59,8 @@ public class BalanceShareActivity extends Activity {
             }
         });
         //上传分享收益记录
-        String f = flow.substring(0, flow.indexOf(" MB"));
+//        String f = flow.substring(0, flow.indexOf(" MB"));
+        String f=flow;
         shareRecord = getShareRecord(Double.parseDouble(f),Double.parseDouble(bene));
         //已可获取热点信息
         sycData(mContext,shareRecord);

@@ -57,7 +57,7 @@ public class BalanceUseActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BalanceUseActivity.this,HomeActivity.class);
+                Intent intent = new Intent(BalanceUseActivity.this,Home2Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

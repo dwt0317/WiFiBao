@@ -69,6 +69,9 @@ public class FlowUsingActivity extends Activity {
                     flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
                     flowusingText.setText(flowUsed);
                     moneyuseText.setText(computeCost(flowUsed));
+                    flowDiff=flowDiff/1024/1024;
+                    DecimalFormat df  = new DecimalFormat("######0.00");
+                    flowDiff=Double.parseDouble(df.format(flowDiff));
                     FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
@@ -85,7 +88,7 @@ public class FlowUsingActivity extends Activity {
         useRecord.setStartTime(new BmobDate(new Date()));
         useRecord.setUser(BmobUser.getCurrentUser(this,User.class));
 
-        wifiDetectHandler.postDelayed(wifiDetectRunnable,200);
+        wifiDetectHandler.postDelayed(wifiDetectRunnable,3500);
         //ImageView refresh = (ImageView)findViewById(R.id.refresh)
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
@@ -132,7 +135,7 @@ public class FlowUsingActivity extends Activity {
         if (mWifi.isConnected()){
             WifiManager wifi_service = (WifiManager)getSystemService(WIFI_SERVICE);
             WifiInfo wifiInfo = wifi_service.getConnectionInfo();
-            if(wifiInfo.getBSSID().equals(wifi.getBSSID()))
+            if(wifiInfo.getBSSID().toLowerCase().equals(wifi.getBSSID().toLowerCase()))
                 return true;
             else return false;
         }
@@ -147,6 +150,9 @@ public class FlowUsingActivity extends Activity {
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
         flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
+        flowDiff=flowDiff/1024/1024;
+        DecimalFormat df  = new DecimalFormat("######0.00");
+        flowDiff=Double.parseDouble(df.format(flowDiff));
 
         Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
         Bundle bundle=new Bundle();

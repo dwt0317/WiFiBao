@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobRealTimeData;
@@ -63,7 +64,8 @@ public class CloseApActivity extends Activity {
 //                }
                 double be = Double.parseDouble((String)msg.obj);
                 double beOld = Double.parseDouble(showFlow.getText().toString());
-                showFlow.setText(String.valueOf(be+beOld)+" MB");
+                DecimalFormat df  = new DecimalFormat("######0.00");
+                showFlow.setText(df.format(be + beOld));
             }
         };
         pullFlowUsed(flowHandle,apId);
@@ -78,14 +80,19 @@ public class CloseApActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String count = String.valueOf(msg.arg1);
-                accessCount.setText(count);
+//                String count = String.valueOf(msg.arg1);
+//                accessCount.setText(count);
+                int be = Integer.parseInt((String) msg.obj);
+//                int beOld = Integer.parseInt(accessCount.getText().toString());
+                accessCount.setText(String.valueOf(be));
             }
         };
-        final AccessListenerThread listenerThread = new AccessListenerThread();
-        listenerThread.setHandler(accessHandle);
-        listenerThread.setContext(mContext);
-        listenerThread.start();
+
+        pullCurConnect(accessHandle,apId);
+//        final AccessListenerThread listenerThread = new AccessListenerThread();
+//        listenerThread.setHandler(accessHandle);
+//        listenerThread.setContext(mContext);
+//        listenerThread.start();
 
         //收入监测,获取收益
         final TextView benefit = (TextView) findViewById(R.id.tv31);
@@ -95,7 +102,8 @@ public class CloseApActivity extends Activity {
                 super.handleMessage(msg);
                 double be = Double.parseDouble((String)msg.obj);
                 double beOld = Double.parseDouble(benefit.getText().toString());
-                benefit.setText(String.valueOf(be+beOld));
+                DecimalFormat df  = new DecimalFormat("######0.00");
+                benefit.setText(df.format(be+beOld));
             }
         };
 
@@ -258,11 +266,45 @@ public class CloseApActivity extends Activity {
         return ap;
     }
 
-    /**
-     * 数据库获得已得收入，已使用者为准，不已本地分享为准
-     * 以热点id为标识，获取一个热点的收益
-     * 暂时未使用id
-     */
+
+    private int pullCurConnect(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        final BmobRealTimeData rtd = new BmobRealTimeData();
+
+        rtd.start(CloseApActivity.this, new ValueEventListener() {
+            @Override
+            public void onDataChange(JSONObject arg0) {
+                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
+                    JSONObject data = arg0.optJSONObject("data");
+                    try {
+                        String curConnect = data.getString("curConnect");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if (apId.equalsIgnoreCase(id)) {
+                            Log.i("bomb:", curConnect);
+                            Message mess = new Message();
+                            mess.obj = curConnect;
+                            handler.sendMessage(mess);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectCompleted() {
+                if (rtd.isConnected()) {
+                    // 监听表更新
+                    rtd.subTableUpdate(tableName);
+                }
+            }
+        });
+
+        return 1;
+    }
+
     private int pullFlowUsed(final Handler handler,final String apId) {
         final String tableName = "ConnectionPool";
 //        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
