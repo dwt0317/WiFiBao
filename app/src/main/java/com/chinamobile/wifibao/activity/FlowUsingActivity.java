@@ -72,7 +72,7 @@ public class FlowUsingActivity extends Activity {
                     flowDiff=flowDiff/1024/1024;
                     DecimalFormat df  = new DecimalFormat("######0.00");
                     flowDiff=Double.parseDouble(df.format(flowDiff));
-                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
+                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff,2);
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
 //                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();

@@ -59,13 +59,8 @@ public class FlowUsingManager {
         curWiFi=wifi;
         errorMsg="";
         useInfoFlag= balanceFlag=useRecordFlag=curConnectFlag=0;
-        if(flag == 1){
-            updateCurConnet(wifi);
-        }else{
-            Toast.makeText(mContext,  "分享者已断开WiFi", Toast.LENGTH_LONG).show();
-            curConnectFlag=1;
-        }
-        updateUseInfo(wifi, flowDiff);
+        curConnectFlag=1;
+        updateUseInfo(wifi, flowDiff,flag);
         updateUseRecord(wifi, useRecord);
         updateUserBalance(wifi, useRecord);
         endDetectHandler.postDelayed(endDetectRunnable,100);
@@ -150,7 +145,8 @@ public class FlowUsingManager {
      * @param wifi
      * 更新connectionPool中的分享的cost和flow
      */
-    public void updateUseInfo(WiFi wifi, final double trafficDiff){
+    //0:被动断开 1：主动断开 2：没有断开
+    public void updateUseInfo(WiFi wifi, final double trafficDiff,final int flag){
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
         query.addWhereEqualTo("WiFi", wifi);    // 查询当前用户的所有帖子
         query.findObjects(mContext, new FindListener<ConnectionPool>() {
@@ -160,7 +156,11 @@ public class FlowUsingManager {
                 conn.setFlowUsed(trafficDiff);
                 double cost = trafficDiff * 0.05;
                 conn.setCost(cost);
-                conn.setCurConnect(conn.getCurConnect());
+                if(flag==2)
+                    conn.setCurConnect(conn.getCurConnect());
+                else {
+                    conn.setCurConnect(conn.getCurConnect()-1);
+                }
                 conn.update(mContext, conn.getObjectId(), new UpdateListener() {
                     @Override
                     public void onSuccess() {
