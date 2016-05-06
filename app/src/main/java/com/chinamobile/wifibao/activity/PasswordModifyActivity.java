@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
@@ -43,6 +44,15 @@ public class PasswordModifyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 validInput();
+            }
+        });
+        ImageView goback = (ImageView)findViewById(R.id.back);
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordModifyActivity.this, PersonalActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
