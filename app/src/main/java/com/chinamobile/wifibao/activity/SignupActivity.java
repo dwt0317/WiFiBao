@@ -1,17 +1,16 @@
 package com.chinamobile.wifibao.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
-import android.text.InputType;
 import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
@@ -41,6 +40,7 @@ public class SignupActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.signup);
         setViewComponent();
     }
@@ -122,7 +122,7 @@ public class SignupActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SignupActivity.this,HomeActivity.class);
+                intent.setClass(SignupActivity.this,Home2Activity.class);
                 startActivity(intent);
             }
         });

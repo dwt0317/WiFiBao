@@ -28,7 +28,7 @@
             android:background="#1892eb"
             android:clickable="true"
             android:id="@+id/home"
-            android:layout_marginLeft="22dp" />
+            android:layout_marginLeft="12dp" />
 
     </RelativeLayout>
 
