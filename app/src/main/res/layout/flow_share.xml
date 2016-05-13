@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:paddingLeft="45dp"
-        android:paddingTop="40px">
+        android:paddingTop="20dp">
 
         <ImageView
             android:layout_width="23dp"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv1"
             android:text="已分享流量："
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_marginTop="20sp"
             android:layout_marginLeft="90sp"
             android:paddingTop="7sp"
@@ -87,7 +87,7 @@
             android:layout_toEndOf="@+id/tv1"
             android:layout_toRightOf="@+id/tv1"
             android:text="0.0"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_marginTop="20sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
@@ -113,7 +113,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="已接入人数："
-            android:textSize="16dp" />
+            android:textSize="16sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_toRightOf="@+id/tv2"
             android:layout_below="@+id/tv11"
             android:text="0"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
@@ -147,7 +147,7 @@
             android:paddingTop="7sp"
             android:paddingBottom="7sp"
             android:text="已获得收益："
-            android:textSize="16dp" />
+            android:textSize="16sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             android:layout_toRightOf="@+id/tv3"
             android:layout_below="@+id/tv21"
             android:text="0.0"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:paddingTop="7sp"
             android:paddingBottom="7sp"/>
 
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/flow_unit"
             android:text="MB"
-            android:textSize="15dp"
+            android:textSize="16sp"
             android:paddingTop="8dp"
             android:paddingBottom="8sp"
             android:layout_marginLeft="10dp"
@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView5"
             android:text="流量币"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:paddingTop="8dp"
             android:paddingBottom="10sp"
             android:layout_marginLeft="10dp"
