@@ -20,8 +20,8 @@
             android:background="#1892eb" />
 
         <ImageView
-            android:layout_width="90px"
-            android:layout_height="90px"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="left"
             android:layout_centerVertical="true"
             android:src="@drawable/home"

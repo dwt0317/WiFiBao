@@ -11,8 +11,8 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/goback"
-            android:layout_width="200px"
-            android:layout_height="150px"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:background="@drawable/goback"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -25,49 +25,49 @@
     </FrameLayout>
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="800px"
+        android:layout_height="200dp"
         android:background="#6fb7f2"
         android:orientation="vertical"
-        android:layout_marginTop="5px">
+        android:layout_marginTop="2dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的余额"
-            android:textSize="90px"
+            android:textSize="22dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200px"
+            android:layout_marginTop="45dp"
             android:textColor="#ffffff" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40px">
+            android:layout_marginTop="12dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffff00"
                 android:text="102"
-                android:textSize="200px"/>
+                android:textSize="50dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:text="流量币"
-                android:textSize="80px"
+                android:textSize="20dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginLeft="50px"
-                android:layout_marginBottom="20px" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="6dp" />
         </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200px"
+        android:layout_height="50dp"
         android:background="@drawable/around"
-        android:layout_marginTop="40px">
+        android:layout_marginTop="13dp">
         <ImageView
-            android:layout_width="150px"
-             android:layout_height="150px"
+            android:layout_width="40dp"
+             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="0.2"
             android:background="@drawable/mywallet_bankcard" />
@@ -75,9 +75,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="银行卡"
-            android:textSize="75px"
+            android:textSize="18dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="7dp"
             android:layout_weight="10" />
         <ImageView
             android:layout_width="wrap_content"
@@ -87,11 +87,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200px"
+        android:layout_height="50dp"
         android:background="@drawable/around">
         <ImageView
-            android:layout_width="150px"
-            android:layout_height="150px"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/mywallet_recharge"
             android:layout_gravity="center"
             android:layout_weight="0.2" />
@@ -99,10 +99,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="充值"
-            android:textSize="75px"
+            android:textSize="18dp"
             android:layout_gravity="center"
-            android:layout_weight="10"
-            android:layout_marginLeft="20px" />
+            android:layout_marginLeft="7dp"
+            android:layout_weight="10"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,11 +111,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200px"
+        android:layout_height="50dp"
         android:background="@drawable/around">
         <ImageView
-            android:layout_width="150px"
-            android:layout_height="150px"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/mywallet_usehistory"
             android:layout_gravity="center"
             android:layout_weight="0.2" />
@@ -123,10 +123,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="消费记录"
-            android:textSize="75px"
+            android:textSize="18dp"
             android:layout_gravity="center"
-            android:layout_weight="10"
-            android:layout_marginLeft="20px" />
+            android:layout_marginLeft="7dp"
+            android:layout_weight="10" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,11 +135,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="200px"
+        android:layout_height="50dp"
         android:background="@drawable/around">
         <ImageView
-            android:layout_width="150px"
-            android:layout_height="150px"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/mywallet_deposit"
             android:layout_gravity="center"
             android:layout_weight="0.2" />
@@ -147,10 +147,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="提现"
-            android:textSize="75px"
+            android:textSize="18dp"
             android:layout_gravity="center"
-            android:layout_weight="10"
-            android:layout_marginLeft="20px" />
+            android:layout_marginLeft="7dp"
+            android:layout_weight="10"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
