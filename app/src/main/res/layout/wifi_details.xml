@@ -40,7 +40,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="455px"
+            android:layout_height="130dp"
             android:src="@mipmap/sky5"
             android:id="@+id/sky"
             android:layout_alignParentTop="true"
@@ -48,9 +48,9 @@
             android:layout_alignParentRight="true" />
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="220px"
+            android:layout_height="65dp"
             android:src="@mipmap/potrait"
-            android:layout_marginTop="360px"
+            android:layout_marginTop="100dp"
             android:id="@+id/portrait"/>
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="30px">
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"

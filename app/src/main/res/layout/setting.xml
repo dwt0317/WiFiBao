@@ -82,7 +82,6 @@
             android:layout_weight="0.3"
             />
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -161,7 +160,7 @@
         android:layout_height="50dp"
         android:text="消息设置"
         android:textColor="#ff1d8deb"
-        android:paddingTop="60px"
+        android:paddingTop="16dp"
         android:paddingLeft="10dp"
         android:textSize="20sp"
         />
