@@ -11,11 +11,12 @@
         android:background="#1892eb">
         <ImageView
             android:id="@+id/setting"
-            android:layout_height="130px"
-            android:layout_width="130px"
+            android:layout_height="27dp"
+            android:layout_width="27dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/home_setting"
-            android:layout_marginLeft="20px" />
+            android:layout_marginLeft="10dp"
+            android:adjustViewBounds="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,9 +41,9 @@
     <!--</ImageView>-->
     <com.chinamobile.wifibao.utils.cycleImage.ImageCycleView
         android:id="@+id/ad_top"
-        android:layout_height="700px"
+        android:layout_height="180dp"
         android:layout_width="fill_parent"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="3dp"
         android:adjustViewBounds="false"
         />
 
@@ -51,116 +52,116 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20px">
+        android:layout_marginTop="7dp">
         <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="wrap_content"
-            android:layout_height="600px"
+            android:layout_height="140dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="300px"
-                android:layout_height="300px"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@drawable/home2_use"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80px" />
+                android:layout_marginTop="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="使用网络"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="false" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout2"
             android:layout_width="wrap_content"
-            android:layout_height="600px"
+            android:layout_height="140dp"
             android:layout_toRightOf="@+id/layout1"
             android:layout_weight="1"
             android:orientation="vertical"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="300px"
-                android:layout_height="300px"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@drawable/home2_share"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80px" />
+                android:layout_marginTop="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="分享网络"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="400px">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/layout3"
-            android:layout_width="533px"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_userinfo"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个人信息"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="false" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout4"
-            android:layout_width="533px"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_toRightOf="@+id/layout3"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_hall"
                 android:layout_gravity="center"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="营业厅"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
                 android:textIsSelectable="true" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout5"
-            android:layout_width="533px"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:layout_toRightOf="@+id/layout4"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_mywallet"
                 android:layout_gravity="center"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
                 android:textIsSelectable="true"
                 android:text="我的钱包" />
@@ -173,65 +174,65 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/layout6"
-            android:layout_width="wrap_content"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_usehistory"
                 android:layout_gravity="center"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="使用记录"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="false" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout7"
-            android:layout_width="wrap_content"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:layout_toRightOf="@+id/layout6"
             android:orientation="vertical"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_sharehistory"
                 android:layout_gravity="center"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="分享记录"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/layout8"
-            android:layout_width="wrap_content"
-            android:layout_height="400px"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:layout_toRightOf="@+id/layout7"
             android:orientation="vertical"
             android:background="@drawable/home2_around">
             <ImageView
-                android:layout_width="200px"
-                android:layout_height="200px"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/home2_manual"
                 android:layout_gravity="center"
-                android:layout_marginTop="60px" />
+                android:layout_marginTop="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="产品手册"
-                android:textSize="60px"
+                android:textSize="16sp"
                 android:layout_gravity="center"/>
         </LinearLayout>
 

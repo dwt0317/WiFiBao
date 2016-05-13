@@ -111,7 +111,7 @@ public class Home2Activity extends Activity {
         setLoginListener(hall, MobileServiceActivity.class);
         setLoginListener(usehistory,UseRecordActivity.class);
         setLoginListener(sharehistory,ShareRecordActivity.class);
-        setLoginListener(manual,ManualActivity.class);
+        setListener(manual,ManualActivity.class);
 
     }
 

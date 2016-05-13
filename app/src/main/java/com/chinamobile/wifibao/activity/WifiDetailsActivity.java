@@ -82,6 +82,7 @@ public class WifiDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WifiDetailsActivity.this,Home2Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -104,6 +105,7 @@ public class WifiDetailsActivity extends Activity {
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
                             if(msg.what == 1){
+                                WiFiDetailsManager.getInstance(WifiDetailsActivity.this).writeWiFitoCache(wifi,WifiDetailsActivity.this);
                                 startActivity(intent);
                             }else if(msg.what==0){
                                 Toast toast=Toast.makeText(getApplicationContext(), "已达到最大接入人数", Toast.LENGTH_SHORT);

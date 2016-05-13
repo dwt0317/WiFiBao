@@ -51,6 +51,7 @@ public class PersonalActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PersonalActivity.this, Home2Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -100,12 +101,12 @@ public class PersonalActivity extends Activity {
                 //获得数据的objectId信息
                 String objectid=String.valueOf(object.getObjectId());
                 //Toast.makeText(mContext, objectid, Toast.LENGTH_SHORT).show();
-                ((TextView)findViewById(R.id.getflowused)).setText(getflowused+"MB");
+                ((TextView)findViewById(R.id.getflowused)).setText(getflowused+" MB");
                 ((TextView)findViewById(R.id.username)).setText(username);
                 ((TextView)findViewById(R.id.phonenumber)).setText(phonenumber);
                 ((TextView)findViewById(R.id.location)).setText(location);
-                ((TextView)findViewById(R.id.balance)).setText(balance+"流量币");
-                ((TextView)findViewById(R.id.getflowshared)).setText(getflowshared+"MB");
+                ((TextView)findViewById(R.id.balance)).setText(balance+" 流量币");
+                ((TextView)findViewById(R.id.getflowshared)).setText(getflowshared+" MB");
             }
 
             @Override

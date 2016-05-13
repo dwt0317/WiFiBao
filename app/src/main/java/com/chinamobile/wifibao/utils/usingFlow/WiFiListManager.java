@@ -11,9 +11,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.chinamobile.wifibao.activity.FlowUsingActivity;
+import com.chinamobile.wifibao.bean.ConnectionPool;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.bean.WiFi;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class WiFiListManager {
     private ArrayList<WiFi> dbNearbyWiFi = new ArrayList<WiFi>();    //在数据库查询到的附近的wifi
     private Context mContext;
     private Handler uiHandler;
+    private Handler enableWiFiHandler;
 
 
     public static synchronized WiFiListManager getInstance(Context context)
@@ -47,24 +51,64 @@ public class WiFiListManager {
     }
 
     public void getAvailableWiFi(){
-        double[] userLoc = {12.0,33.0};
+        final double[] userLoc = {12.0,33.0};
         getWifiList().clear();
         ownerList.clear();
         dbNearbyWiFi.clear();
-        enableWiFi();
-        readDBNearbyWiFi(userLoc);
+
+        enableWiFiHandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.what == 1){
+                    readDBNearbyWiFi(userLoc);
+                }
+            }
+        };
+        enableWiFiHandler.post(enableWiFiRunnable);
+
     }
 
 
+//    private void readDBNearbyWiFi(double[] userLoc){
+//        BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
+////        bmobQuery.addWhereNear("location", userPoint);
+//        bmobQuery.include("user");
+//        bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
+//        bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
+//            @Override
+//            public void onSuccess(List<WiFi> object) {
+//                dbNearbyWiFi = new ArrayList<WiFi>(object);
+//                compareWiFiList();
+//                Message msg = new Message();
+//                msg.what = 1;
+//                getUiHandler().sendMessage(msg);
+//            }
+//
+//            @Override
+//            public void onError(int code, String msg) {
+//                Log.e("wifi", "read wifi fail");
+//                Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
+//                toast.show();
+//            }
+//        });
+//    }
+
     private void readDBNearbyWiFi(double[] userLoc){
-        BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
+        BmobQuery<ConnectionPool> bmobQuery = new BmobQuery<ConnectionPool>();
 //        bmobQuery.addWhereNear("location", userPoint);
-        bmobQuery.include("user");
+        bmobQuery.include("WiFi,WiFi.user");
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
-        bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
+        bmobQuery.findObjects(mContext, new FindListener<ConnectionPool>() {
             @Override
-            public void onSuccess(List<WiFi> object) {
-                dbNearbyWiFi = new ArrayList<WiFi>(object);
+            public void onSuccess(List<ConnectionPool> connectionList) {
+                for(int i=0;i<connectionList.size();i++){
+                    WiFi wifi = connectionList.get(i).getWiFi();
+                    wifi.setCurConnect(connectionList.get(i).getCurConnect());
+//                    wifi.setUser(connectionList.get(i).getUser());
+                    dbNearbyWiFi.add(wifi);
+                }
                 compareWiFiList();
                 Message msg = new Message();
                 msg.what = 1;
@@ -73,13 +117,16 @@ public class WiFiListManager {
 
             @Override
             public void onError(int code, String msg) {
-                Log.e("wifi", "read wifi fail");
-                Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+                Log.e("bomb", "read wifi fail");
+                Log.e("bomb",String.valueOf(code));
+                Toast toast = Toast.makeText(mContext, "网络异常，请检查您的网络设置", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
                 toast.show();
             }
         });
     }
+
+
 
     private void compareWiFiList(){
         String wserviceName = Context.WIFI_SERVICE;
@@ -102,25 +149,33 @@ public class WiFiListManager {
 
     //检测wifi是否开启并开启
 
-    private void enableWiFi(){
-        WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
-        if (!wifiManager.isWifiEnabled())
-        {
-            wifiManager.setWifiEnabled(true);
-            Toast toast=Toast.makeText(mContext, "正在打开WLAN...", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-            toast.show();
-            while(!wifiManager.isWifiEnabled()){
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(1000);
+    private Runnable enableWiFiRunnable= new Runnable() {
+        @Override
+        public void run() {
+            WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+            Message msg = new Message();
+            msg.what=1;
+            Toast toast = new Toast(mContext);
+            if (!wifiManager.isWifiEnabled())
+            {
+                wifiManager.setWifiEnabled(true);
+                toast.makeText(mContext, "正在打开WLAN..", Toast.LENGTH_SHORT).show();
+                while(!wifiManager.isWifiEnabled()){
+                    try {
+                        Thread.currentThread();
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+                toast.cancel();
+                enableWiFiHandler.sendMessage(msg);
+            }else
+                enableWiFiHandler.sendMessage(msg);
         }
-    }
+    };
+
 
 
     private boolean isWiFiActive() {

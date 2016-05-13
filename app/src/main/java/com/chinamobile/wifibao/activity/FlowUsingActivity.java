@@ -69,7 +69,10 @@ public class FlowUsingActivity extends Activity {
                     flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
                     flowusingText.setText(flowUsed);
                     moneyuseText.setText(computeCost(flowUsed));
-                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff);
+                    flowDiff=flowDiff/1024/1024;
+                    DecimalFormat df  = new DecimalFormat("######0.00");
+                    flowDiff=Double.parseDouble(df.format(flowDiff));
+                    FlowUsingManager.getInstance(FlowUsingActivity.this).updateUseInfo(wifi, flowDiff,2);
                     TrafficMonitor.getInstance(FlowUsingActivity.this).refreshTraffic();
                 }else{
 //                    TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
@@ -85,7 +88,7 @@ public class FlowUsingActivity extends Activity {
         useRecord.setStartTime(new BmobDate(new Date()));
         useRecord.setUser(BmobUser.getCurrentUser(this,User.class));
 
-        wifiDetectHandler.postDelayed(wifiDetectRunnable,200);
+        wifiDetectHandler.postDelayed(wifiDetectRunnable,3500);
         //ImageView refresh = (ImageView)findViewById(R.id.refresh)
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
@@ -93,7 +96,7 @@ public class FlowUsingActivity extends Activity {
             public void onClick(View v) {
                 uiHandler.removeMessages(1);
                 uiHandler.removeMessages(0);
-                endUsing();
+                endUsing(1);
             }
         });
     }
@@ -111,9 +114,9 @@ public class FlowUsingActivity extends Activity {
         @Override
         public void run() {
             if(isWiFiActive()){
-                wifiDetectHandler.postDelayed(wifiDetectRunnable,2000);
+                wifiDetectHandler.postDelayed(wifiDetectRunnable,5000);
             }else
-                endUsing();
+                endUsing(0);
         }
     };
 
@@ -132,7 +135,7 @@ public class FlowUsingActivity extends Activity {
         if (mWifi.isConnected()){
             WifiManager wifi_service = (WifiManager)getSystemService(WIFI_SERVICE);
             WifiInfo wifiInfo = wifi_service.getConnectionInfo();
-            if(wifiInfo.getBSSID().equals(wifi.getBSSID()))
+            if(wifiInfo.getBSSID().toLowerCase().equals(wifi.getBSSID().toLowerCase()))
                 return true;
             else return false;
         }
@@ -141,11 +144,15 @@ public class FlowUsingActivity extends Activity {
     }
 
 
-    private void endUsing(){
+    private void endUsing(int flag){
+
         wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
         flowDiff=TrafficMonitor.getInstance(FlowUsingActivity.this).getTrafficDiff();
+        flowDiff=flowDiff/1024/1024;
+        DecimalFormat df  = new DecimalFormat("######0.00");
+        flowDiff=Double.parseDouble(df.format(flowDiff));
 
         Intent intent = new Intent(FlowUsingActivity.this, BalanceUseActivity.class);
         Bundle bundle=new Bundle();
@@ -158,7 +165,9 @@ public class FlowUsingActivity extends Activity {
         useRecord.setCost(cost);
         useRecord.setFlowUsed(Double.parseDouble(flowUsed));
 
-        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff);
+
+        FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff,flag);
+
         startActivity(intent);
     }
 }

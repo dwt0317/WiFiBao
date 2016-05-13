@@ -19,13 +19,16 @@ import android.widget.Toast;
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
 import com.chinamobile.wifibao.utils.ConnectedIP;
+import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
 import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
+import com.chinamobile.wifibao.activity.ShareActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobRealTimeData;
@@ -47,40 +50,51 @@ public class CloseApActivity extends Activity {
 
         Toast.makeText(mContext, "热点已开启！", Toast.LENGTH_SHORT).show();
         //流量监测
+        final String apId = getWifiAp().getObjectId();
         final TextView showFlow = (TextView) findViewById(R.id.tv11);
         final Handler flowHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String sR = (String) msg.obj;
-                showFlow.setText(sR);
-                if (msg.arg1 == 0) {
-                    //WifiApAdmin.closeWifiAp(mContext);
-                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
-                }
+//                String sR = (String) msg.obj;
+//                showFlow.setText(sR);
+//                if (msg.arg1 == 0) {
+//                    //WifiApAdmin.closeWifiAp(mContext);
+//                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
+//                }
+                double be = Double.parseDouble((String)msg.obj);
+                double beOld = Double.parseDouble(showFlow.getText().toString());
+                DecimalFormat df  = new DecimalFormat("######0.00");
+                showFlow.setText(df.format(be + beOld));
             }
         };
-        final TrafficMonitorService monitorThread = new TrafficMonitorService();
-        monitorThread.setHandler(flowHandle);
-        monitorThread.setContext(mContext);
-        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
-        monitorThread.start();
+        pullFlowUsed(flowHandle,apId);
+//        final TrafficMonitorService monitorThread = new TrafficMonitorService();
+//        monitorThread.setHandler(flowHandle);
+//        monitorThread.setContext(mContext);
+//        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
+//        monitorThread.start();
         //接入监测
         final TextView accessCount = (TextView) findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                String count = String.valueOf(msg.arg1);
-                accessCount.setText(count);
+//                String count = String.valueOf(msg.arg1);
+//                accessCount.setText(count);
+                int be = Integer.parseInt((String) msg.obj);
+//                int beOld = Integer.parseInt(accessCount.getText().toString());
+                accessCount.setText(String.valueOf(be));
             }
         };
-        final AccessListenerThread listenerThread = new AccessListenerThread();
-        listenerThread.setHandler(accessHandle);
-        listenerThread.setContext(mContext);
-        listenerThread.start();
 
-        //收入监测
+        pullCurConnect(accessHandle,apId);
+//        final AccessListenerThread listenerThread = new AccessListenerThread();
+//        listenerThread.setHandler(accessHandle);
+//        listenerThread.setContext(mContext);
+//        listenerThread.start();
+
+        //收入监测,获取收益
         final TextView benefit = (TextView) findViewById(R.id.tv31);
         final Handler benefitHandle = new Handler() {
             @Override
@@ -88,11 +102,12 @@ public class CloseApActivity extends Activity {
                 super.handleMessage(msg);
                 double be = Double.parseDouble((String)msg.obj);
                 double beOld = Double.parseDouble(benefit.getText().toString());
-                benefit.setText(String.valueOf(be+beOld));
+                DecimalFormat df  = new DecimalFormat("######0.00");
+                benefit.setText(df.format(be+beOld));
             }
         };
-        //获取收益
-        pullBenefit(benefitHandle);
+
+        pullBenefit(benefitHandle,apId);
 
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.gohome);
@@ -118,7 +133,8 @@ public class CloseApActivity extends Activity {
             @Override
             public void onClick(View v) {
                 WifiApAdmin.closeWifiAp(mContext);
-                monitorThread.stopService();
+//                monitorThread.stopService();
+                DatabaseUtil.getInstance().deletefromConnetionPool(mContext);
                 Toast.makeText(mContext, "宝宝这就去睡觉", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CloseApActivity.this, BalanceShareActivity.class);
                 intent.putExtra("flow", showFlow.getText().toString());
@@ -250,16 +266,11 @@ public class CloseApActivity extends Activity {
         return ap;
     }
 
-    /**
-     * 数据库获得已得收入，已使用者为准，不已本地分享为准
-     * 以热点id为标识，获取一个热点的收益
-     * 暂时未使用id
-     */
-    private int pullBenefit(final Handler handler) {
-        final String tableName = "UseRecord";
-        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+
+    private int pullCurConnect(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         final BmobRealTimeData rtd = new BmobRealTimeData();
-        final String objId = getWifiAp().getObjectId();
 
         rtd.start(CloseApActivity.this, new ValueEventListener() {
             @Override
@@ -267,11 +278,92 @@ public class CloseApActivity extends Activity {
                 if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
                     JSONObject data = arg0.optJSONObject("data");
                     try {
-                        String cost = data.getString("cost");
-                        Log.i("cost:", cost);
-                        Message mess = new Message();
-                        mess.obj = cost;
-                        handler.sendMessage(mess);
+                        String curConnect = data.getString("curConnect");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if (apId.equalsIgnoreCase(id)) {
+                            Log.i("bomb:", curConnect);
+                            Message mess = new Message();
+                            mess.obj = curConnect;
+                            handler.sendMessage(mess);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectCompleted() {
+                if (rtd.isConnected()) {
+                    // 监听表更新
+                    rtd.subTableUpdate(tableName);
+                }
+            }
+        });
+
+        return 1;
+    }
+
+    private int pullFlowUsed(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        final BmobRealTimeData rtd = new BmobRealTimeData();
+
+        rtd.start(CloseApActivity.this, new ValueEventListener() {
+            @Override
+            public void onDataChange(JSONObject arg0) {
+                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
+                    JSONObject data = arg0.optJSONObject("data");
+                    try {
+                        String flow = data.getString("flowUsed");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if (apId.equalsIgnoreCase(id)) {
+                            Log.i("bomb:", flow);
+                            Message mess = new Message();
+                            mess.obj = flow;
+                            handler.sendMessage(mess);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectCompleted() {
+                if (rtd.isConnected()) {
+                    // 监听表更新
+                    rtd.subTableUpdate(tableName);
+                }
+            }
+        });
+
+        return 1;
+    }
+
+
+    private int pullBenefit(final Handler handler,final String apId) {
+        final String tableName = "ConnectionPool";
+//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        final BmobRealTimeData rtd = new BmobRealTimeData();
+
+        rtd.start(CloseApActivity.this, new ValueEventListener() {
+            @Override
+            public void onDataChange(JSONObject arg0) {
+                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(arg0.optString("action"))) {
+                    JSONObject data = arg0.optJSONObject("data");
+                    try {
+                        String flow = data.getString("cost");
+                        String id = data.getJSONObject("WiFi").getString("objectId");
+                        if(apId.equalsIgnoreCase(id)){
+                            Log.i("cost:", flow);
+                            Message mess = new Message();
+                            mess.obj = flow;
+                            handler.sendMessage(mess);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -301,7 +393,8 @@ public class CloseApActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true);
+//            moveTaskToBack(true);
+//            return true;
             return true;
         }
         return super.onKeyDown(keyCode, event);

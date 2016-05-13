@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(SignupActivity.this, "注册成功！",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent();
-                                intent.setClass(SignupActivity.this, HomeActivity.class);
+                                intent.setClass(SignupActivity.this, Home2Activity.class);
                                 startActivity(intent);
                             } else {
                                 String error = SignupManager.getInstance(SignupActivity.this).getErrorMsg();

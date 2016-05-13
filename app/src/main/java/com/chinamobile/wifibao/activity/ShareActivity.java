@@ -88,17 +88,34 @@ public class ShareActivity extends Activity {
         //如果热点已经打开，跳转下个页面
         isWiFiEnabled();
 
-        final Handler openHandle = new Handler() {
+        final Handler writePoolHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.arg1 == 1) {
+                    //写wifi和Pool都成功，才开启
                     open();
                 }else {
                     Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
                 }
             }
         };
+
+        final Handler openHandle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.arg1 == 1) {
+                    //ConnectPool
+                    DatabaseUtil util = DatabaseUtil.getInstance();
+                    util.writeApToPool(mContext, writePoolHandle, ap);
+                }else {
+                    Toast.makeText(mContext, "糟糕，网络不好哦...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+
 
         //点击打开热点
 
@@ -117,6 +134,7 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShareActivity.this, Home2Activity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -147,12 +165,16 @@ public class ShareActivity extends Activity {
             ap.setPassword(password);
             ap.setUpperLimit(Double.parseDouble(share));//没有判断非法输入，但在xml中做了输入限制
             ap.setMaxConnect(Integer.parseInt(access));
+            ap.setCurConnect(0);
             ap.setScore(WiFiApGradeUtil.getGrade(ap));
             ap.setBSSID(getLocalMacAddress());
             ap.setState(true);
             ap.setUser(user);
             //上传热点信息，成功则打开热点
-            DatabaseUtil.getInstance().writeApToDatabase(mContext, handler, ap);
+            DatabaseUtil util = DatabaseUtil.getInstance();
+            util.writeApToDatabase(mContext, handler, ap);
+            //ConnectPool
+            //util.writeApToPool(mContext, handler, ap);
         }
     }
     /**
@@ -168,6 +190,7 @@ public class ShareActivity extends Activity {
         Intent intent = new Intent(ShareActivity.this, CloseApActivity.class);
         intent.putExtra("maxshare",ap.getUpperLimit());
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.scale_in, R.anim.alpha_out);
         ShareActivity.this.finish();
@@ -216,6 +239,7 @@ public class ShareActivity extends Activity {
     }
 
     /***
+     * 数据库同步后，objectId存在
      * 保存wifiap信息
      */
     void writeInCache(WiFi ap){
@@ -234,6 +258,10 @@ public class ShareActivity extends Activity {
         editor.putLong("startTime",(new Date()).getTime());
         editor.commit();
     }
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -302,8 +330,8 @@ public class ShareActivity extends Activity {
          tv_data.setTextColor(0xff1B940A);
          tv_wifi.setTextColor(0xff1B940A);
          **/
-        tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border,null));
-        tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border,null));
+        tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border));
+        tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border));
         ;
     }
 
@@ -318,13 +346,13 @@ public class ShareActivity extends Activity {
                 case R.id.ll_data:
                     //tv_data.setTextColor(0xff1B940A);
                     //tv_data.setBackgroundColor(Color.WHITE);
-                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
                     viewPager.setCurrentItem(0);
                     break;
                 case R.id.ll_wifi:
                     //tv_wifi.setTextColor(0xff1B940A);
                     //tv_wifi.setBackgroundColor(Color.WHITE);
-                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
                     viewPager.setCurrentItem(1);
                     break;
                 default:
@@ -348,13 +376,13 @@ public class ShareActivity extends Activity {
                     //iv_home.setImageResource(R.drawable.tab_weixin_pressed);
                     //tv_data.setTextColor(0xff1B940A);
                     //tv_data.setBackgroundColor(Color.WHITE);
-                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
 
                     break;
                 case 1:
                     //iv_address.setImageResource(R.drawable.tab_address_pressed);
                     //tv_wifi.setTextColor(0xff1B940A);
-                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused,null));
+                    tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border_focused));
 
                     break;
 
