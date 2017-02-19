@@ -19,6 +19,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * 热点列表
+ */
 public class WifiListActivity extends Activity {
 
     private int[] icon = {R.mipmap.potrait};//图标
@@ -48,7 +52,7 @@ public class WifiListActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WifiListActivity.this,Home2Activity.class);
+                Intent intent = new Intent(WifiListActivity.this,HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -66,7 +70,6 @@ public class WifiListActivity extends Activity {
         });
         //2016/3/23
         //wifiList是一个 ArrayList<WiFi>的实例
-
 
         Handler uiHandler = new Handler(){
             @Override
@@ -87,7 +90,6 @@ public class WifiListActivity extends Activity {
         wifiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intent = new Intent(WifiListActivity.this, WifiDetailsActivity.class);
                 Bundle bundle = new Bundle();
                 //传递参数
@@ -99,7 +101,6 @@ public class WifiListActivity extends Activity {
 
     }
 
-
     private Runnable updateListRunnable = new Runnable() {
         @Override
         public void run() {
@@ -108,7 +109,6 @@ public class WifiListActivity extends Activity {
             updateListHandler.postDelayed(updateListRunnable,5000);
         }
     };
-
 
     public void updateWiFiListView(){
         int size=wifiList.size();
@@ -124,6 +124,5 @@ public class WifiListActivity extends Activity {
                 new int[]{R.id.portraitView, R.id.ssidView,R.id.curConnectView,R.id.score});
         wifiListView.setAdapter(saImageItems);
         wifiListView.setTextFilterEnabled(true);
-
     }
 }

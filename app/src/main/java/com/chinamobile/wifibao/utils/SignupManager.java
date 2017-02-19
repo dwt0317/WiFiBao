@@ -16,7 +16,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.VerifySMSCodeListener;
 
 /**
- * Created by dwt on 2016/4/13.
+ * 注册后台
  */
 public class SignupManager {
     private static SignupManager instance;
@@ -35,6 +35,9 @@ public class SignupManager {
     }
 
 
+    /**
+     * 发送验证码
+     */
     public void requestSMSCode(String phoneNumber){
         BmobSMS.requestSMSCode(mContext, phoneNumber, "wifiBao", new RequestSMSCodeListener() {
 

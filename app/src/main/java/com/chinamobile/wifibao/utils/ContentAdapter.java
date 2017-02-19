@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by lab on 2016/4/27.
+ * 广告轮播工具类
  */
 public class ContentAdapter extends PagerAdapter {
     private List<View> views;

@@ -20,7 +20,7 @@ import com.chinamobile.wifibao.utils.usingFlow.WiFiDetailsManager;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by apple on 2016/3/25.
+ * 查看热点信息
  */
 
 
@@ -36,10 +36,8 @@ public class WifiDetailsActivity extends Activity {
     }
     private void setViewComponent() {
 
-
         setContentView(R.layout.wifi_details);
         //新页面接收数据
-        //Bundle bundle = this.getIntent().getExtras();
         final WiFi wifi = (WiFi)this.getIntent().getSerializableExtra(WifiListActivity.wifiListSER_KEY);
        //接收ssid值
         TextView wifiname = (TextView) findViewById(R.id.wifiname);
@@ -61,27 +59,12 @@ public class WifiDetailsActivity extends Activity {
         TextView maxconnectText = (TextView) findViewById(R.id.maxconnectText);
         maxconnectText.setText(wifi.getMaxConnect().toString());
 
-//        Handler uiHandler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                if(msg.what == 1){
-//                    shareuserText.setText(WiFiDetailsManager.getInstance(WifiDetailsActivity.this).getSelectedUser().getUsername());
-//                }else{
-//
-//                }
-//            }
-//        };
-
-//        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).setUiHandler(uiHandler);
-//        WiFiDetailsManager.getInstance(WifiDetailsActivity.this).queryUser(wifi);
-
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WifiDetailsActivity.this,Home2Activity.class);
+                Intent intent = new Intent(WifiDetailsActivity.this,HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -98,7 +81,6 @@ public class WifiDetailsActivity extends Activity {
                     Bundle bundle=new Bundle();
                     bundle.putSerializable(wifiDetailSER_KEY,wifi);
                     intent.putExtras(bundle);
-
                     //传递参数
                     Handler connectHandler = new Handler(){
                         @Override
@@ -119,7 +101,6 @@ public class WifiDetailsActivity extends Activity {
                 }
             }
         });
-
     }
     private boolean isLogin(){
         BmobUser bmobUser = BmobUser.getCurrentUser(this);

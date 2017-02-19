@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,24 +17,19 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.WiFi;
-import com.chinamobile.wifibao.utils.ConnectedIP;
 import com.chinamobile.wifibao.utils.DatabaseUtil;
 import com.chinamobile.wifibao.utils.wifiap.WifiApAdmin;
-import com.chinamobile.wifibao.utils.traffic.TrafficMonitorService;
-import com.chinamobile.wifibao.activity.ShareActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobRealTimeData;
 import cn.bmob.v3.listener.ValueEventListener;
 
 /**
- * Created by cdd on 2016/3/16.
+ * 正在分享热点页面
  */
 public class CloseApActivity extends Activity {
     private Context mContext = null;
@@ -56,12 +50,6 @@ public class CloseApActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-//                String sR = (String) msg.obj;
-//                showFlow.setText(sR);
-//                if (msg.arg1 == 0) {
-//                    //WifiApAdmin.closeWifiAp(mContext);
-//                    Toast.makeText(mContext, "超出上限，请关闭热点！", Toast.LENGTH_LONG).show();
-//                }
                 double be = Double.parseDouble((String)msg.obj);
                 double beOld = Double.parseDouble(showFlow.getText().toString());
                 DecimalFormat df  = new DecimalFormat("######0.00");
@@ -69,30 +57,18 @@ public class CloseApActivity extends Activity {
             }
         };
         pullFlowUsed(flowHandle,apId);
-//        final TrafficMonitorService monitorThread = new TrafficMonitorService();
-//        monitorThread.setHandler(flowHandle);
-//        monitorThread.setContext(mContext);
-//        monitorThread.setMaxShare(getIntent().getDoubleExtra("maxshare", 0.0));
-//        monitorThread.start();
         //接入监测
         final TextView accessCount = (TextView) findViewById(R.id.tv21);
         final Handler accessHandle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-//                String count = String.valueOf(msg.arg1);
-//                accessCount.setText(count);
                 int be = Integer.parseInt((String) msg.obj);
-//                int beOld = Integer.parseInt(accessCount.getText().toString());
                 accessCount.setText(String.valueOf(be));
             }
         };
 
         pullCurConnect(accessHandle,apId);
-//        final AccessListenerThread listenerThread = new AccessListenerThread();
-//        listenerThread.setHandler(accessHandle);
-//        listenerThread.setContext(mContext);
-//        listenerThread.start();
 
         //收入监测,获取收益
         final TextView benefit = (TextView) findViewById(R.id.tv31);
@@ -114,7 +90,7 @@ public class CloseApActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CloseApActivity.this, Home2Activity.class);
+                Intent intent = new Intent(CloseApActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -146,111 +122,9 @@ public class CloseApActivity extends Activity {
         });
     }//end onCreate
 
-    /**
-     * 介入监听线程
-     */
-    private class AccessListenerThread extends Thread {
-        private Handler handler;
-        private Context context;
-        private static final int WIFI_AP_STATE_ENABLING = 12;
-        private static final int WIFI_AP_STATE_ENABLED = 13;
-        private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
-
-        public void setHandler(Handler handler) {
-            this.handler = handler;
-        }
-
-        public void setContext(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void run() {
-            ConnectedIP cp = ConnectedIP.getInstance();
-            while (true) {
-                if (stop) break;
-                Message mess = new Message();
-                if (getWiFiApState() != WIFI_AP_STATE_ENABLING && getWiFiApState() != WIFI_AP_STATE_ENABLED) {
-                    mess.arg1 = 0;
-                    handler.sendMessage(mess);
-                    break;
-                } else {
-                    mess.arg1 = cp.getConnectedIpCount();
-                    //Log.i("ip:", String.valueOf(mess.arg1));
-                    handler.sendMessage(mess);
-                }
-                try {
-                    Thread.currentThread().sleep(2000);
-                } catch (InterruptedException e) {
-                    Log.e("cdd:", "Thread ex", e);
-                }
-            }
-        }
-
-        private int getWiFiApState() {
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            int apState = WIFI_AP_STATE_ENABLED;
-            try {
-                String name = METHOD_GET_WIFI_AP_STATE;
-                Method method = WifiManager.class.getMethod(name);
-                apState = (int) method.invoke(wifiManager);
-            } catch (Exception e) {
-                Log.e("cdd:", "SecurityException", e);
-            }
-            return apState;
-        }
-    }//end accessListenerThread
-
-    /**
-     * 数据库获得已得收入,实时更新
-     * 暂不使用
-     */
-    private class BenefitPullThread extends Thread {
-        private boolean doStop = false;
-        private Context context;
-        private Handler handler;
-
-        //private static BenefitThread bt;
-        //private BenefitThread(){}
-
-        public void setDoStop(boolean doStop) {
-            this.doStop = doStop;
-        }
-
-        public void setContext(Context context) {
-            this.context = context;
-        }
-
-        public void setHandler(Handler handler) {
-            this.handler = handler;
-        }
-
-        //关闭线程
-        public void stopThread() {
-            setDoStop(true);
-        }
-
-        @Override
-        public void run() {
-            while (!doStop) {
-//                int benefit = pullBenefit();
-//                Message mess = new Message();
-//                mess.arg1 = benefit;
-//                handler.sendMessage(mess);//异步不可以这样
-//                pullBenefit(handle);
-                try {
-                    Thread.currentThread().sleep(6000);
-                } catch (InterruptedException e) {
-                    Log.e("cdd:", "Thread ex", e);
-                }
-            }
-        }
-
-    }//end BenefitPullThread
 
     /**
      * 从本地缓存中读取热点信息
-     *
      * @return
      */
     private WiFi getWifiAp() {
@@ -266,10 +140,11 @@ public class CloseApActivity extends Activity {
         return ap;
     }
 
-
+    /**
+     * 获取热点当前接入人数
+     */
     private int pullCurConnect(final Handler handler,final String apId) {
         final String tableName = "ConnectionPool";
-//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         final BmobRealTimeData rtd = new BmobRealTimeData();
 
         rtd.start(CloseApActivity.this, new ValueEventListener() {
@@ -305,11 +180,12 @@ public class CloseApActivity extends Activity {
         return 1;
     }
 
+    /**
+     * 获取当前已分享的流量
+     */
     private int pullFlowUsed(final Handler handler,final String apId) {
         final String tableName = "ConnectionPool";
-//        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");
         final BmobRealTimeData rtd = new BmobRealTimeData();
-
         rtd.start(CloseApActivity.this, new ValueEventListener() {
             @Override
             public void onDataChange(JSONObject arg0) {
@@ -324,7 +200,6 @@ public class CloseApActivity extends Activity {
                             mess.obj = flow;
                             handler.sendMessage(mess);
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -339,11 +214,13 @@ public class CloseApActivity extends Activity {
                 }
             }
         });
-
         return 1;
     }
 
 
+    /**
+     * 获取当前收益
+     */
     private int pullBenefit(final Handler handler,final String apId) {
         final String tableName = "ConnectionPool";
 //        Bmob.initialize(CloseApActivity.this, "81c22e29e8d2f6204f9d1e58dee89f8c");

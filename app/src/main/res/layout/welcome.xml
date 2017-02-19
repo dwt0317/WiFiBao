@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textColor="#696969"
-        android:text="您的网络分享专家"
+        android:text="您的流量分享专家"
         android:textSize="22dp"
         android:layout_gravity="center_horizontal" />
 

@@ -13,7 +13,7 @@ import android.util.Log;
 import java.text.DecimalFormat;
 
 /**
- * Created by dwt on 2016/3/22.
+ * 流量监控
  */
 public class TrafficMonitor {
 

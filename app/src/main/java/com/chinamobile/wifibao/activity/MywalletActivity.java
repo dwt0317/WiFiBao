@@ -8,10 +8,8 @@ import android.widget.ImageView;
 
 import com.chinamobile.wifibao.R;
 
-import cn.bmob.v3.Bmob;
-
 /**
- * Created by Administrator on 2016/4/19.
+ * 我的钱包页面
  */
 public class MywalletActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +20,7 @@ public class MywalletActivity extends Activity {
         goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MywalletActivity.this,Home2Activity.class);
+                Intent intent = new Intent(MywalletActivity.this,HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

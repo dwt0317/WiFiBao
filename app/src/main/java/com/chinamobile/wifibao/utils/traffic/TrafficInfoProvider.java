@@ -59,7 +59,6 @@ public class TrafficInfoProvider {
                         TrafficInfo trafficInfo = new TrafficInfo();
                         //封装应用信息
                         trafficInfo.setPackName(packinfo.packageName);
-                        //trafficInfo.setAppName(packinfo.applicationInfo.loadLabel(pm).toString());
                         //获取到应用的uid（user id）
                         int uid = packinfo.applicationInfo.uid;
                         trafficInfo.setUid(uid);

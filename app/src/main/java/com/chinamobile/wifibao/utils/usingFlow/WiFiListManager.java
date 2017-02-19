@@ -24,7 +24,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by dwt on 2016/3/31.
+ * 热点列表后台
  */
 public class WiFiListManager {
     private static WiFiListManager instance;
@@ -50,12 +50,15 @@ public class WiFiListManager {
         this.mContext = context;
     }
 
+
+    /**
+     * 获取附近可用wifi
+     */
     public void getAvailableWiFi(){
         final double[] userLoc = {12.0,33.0};
         getWifiList().clear();
         ownerList.clear();
         dbNearbyWiFi.clear();
-
         enableWiFiHandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -70,34 +73,11 @@ public class WiFiListManager {
     }
 
 
-//    private void readDBNearbyWiFi(double[] userLoc){
-//        BmobQuery<WiFi> bmobQuery = new BmobQuery<WiFi>();
-////        bmobQuery.addWhereNear("location", userPoint);
-//        bmobQuery.include("user");
-//        bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
-//        bmobQuery.findObjects(mContext, new FindListener<WiFi>() {
-//            @Override
-//            public void onSuccess(List<WiFi> object) {
-//                dbNearbyWiFi = new ArrayList<WiFi>(object);
-//                compareWiFiList();
-//                Message msg = new Message();
-//                msg.what = 1;
-//                getUiHandler().sendMessage(msg);
-//            }
-//
-//            @Override
-//            public void onError(int code, String msg) {
-//                Log.e("wifi", "read wifi fail");
-//                Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-//                toast.show();
-//            }
-//        });
-//    }
-
+    /**
+     * 获取数据库中离用户最近的20个可用热点
+     */
     private void readDBNearbyWiFi(double[] userLoc){
         BmobQuery<ConnectionPool> bmobQuery = new BmobQuery<ConnectionPool>();
-//        bmobQuery.addWhereNear("location", userPoint);
         bmobQuery.include("WiFi,WiFi.user");
         bmobQuery.setLimit(20);    //获取最接近用户地点的20条数据
         bmobQuery.findObjects(mContext, new FindListener<ConnectionPool>() {
@@ -106,7 +86,6 @@ public class WiFiListManager {
                 for(int i=0;i<connectionList.size();i++){
                     WiFi wifi = connectionList.get(i).getWiFi();
                     wifi.setCurConnect(connectionList.get(i).getCurConnect());
-//                    wifi.setUser(connectionList.get(i).getUser());
                     dbNearbyWiFi.add(wifi);
                 }
                 compareWiFiList();
@@ -127,7 +106,9 @@ public class WiFiListManager {
     }
 
 
-
+    /**
+     * 将数据库热点与用户手机搜索到的热点进行比对
+     */
     private void compareWiFiList(){
         String wserviceName = Context.WIFI_SERVICE;
         WifiManager wm = (WifiManager) mContext.getSystemService(wserviceName);
@@ -139,7 +120,6 @@ public class WiFiListManager {
             Log.i("wifi", result.SSID);
             Log.i("wifi", result.BSSID);
         }
-
         for(WiFi wifi: dbNearbyWiFi){
             if(scanIDList.contains(wifi.getBSSID().toLowerCase())&&wifi.getState()==true){
                 getWifiList().add(wifi);
@@ -147,8 +127,9 @@ public class WiFiListManager {
         }
     }
 
-    //检测wifi是否开启并开启
-
+    /**
+     * 检测wifi是否开启并开启
+     */
     private Runnable enableWiFiRunnable= new Runnable() {
         @Override
         public void run() {
@@ -177,32 +158,8 @@ public class WiFiListManager {
     };
 
 
-
-    private boolean isWiFiActive() {
-        Context context = mContext.getApplicationContext();
-        ConnectivityManager connectivity = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getTypeName().equals("WIFI") && info[i].isConnected()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-
-
     public ArrayList<WiFi> getWifiList() {
         return wifiList;
-    }
-
-    public void setWifiList(ArrayList<WiFi> wifiList) {
-        this.wifiList = wifiList;
     }
 
     public Handler getUiHandler() {

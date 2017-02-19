@@ -35,8 +35,7 @@ import java.util.List;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by cdd on 2016/3/16.
- * modified by cdd on 2016/4/25
+ * 热点分享设置页面
  * 缓存的wifi热点信息可以用于，后面条件查询数据库；目前缓存热点开启时间，在上传热点分享信息可以用到。
  */
 
@@ -47,14 +46,9 @@ public class ShareActivity extends Activity {
     private WiFi ap;
     private User user;
 
-
     // 顶部菜单2个Linearlayout
     private LinearLayout ll_data;
     private LinearLayout ll_wifi;
-
-
-    // 顶部菜单2个ImageView
-
 
     // 顶部菜单2个菜单标题
     private TextView tv_data;
@@ -66,7 +60,6 @@ public class ShareActivity extends Activity {
 
     // ViewPager适配器ContentAdapter
     private ContentAdapter adapter;
-
     private List<View> views;
     private View page_01;
     private View page_02;
@@ -115,10 +108,7 @@ public class ShareActivity extends Activity {
             }
         };
 
-
-
         //点击打开热点
-
         Button shareButton = (Button)page_01.findViewById(R.id.share_submit);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,18 +117,16 @@ public class ShareActivity extends Activity {
             }
         });
 
-
         //返回HomeActivity
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShareActivity.this, Home2Activity.class);
+                Intent intent = new Intent(ShareActivity.this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
-
     }
 
 
@@ -173,8 +161,6 @@ public class ShareActivity extends Activity {
             //上传热点信息，成功则打开热点
             DatabaseUtil util = DatabaseUtil.getInstance();
             util.writeApToDatabase(mContext, handler, ap);
-            //ConnectPool
-            //util.writeApToPool(mContext, handler, ap);
         }
     }
     /**
@@ -247,7 +233,6 @@ public class ShareActivity extends Activity {
         SharedPreferences.Editor editor = sp.edit();
 
         editor.putString("objectId",ap.getObjectId());
-
         editor.putString("SSID", ap.getBSSID());
         editor.putString("password", ap.getPassword());
         editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
@@ -273,34 +258,21 @@ public class ShareActivity extends Activity {
         // 设置按钮监听
         ll_data.setOnClickListener(new MyListener());
         ll_wifi.setOnClickListener(new MyListener());
-
-
         //设置ViewPager滑动监听
         viewPager.addOnPageChangeListener(new MyPageListener());
     }
 
     private void initView() {
-
         // 顶部菜单2个Linearlayout
         this.ll_data = (LinearLayout) findViewById(R.id.ll_data);
         this.ll_wifi = (LinearLayout) findViewById(R.id.ll_wifi);
-
-
-        // 顶部菜单2个ImageView
-
 
         // 顶部菜单2个菜单标题
         this.tv_data = (TextView) findViewById(R.id.set_data);
         this.tv_wifi = (TextView) findViewById(R.id.set_wifi);
 
-
         // 中间内容区域ViewPager
         this.viewPager = (ViewPager) findViewById(R.id.set_content);
-
-        // 适配器
-        //View page_01 = View.inflate(ShareSetActivity.this, R.layout.set_share_data, null);
-        //View page_02 = View.inflate(ShareSetActivity.this, R.layout.set_share_wifi, null);
-
 
         views = new ArrayList<View>();
         LayoutInflater myInflater = getLayoutInflater();
@@ -308,31 +280,18 @@ public class ShareActivity extends Activity {
         page_02 = myInflater.inflate(R.layout.set_share_wifi, null);
         views.add(page_01);
         views.add(page_02);
-
-
         this.adapter = new ContentAdapter(views);
         viewPager.setAdapter(adapter);
-
     }
 
 
-
+    /**
+     * 设置顶栏
+     */
     private void restartTop() {
-        // ImageView置为灰色
-
-        //iv_home.setImageResource(R.drawable.tab_weixin_normal);
-        //iv_address.setImageResource(R.drawable.tab_address_normal);
-        //iv_friend.setImageResource(R.drawable.tab_find_frd_normal);
-        //iv_setting.setImageResource(R.drawable.tab_settings_normal);
-
         // TextView置为白色
-        /**
-         tv_data.setTextColor(0xff1B940A);
-         tv_wifi.setTextColor(0xff1B940A);
-         **/
         tv_data.setBackground(getResources().getDrawable(R.drawable.textview_border));
         tv_wifi.setBackground(getResources().getDrawable(R.drawable.textview_border));
-        ;
     }
 
 

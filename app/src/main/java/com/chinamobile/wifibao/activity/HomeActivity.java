@@ -1,103 +1,160 @@
 package com.chinamobile.wifibao.activity;
 
 import android.app.Activity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.*;
-import android.content.Intent;
-import java.util.HashMap;
-import java.util.ArrayList;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.chinamobile.wifibao.R;
+import com.chinamobile.wifibao.utils.cycleImage.ADInfo;
+import com.chinamobile.wifibao.utils.cycleImage.ImageCycleView;
+
+import java.util.ArrayList;
 
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 
-/**
- * Created by Administrator on 2016/3/29.
- */
-public class HomeActivity extends Activity{
+import com.chinamobile.wifibao.utils.cycleImage.ImageCycleView.ImageCycleViewListener;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+/**
+ * APP主页面
+ */
+public class HomeActivity extends Activity {
     private ImageView portrait;
     private ImageView portraitNotLogin;
     private TextView username;
     private LinearLayout usernameLayout;
     private LinearLayout logoutLayout;
+    private LinearLayout aboutusLayout;
+    private LinearLayout mywalletLayout;
 
-    public void onCreate(Bundle savedInstanceState) {
+    private LinearLayout use;
+    private LinearLayout share;
+    private LinearLayout userinfo;
+    private LinearLayout hall;
+    private LinearLayout mywallet;
+    private LinearLayout usehistory;
+    private LinearLayout sharehistory;
+    private LinearLayout manual;
+
+    private ImageCycleView mAdView;
+    private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
+    private String[] imageUrls = {
+            "drawable://" + R.drawable.home_ad_0,
+            "drawable://" + R.drawable.home_ad_1,
+            "drawable://" + R.drawable.home_ad_2,
+            "drawable://" + R.drawable.home_ad_3
+
+    };
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
-        Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
-        BmobSMS.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
-
-        //gridview填充数据
-        int[] icon = {R.drawable.home_useflow,R.drawable.home_shareflow,R.drawable.home_userinfo,R.drawable.home_wallet,
-                R.drawable.home_viewused,R.drawable.home_viewshared,R.drawable.home_recharge,R.drawable.home_bill};
-        String[] iconName = {"使用流量" ,"分享流量","个人信息","我的钱包","查看使用","查看分享","充值","我的账单"};
-
-        GridView gridview = (GridView) findViewById(R.id.gridview1);
-        ArrayList<HashMap<String, Object>> ImageItem = new ArrayList<HashMap<String, Object>>();
-
-        for (int i = 0; i < 8; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("Image", icon[i]);
-            map.put("ImageText", iconName[i]);
-            ImageItem.add(map);
-        }
-        SimpleAdapter saImageItems = new SimpleAdapter(this,ImageItem,R.layout.homegrid_item,new String[]{"Image", "ImageText"},
-                new int[]{R.id.ItemImage, R.id.ItemText});
-        gridview.setAdapter(saImageItems);
-        //设置跳转
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (position == 0) {
-                    Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this, WifiListActivity.class);
-                    startActivity(intent);
-                } else if (position == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this, ShareActivity.class);
-                    goToActivity(intent);
-                } else if (position == 2) {
-                    Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this, PersonalActivity.class);
-                    goToActivity(intent);
-                }
-                else if (position == 4) {
-                    Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this, UseRecordActivity.class);
-                    goToActivity(intent);
-                }
-            }
-        });
-
-        createSettingPanel();
-
+        setContentView(R.layout.home2);
+        setViewComponent();
+        initImageLoader();
+        initCycleImage();
     }
 
     private long exitTime = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
             exit();
             return false;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    private void createSettingPanel(){
-        //用户设置页面
-        final View setting_content= this.getLayoutInflater().inflate(R.layout.haslogged, null);
-        final PopupWindow popup = new PopupWindow(setting_content,900,2560);
+    /**
+     * 返回键
+     */
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+    private void setViewComponent(){
+        Bmob.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+        BmobSMS.initialize(this, "81c22e29e8d2f6204f9d1e58dee89f8c");
+
+        createSettingPanel();
+
+        use = (LinearLayout)findViewById(R.id.layout1);
+        share = (LinearLayout)findViewById(R.id.layout2);
+        userinfo = (LinearLayout)findViewById(R.id.layout3);
+        hall = (LinearLayout)findViewById(R.id.layout4);
+        mywallet = (LinearLayout)findViewById(R.id.layout5);
+        usehistory = (LinearLayout)findViewById(R.id.layout6);
+        sharehistory = (LinearLayout)findViewById(R.id.layout7);
+        manual = (LinearLayout)findViewById(R.id.layout8);
+
+        setListener(use, WifiListActivity.class);
+        setLoginListener(share, ShareActivity.class);
+        setLoginListener(userinfo, PersonalActivity.class);
+        setLoginListener(mywallet, MywalletActivity.class);
+        setLoginListener(hall, MobileServiceActivity.class);
+        setLoginListener(usehistory,UseRecordActivity.class);
+        setLoginListener(sharehistory,ShareRecordActivity.class);
+        setListener(manual,ManualActivity.class);
+
+    }
+
+   private void setListener(LinearLayout layout,final Class page ){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(HomeActivity.this, page);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 登录跳转
+     */
+    private void setLoginListener(LinearLayout layout,final Class page){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(HomeActivity.this, page);
+                goToActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 侧边栏
+     */
+    private void createSettingPanel() {
+        final View setting_content = this.getLayoutInflater().inflate(R.layout.haslogged, null);
+        final PopupWindow popup = new PopupWindow(setting_content, 900, 2560);
         popup.setFocusable(true);   //设置可以获取焦点
         popup.setBackgroundDrawable(new BitmapDrawable()); //防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
 
-        final ImageView  image_set= (ImageView) findViewById(R.id.setting);
+        final ImageView image_set = (ImageView) findViewById(R.id.setting);
         image_set.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 popup.setAnimationStyle(R.style.PopupAnimation);
@@ -110,17 +167,19 @@ public class HomeActivity extends Activity{
         username = (TextView) setting_content.findViewById(R.id.username);
         usernameLayout = (LinearLayout) setting_content.findViewById(R.id.usernameLayout);
         logoutLayout = (LinearLayout) setting_content.findViewById(R.id.logoutLayout);
+        aboutusLayout=(LinearLayout) setting_content.findViewById(R.id.aboutusLayout);
+        mywalletLayout=(LinearLayout) setting_content.findViewById(R.id.mywalletLayout);
 
         BmobUser bmobUser = BmobUser.getCurrentUser(this);
-        if(bmobUser == null){
+        if (bmobUser == null) {
             usernameLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this,LoginActivity.class);
+                    intent.setClass(HomeActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             });
-        }else{
+        } else {
             portrait.setVisibility(View.VISIBLE);
             portraitNotLogin.setVisibility(View.GONE);
             logoutLayout.setVisibility(View.VISIBLE);
@@ -134,16 +193,34 @@ public class HomeActivity extends Activity{
             });
             logoutLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    BmobUser.logOut(HomeActivity.this);
+                    if (BmobUser.getCurrentUser(HomeActivity.this)!=null){
+                        BmobUser.logOut(HomeActivity.this);
+                        Intent intent = new Intent();
+                        intent.setClass(HomeActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+            mywalletLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(HomeActivity.this, HomeActivity.class);
+                    intent.setClass(HomeActivity.this, MywalletActivity.class);
+                    goToActivity(intent);
+                }
+            });
+            aboutusLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this, ManualActivity.class);
                     startActivity(intent);
                 }
             });
         }
-
     }
 
+    /**
+     * Activity 跳转
+     */
     private void goToActivity(Intent destIntent){
         BmobUser bmobUser = BmobUser.getCurrentUser(this);
         if(bmobUser == null){
@@ -155,13 +232,69 @@ public class HomeActivity extends Activity{
         }
     }
 
-    public void exit() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            finish();
-            System.exit(0);
+    /**
+     * 广告轮播
+     */
+    private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener() {
+        @Override
+        public void onImageClick(ADInfo info, int position, View imageView) {
+            Toast.makeText(HomeActivity.this, "content: "+info.getContent(), Toast.LENGTH_SHORT).show();
         }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            ImageLoader.getInstance().displayImage(imageURL, imageView);// 使用ImageLoader对图片进行加装！
+        }
+    };
+
+    /**
+     * 初始化轮播广告
+     */
+    private void initCycleImage(){
+        for(int i=0;i < imageUrls.length; i ++){
+            ADInfo info = new ADInfo();
+            info.setUrl(imageUrls[i]);
+            info.setContent("ad " + i);
+            infos.add(info);
+        }
+        mAdView = (ImageCycleView) findViewById(R.id.ad_top);
+        mAdView.setImageResources(infos, mAdCycleViewListener);
     }
+
+    /**
+     * 加载图片
+     */
+    private void initImageLoader(){
+        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.drawable.icon_empty) // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.icon_error) // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+                .build(); // 创建配置过得DisplayImageOption对象
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(options)
+                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.startImageCycle();
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAdView.pushImageCycle();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdView.pushImageCycle();
+    }
+
+
+
+
 }

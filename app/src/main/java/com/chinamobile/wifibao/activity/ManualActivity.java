@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.chinamobile.wifibao.R;
 
 /**
- * Created by cdd on 2016/4/21.
+ * 用户手册页面
  */
 public class ManualActivity extends Activity {
 
@@ -23,7 +23,7 @@ public class ManualActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(ManualActivity.this, Home2Activity.class);
+                intent.setClass(ManualActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

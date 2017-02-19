@@ -7,14 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 
 import java.text.DecimalFormat;
 
 /**
- * Created by apple on 2016/3/25.
+ * 热点使用结算页面
  */
 public class BalanceUseActivity extends Activity {
     public void onCreate(Bundle saveInstanceState) {
@@ -57,7 +56,7 @@ public class BalanceUseActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BalanceUseActivity.this,Home2Activity.class);
+                Intent intent = new Intent(BalanceUseActivity.this,HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -76,7 +75,7 @@ public class BalanceUseActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(BalanceUseActivity.this, Home2Activity.class);
+            Intent intent = new Intent(BalanceUseActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }

@@ -26,7 +26,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 
 /**
- * Created by cdd on 2016/3/24.
+ * 热点分享结算页面
  */
 public class BalanceShareActivity extends Activity {
     private ImageView home = null;
@@ -54,7 +54,7 @@ public class BalanceShareActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BalanceShareActivity.this,Home2Activity.class);
+                Intent intent = new Intent(BalanceShareActivity.this,HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -78,13 +78,20 @@ public class BalanceShareActivity extends Activity {
 
     }
 
+    /**
+     * 获取当前登录用户
+     */
     private User getUser() {
-        //User u=null;
-        //获取当前登录用户,mContext似乎应该换成getApplicationContext,登陆时也应该修改成为之
+        //mContext似乎应该换成getApplicationContext,登陆时也应该修改成为之
         User u = BmobUser.getCurrentUser(mContext, User.class);
         return u;
     }
 
+    /**
+     * 获取分享记录
+     * @param flow
+     * @param income
+     */
     private ShareRecord getShareRecord(Double flow,Double income) {
         ShareRecord sr=new ShareRecord();
         sr.setWiFi(getWifiAp());
@@ -116,12 +123,13 @@ public class BalanceShareActivity extends Activity {
         return ap;
     }
 
+    /**
+     * 上传分享记录
+     */
     private void sycData(Context context, ShareRecord shareRecord){
         if(shareRecord == null){
             Toast.makeText(mContext,"数据异常",Toast.LENGTH_SHORT).show();
         }
-
-
         Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -135,10 +143,8 @@ public class BalanceShareActivity extends Activity {
             }
 
         };
-
         DatabaseUtil du = DatabaseUtil.getInstance();
         du.writeShareRecordToDatabase(context, handler, shareRecord);
-
     }
 
 }

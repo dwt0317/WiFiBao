@@ -21,6 +21,9 @@ import com.chinamobile.wifibao.utils.SignupManager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 注册页面
+ */
 public class SignupActivity extends AppCompatActivity {
 
     private ImageView home;
@@ -75,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(SignupActivity.this, "注册成功！",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent();
-                                intent.setClass(SignupActivity.this, Home2Activity.class);
+                                intent.setClass(SignupActivity.this, HomeActivity.class);
                                 startActivity(intent);
                             } else {
                                 String error = SignupManager.getInstance(SignupActivity.this).getErrorMsg();
@@ -122,7 +125,7 @@ public class SignupActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SignupActivity.this,Home2Activity.class);
+                intent.setClass(SignupActivity.this,HomeActivity.class);
                 startActivity(intent);
             }
         });

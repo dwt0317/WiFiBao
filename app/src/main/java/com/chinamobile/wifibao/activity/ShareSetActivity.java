@@ -36,6 +36,9 @@ import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 
+/**
+ * 分享热点设置
+ */
 public class ShareSetActivity extends FragmentActivity {
     private Context mContext = null;
     private static final String METHOD_GET_WIFI_AP_STATE = "getWifiApState";
@@ -43,23 +46,14 @@ public class ShareSetActivity extends FragmentActivity {
     private WiFi ap;
     private User user;
 
-
     // 顶部菜单2个Linearlayout
      private LinearLayout ll_data;
      private LinearLayout ll_wifi;
-
-
-     // 顶部菜单2个ImageView
-
-
      // 顶部菜单2个菜单标题
      private TextView tv_data;
      private TextView tv_wifi;
-
-
      // 中间内容区域
      private ViewPager viewPager;
-
      // ViewPager适配器ContentAdapter
      private ContentAdapter adapter;
 
@@ -71,19 +65,15 @@ public class ShareSetActivity extends FragmentActivity {
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.set_share_main);
-
          // 初始化控件
          initView();
          // 初始化顶部按钮事件
          initEvent();
-
          mContext = this;
-
          //用户
          user = getUser();
          //如果热点已经打开，跳转下个页面
          isWiFiEnabled();
-
          final Handler openHandle = new Handler() {
              @Override
              public void handleMessage(Message msg) {
@@ -97,7 +87,6 @@ public class ShareSetActivity extends FragmentActivity {
          };
 
          //点击打开热点
-
          Button shareButton = (Button)page_01.findViewById(R.id.share_submit);
          shareButton.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -105,24 +94,17 @@ public class ShareSetActivity extends FragmentActivity {
                  checkOrDo(openHandle);
              }
          });
-
-
          //返回HomeActivity
          ImageView home = (ImageView) findViewById(R.id.home);
          home.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(ShareSetActivity.this, Home2Activity.class);
+                 Intent intent = new Intent(ShareSetActivity.this, HomeActivity.class);
                  startActivity(intent);
              }
          });
-
      }
 
-
-
-
-    //功能实现
     /**
      * 非法输入
      */
@@ -205,8 +187,7 @@ public class ShareSetActivity extends FragmentActivity {
      * @return
      */
     private User getUser() {
-        //User u=null;
-        //获取当前登录用户,mContext似乎应该换成getApplicationContext,登陆时也应该修改成为之
+        //获取当前登录用户
         User u = BmobUser.getCurrentUser(mContext, User.class);
         return u;
     }
@@ -217,9 +198,7 @@ public class ShareSetActivity extends FragmentActivity {
     void writeInCache(WiFi ap){
         SharedPreferences sp = getApplicationContext().getSharedPreferences("WIFIAPIFNO", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-
         editor.putString("objectId",ap.getObjectId());
-
         editor.putString("SSID", ap.getBSSID());
         editor.putString("password", ap.getPassword());
         editor.putFloat("upperLimit", Float.parseFloat(ap.getUpperLimit().toString()));
@@ -241,43 +220,25 @@ public class ShareSetActivity extends FragmentActivity {
         // 设置按钮监听
         ll_data.setOnClickListener(new MyListener());
         ll_wifi.setOnClickListener(new MyListener());
-
-
         //设置ViewPager滑动监听
         viewPager.addOnPageChangeListener(new MyPageListener());
     }
 
     private void initView() {
-
         // 顶部菜单2个Linearlayout
         this.ll_data = (LinearLayout) findViewById(R.id.ll_data);
         this.ll_wifi = (LinearLayout) findViewById(R.id.ll_wifi);
-
-
-        // 顶部菜单2个ImageView
-
-
         // 顶部菜单2个菜单标题
         this.tv_data = (TextView) findViewById(R.id.set_data);
         this.tv_wifi = (TextView) findViewById(R.id.set_wifi);
-
-
         // 中间内容区域ViewPager
         this.viewPager = (ViewPager) findViewById(R.id.set_content);
-
-        // 适配器
-        //View page_01 = View.inflate(ShareSetActivity.this, R.layout.set_share_data, null);
-        //View page_02 = View.inflate(ShareSetActivity.this, R.layout.set_share_wifi, null);
-
-
         views = new ArrayList<View>();
         LayoutInflater myInflater = getLayoutInflater();
         page_01 = myInflater.inflate(R.layout.set_share_data, null);
         page_02 = myInflater.inflate(R.layout.set_share_wifi, null);
         views.add(page_01);
         views.add(page_02);
-
-
         this.adapter = new ContentAdapter(views);
         viewPager.setAdapter(adapter);
 

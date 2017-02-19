@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.ShareRecord;
-import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.utils.ShareRecordManager;
 
@@ -24,7 +23,7 @@ import java.util.HashMap;
 
 import cn.bmob.v3.BmobUser;
 /**
- * Created by cdd on 2016/4/24.
+ * 查看分享记录页面
  */
 public class ShareRecordActivity extends Activity {
 
@@ -33,7 +32,6 @@ public class ShareRecordActivity extends Activity {
 
     private ListView recordListView;
     private ArrayList<ShareRecord> recordList;
-    private HashMap<String,Integer> recordsSepByMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class ShareRecordActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShareRecordActivity.this, Home2Activity.class);
+                Intent intent = new Intent(ShareRecordActivity.this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -67,26 +65,24 @@ public class ShareRecordActivity extends Activity {
                 super.handleMessage(msg);
                 if(msg.what == 1){
                     recordList = srm.getShareRecordList();
-                    recordsSepByMonth =  srm.getRecordsSepByMonth();
                     updateRecordListView();
                 }else{
-                    //Toast.makeText(ShareRecordActivity.this, "Please wait..", Toast.LENGTH_SHORT).show();
                 }
             }
         };
-
         srm.setUiHandler(uiHandler);
         srm.queryShareRecord(BmobUser.getCurrentUser(ShareRecordActivity.this, User.class));
     }
 
 
-
+    /**
+     * 更新用户记录列表
+     */
     public void updateRecordListView(){
         int size=0;
         if(recordList != null){
             size=recordList.size();
         }
-
         ShareRecord sr;;
         for (int i = 0; i < size; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -102,9 +98,11 @@ public class ShareRecordActivity extends Activity {
                 new int[]{R.id.week,R.id.date,R.id.portrait, R.id.money,R.id.wifi});
         recordListView.setAdapter(saImageItems);
         recordListView.setTextFilterEnabled(true);
-
     }
 
+    /**
+     * 获取weekday
+     */
     private String getWeek(ShareRecord record){
         Date date;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -118,6 +116,10 @@ public class ShareRecordActivity extends Activity {
         }
         return "";
     }
+
+    /**
+     * 格式化日期
+     */
     private String formatDate(String date){
         String fdate="";
         String[] tmp =date.split(" ");

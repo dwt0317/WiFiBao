@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.chinamobile.wifibao.R;
 
 /**
- * Created by apple on 2016/4/20.
+ * 营业厅服务页面
  */
 public class MobileServiceActivity  extends Activity {
 
@@ -20,12 +20,10 @@ public class MobileServiceActivity  extends Activity {
             goback.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MobileServiceActivity.this, Home2Activity.class);
+                    Intent intent = new Intent(MobileServiceActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
             });
-
         }
-
 }

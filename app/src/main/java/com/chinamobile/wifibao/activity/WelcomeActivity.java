@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 
 /**
- * Created by lab on 2016/4/19.
+ * 打开APP欢迎界面
  */
 public class WelcomeActivity extends Activity {
     private final int SKIP_DELAY_TIME = 2000;
@@ -27,7 +27,7 @@ public class WelcomeActivity extends Activity {
         TimerTask task = new TimerTask(){
             @Override
             public void run() {
-                Intent intent=new Intent(WelcomeActivity.this,Home2Activity.class);
+                Intent intent=new Intent(WelcomeActivity.this,HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();

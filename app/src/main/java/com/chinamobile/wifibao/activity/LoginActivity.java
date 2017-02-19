@@ -22,7 +22,7 @@ import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.utils.LoginManager;
 
 /**
- * Created by apple on 2016/4/6.
+ * 登录页面
  */
 public class LoginActivity extends Activity {
     private Button loginbutton;
@@ -43,7 +43,6 @@ public class LoginActivity extends Activity {
     private void setViewComponent() {
         setContentView(R.layout.login);
 
-
         username = (AutoCompleteTextView) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         register = (TextView) findViewById(R.id.register);
@@ -54,7 +53,6 @@ public class LoginActivity extends Activity {
         password.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);// 隐藏密码为InputType.TYPE_TEXT_VARIATION_PASSWORD，也就是0x81
                                                               // 显示密码为InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD，也就是0x91
-
         username.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
@@ -64,12 +62,10 @@ public class LoginActivity extends Activity {
                 // sp.getAll()返回一张hash map
                 // keySet()得到的是a set of the keys.
                 // hash map是由key-value组成的
-
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                         LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line,
                         allUserName);
-
                 username.setAdapter(adapter);// 设置数据适配器
             }
 
@@ -95,7 +91,7 @@ public class LoginActivity extends Activity {
                         sp.edit().putString(usernameStr, passwordStr).commit();
                     }
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this,Home2Activity.class);
+                    intent.setClass(LoginActivity.this,HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else{
@@ -126,7 +122,4 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
-
-
 }

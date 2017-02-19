@@ -31,7 +31,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 
 /**
- * Created by apple on 2016/3/25.
+ * 正在使用流量
  */
 public class FlowUsingActivity extends Activity {
     private String flowUsed;
@@ -87,9 +87,7 @@ public class FlowUsingActivity extends Activity {
         useRecord.setWiFi(wifi);
         useRecord.setStartTime(new BmobDate(new Date()));
         useRecord.setUser(BmobUser.getCurrentUser(this,User.class));
-
         wifiDetectHandler.postDelayed(wifiDetectRunnable,3500);
-        //ImageView refresh = (ImageView)findViewById(R.id.refresh)
 
         Button button = (Button)findViewById(R.id.use_stop);//断开连接
         button.setOnClickListener(new Button.OnClickListener() {//创建监听
@@ -120,7 +118,9 @@ public class FlowUsingActivity extends Activity {
         }
     };
 
-
+    /**
+     * 计算已消费金额
+     */
     private String computeCost(String flowUsed){
         double cost=0.0;
         cost = 0.2 * Double.parseDouble(flowUsed);
@@ -128,7 +128,9 @@ public class FlowUsingActivity extends Activity {
         return String.valueOf(df.format(cost));
     }
 
-
+    /**
+     * 检测wifi是否成功连接
+     */
     private boolean isWiFiActive() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -143,9 +145,10 @@ public class FlowUsingActivity extends Activity {
             return false;
     }
 
-
+    /**
+     * 结束使用
+     */
     private void endUsing(int flag){
-
         wifiDetectHandler.removeCallbacks(wifiDetectRunnable);
         TrafficMonitor.getInstance(FlowUsingActivity.this).disableTrafficMonitor();
         flowUsed= TrafficMonitor.getInstance(FlowUsingActivity.this).getTotalTrafficStr();
@@ -164,10 +167,7 @@ public class FlowUsingActivity extends Activity {
         double cost=Double.parseDouble(computeCost(flowUsed));
         useRecord.setCost(cost);
         useRecord.setFlowUsed(Double.parseDouble(flowUsed));
-
-
         FlowUsingManager.getInstance(FlowUsingActivity.this).disconnect(wifi,useRecord,flowDiff,flag);
-
         startActivity(intent);
     }
 }

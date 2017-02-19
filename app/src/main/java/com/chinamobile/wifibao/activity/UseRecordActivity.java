@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.UserManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -17,7 +15,6 @@ import com.chinamobile.wifibao.R;
 import com.chinamobile.wifibao.bean.UseRecord;
 import com.chinamobile.wifibao.bean.User;
 import com.chinamobile.wifibao.utils.UseRecordManager;
-import com.chinamobile.wifibao.utils.usingFlow.WiFiListManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ import java.util.HashMap;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by dwt on 2016/4/21.
+ * 查看用户历史记录
  */
 public class UseRecordActivity extends Activity {
 
@@ -53,7 +50,7 @@ public class UseRecordActivity extends Activity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UseRecordActivity.this, Home2Activity.class);
+                Intent intent = new Intent(UseRecordActivity.this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -66,7 +63,6 @@ public class UseRecordActivity extends Activity {
                 super.handleMessage(msg);
                 if(msg.what == 1){
                     useRecordList = UseRecordManager.getInstance(UseRecordActivity.this).getUseRecordList();
-//                    recordsSepByMonth =  UseRecordManager.getInstance(UseRecordActivity.this).getRecordsSepByMonth();
                     if(useRecordList.size()!=0)
                         updateRecordListView();
                 }else{

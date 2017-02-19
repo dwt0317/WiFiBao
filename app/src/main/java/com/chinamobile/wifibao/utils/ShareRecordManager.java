@@ -19,7 +19,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by cdd on 2016/4/24.
+ * 分享记录后台
  */
 public class ShareRecordManager {
 
@@ -43,19 +43,17 @@ public class ShareRecordManager {
     }
 
     /**
-     *当前登录用户
+     * 查询分享记录
      * @param user
      */
     public void queryShareRecord(User user){
         BmobQuery<ShareRecord> bmobQuery = new BmobQuery<ShareRecord>();
-
         bmobQuery.include("WiFi");
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.findObjects(mContext, new FindListener<ShareRecord>() {
             @Override
             public void onSuccess(List<ShareRecord> recordList) {
                 shareRecordList= new ArrayList<ShareRecord>(recordList);
-                //separateRecords();
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
@@ -73,28 +71,6 @@ public class ShareRecordManager {
                 toast.show();
             }
         });
-    }
-
-    private  void separateRecords(){
-        //ArrayList<String> months = new ArrayList<String>();
-        for(int i=0;i<shareRecordList.size();i++){
-            ShareRecord item = shareRecordList.get(i);
-            String dateStr = item.getStartTime().getDate();
-            String[] dateArr = dateStr.split("-");
-            String year_month=dateArr[0]+"-"+dateArr[1];
-            if(!getRecordsSepByMonth().containsKey(year_month)){
-                getRecordsSepByMonth().put(year_month, i);
-            }else
-                getRecordsSepByMonth().put(year_month, getRecordsSepByMonth().get(year_month) + 1);
-        }
-        Iterator<String> iter = getRecordsSepByMonth().keySet().iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            Integer value = getRecordsSepByMonth().get(key);
-            Log.i("record",key+" "+value);
-
-        }
-
     }
 
 

@@ -21,7 +21,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by cdd on 2016/3/31.
+ * 数据库工具类
  */
 public class DatabaseUtil {
     private static DatabaseUtil du;

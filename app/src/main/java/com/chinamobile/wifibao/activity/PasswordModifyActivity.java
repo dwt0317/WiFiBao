@@ -23,7 +23,7 @@ import cn.bmob.v3.listener.UpdateListener;
 
 
 /**
- * Created by lab on 2016/4/19.
+ * 修改密码页面
  */
 public class PasswordModifyActivity extends Activity {
     private Context mContext = PasswordModifyActivity.this;
@@ -59,7 +59,9 @@ public class PasswordModifyActivity extends Activity {
 
     }
 
-
+    /**
+     * 检测密码输入是否有效
+     */
     private void validInput() {
         password1 = (EditText) findViewById(R.id.newPassword1);
         password2 = (EditText) findViewById(R.id.newPassword2);
@@ -67,11 +69,6 @@ public class PasswordModifyActivity extends Activity {
         oldPassword = password.getText().toString().trim();
         newPassword1 = password1.getText().toString().trim();
         newPassword2 = password2.getText().toString().trim();
-        /*
-        Toast.makeText(PasswordModifyActivity.this,
-                oldPassword + " " + newPassword1 + " " + newPassword2,
-                Toast.LENGTH_SHORT).show();
-        */
         if (oldPassword.isEmpty()) {
             System.out.print(oldPassword);
             Toast.makeText(PasswordModifyActivity.this, "请输入旧密码!"+ oldPassword, Toast.LENGTH_SHORT).show();
@@ -89,7 +86,6 @@ public class PasswordModifyActivity extends Activity {
             //password2.setError("两次输入新密码不一致！");
             //return false;
         } else {
-
 
 
             final Handler modifyHandler = new Handler() {
@@ -112,16 +108,7 @@ public class PasswordModifyActivity extends Activity {
             SignupManager.getInstance(mContext).setUiHandler(modifyHandler);
             SignupManager.getInstance(mContext).modifyPassword(oldPassword, newPassword1);
         }
-
-
     }
-
-
-
-
-
-
-
 }
 
 

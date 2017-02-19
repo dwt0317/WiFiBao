@@ -27,7 +27,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by dwt on 2016/3/31.
+ * 热点使用后台
  */
 public class FlowUsingManager {
     private static FlowUsingManager instance;
@@ -53,9 +53,10 @@ public class FlowUsingManager {
     }
 
 
+    /**
+     * 停止使用热点
+     */
     public void disconnect(WiFi wifi,UseRecord useRecord,double flowDiff,int flag){
-//        disconnectWiFi(wifi);
-
         curWiFi=wifi;
         errorMsg="";
         useInfoFlag= balanceFlag=useRecordFlag=curConnectFlag=0;
@@ -85,7 +86,6 @@ public class FlowUsingManager {
 //                Toast.makeText(mContext,  "上传结算数据失败,请稍候再试 \n"+errorMsg, Toast.LENGTH_LONG).show();
             }
             deleteWiFiConfig(curWiFi.getSSID());
-
         }
     };
 
@@ -105,9 +105,11 @@ public class FlowUsingManager {
         String SSID = wifi.getSSID();
         WifiManager wifiManager = (WifiManager) getmContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.disconnect();
-//        deleteWiFiConfig(SSID);
     }
 
+    /**
+     * 在手机中删除wifi设置信息
+     */
     private void deleteWiFiConfig(String SSID){
         WifiManager wifiManager = (WifiManager) getmContext().getSystemService(Context.WIFI_SERVICE);
         SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences("WiFiInfo", mContext.MODE_PRIVATE);
@@ -123,13 +125,15 @@ public class FlowUsingManager {
         }
     }
 
+    /**
+     * 更新用户使用记录
+     */
     private void updateUseRecord(final WiFi wifi,final UseRecord useRecord){
         useRecord.save(mContext, new SaveListener() {
             @Override
             public void onSuccess() {
                 Log.i("bmob", "add use record done!");
                 useRecordFlag=1;
-             //   updateUserBalance(wifi,useRecord);
             }
             @Override
             public void onFailure(int code, String arg0) {
@@ -148,7 +152,7 @@ public class FlowUsingManager {
     //0:被动断开 1：主动断开 2：没有断开
     public void updateUseInfo(WiFi wifi, final double trafficDiff,final int flag){
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
-        query.addWhereEqualTo("WiFi", wifi);    // 查询当前用户的所有帖子
+        query.addWhereEqualTo("WiFi", wifi);
         query.findObjects(mContext, new FindListener<ConnectionPool>() {
             @Override
             public void onSuccess(List<ConnectionPool> object) {
@@ -167,7 +171,6 @@ public class FlowUsingManager {
                         useInfoFlag=1;
                         Log.i("bmob", "流量花费更新成功");
                     }
-
                     @Override
                     public void onFailure(int code, String msg) {
                         useInfoFlag=2;
@@ -191,7 +194,9 @@ public class FlowUsingManager {
 
 
 
-
+    /**
+     * 更新用户余额
+     */
     private void updateUserBalance(final WiFi wifi, final UseRecord useRecord){
         User user = User.getCurrentUser(mContext,User.class);
         user.setBalance(user.getBalance() - useRecord.getCost());
@@ -201,7 +206,6 @@ public class FlowUsingManager {
             public void onSuccess() {
                 balanceFlag=1;
                 Log.i("bmob", "balance 更新成功");
-//                disconnectWiFi(wifi);
             }
 
             @Override
@@ -209,43 +213,9 @@ public class FlowUsingManager {
                 errorMsg+=msg+" ";
                 balanceFlag=2;
                 Log.i("bmob", "balance 更新失败：" + msg);
-//                disconnectWiFi(wifi);
             }
         });
     }
-
-    private void updateCurConnet(WiFi wifi){
-        BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
-        query.addWhereEqualTo("WiFi", wifi);
-        query.findObjects(mContext, new FindListener<ConnectionPool>() {
-            @Override
-            public void onSuccess(List<ConnectionPool> object) {
-                ConnectionPool conn = object.get(0);
-                conn.setCurConnect(conn.getCurConnect()-1);
-                conn.update(mContext, conn.getObjectId(), new UpdateListener() {
-                    @Override
-                    public void onSuccess() {
-                        curConnectFlag=1;
-                        Log.i("bmob", "修改已接入人数成功");
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        curConnectFlag=2;
-                        Log.e("bmob", "修改已接入人数失败" + msg);
-//                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            @Override
-            public void onError(int code, String msg) {
-                Log.e("bmob",msg);
-                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
 
     public Context getmContext() {
         return mContext;

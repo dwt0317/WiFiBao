@@ -21,7 +21,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by dwt on 2016/4/20.
+ * 使用记录后台
  */
 public class UseRecordManager {
     private static UseRecordManager instance;
@@ -40,21 +40,22 @@ public class UseRecordManager {
         return instance;
     }
 
+    /**
+     * 查询使用记录
+     */
     public void queryUseRecord(User user){
         BmobQuery<UseRecord> bmobQuery = new BmobQuery<UseRecord>();
-//        bmobQuery.addWhereEqualTo("objectId","661e74889d");
         bmobQuery.include("WiFi");
+        bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.findObjects(mContext, new FindListener<UseRecord>() {
             @Override
             public void onSuccess(List<UseRecord> recordList) {
-                useRecordList= new ArrayList<UseRecord>(recordList);
-//                separateRecords();
+                useRecordList= new ArrayList<>(recordList);
                 Message msg = new Message();
                 msg.what = 1;
                 getUiHandler().sendMessage(msg);
                 Log.i("bmob","read record done");
             }
-
             @Override
             public void onError(int code, String msg) {
                 Log.e("bomb", "read useRecord fail");
@@ -63,28 +64,6 @@ public class UseRecordManager {
                 toast.show();
             }
         });
-    }
-
-    private  void separateRecords(){
-        ArrayList<String> months = new ArrayList<String>();
-        for(int i=0;i<useRecordList.size();i++){
-            UseRecord item = useRecordList.get(i);
-            String dateStr = item.getStartTime().getDate();
-            String[] dateArr = dateStr.split("-");
-            String year_month=dateArr[0]+"-"+dateArr[1];
-            if(!getRecordsSepByMonth().containsKey(year_month)){
-                getRecordsSepByMonth().put(year_month, i);
-            }else
-                getRecordsSepByMonth().put(year_month, getRecordsSepByMonth().get(year_month) + 1);
-        }
-        Iterator<String> iter = getRecordsSepByMonth().keySet().iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            Integer value = getRecordsSepByMonth().get(key);
-            Log.i("record",key+" "+value);
-
-        }
-
     }
 
 

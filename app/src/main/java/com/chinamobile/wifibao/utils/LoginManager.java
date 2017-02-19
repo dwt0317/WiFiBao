@@ -12,7 +12,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 
 /**
- * Created by dwt on 2016/4/6.
+ * 登录工具类
  */
 public class LoginManager {
     private static LoginManager instance;

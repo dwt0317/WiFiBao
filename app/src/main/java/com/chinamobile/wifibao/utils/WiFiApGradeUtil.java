@@ -3,7 +3,7 @@ package com.chinamobile.wifibao.utils;
 import com.chinamobile.wifibao.bean.WiFi;
 
 /**
- * Created by cdd on 2016/4/18.
+ * 计算热点评分
  */
 public class WiFiApGradeUtil {
 

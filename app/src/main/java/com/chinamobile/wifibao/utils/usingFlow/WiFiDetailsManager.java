@@ -25,7 +25,7 @@ import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by dwt on 2016/3/31.
+ * 热点详细信息后台
  */
 public class WiFiDetailsManager {
 
@@ -50,29 +50,9 @@ public class WiFiDetailsManager {
     }
 
 
-//    public void queryUser(WiFi wifi){
-//        User user = wifi.getUser();
-//        BmobQuery<User> query = new BmobQuery<User>();
-//        query.getObject(mContext, user.getObjectId(), new GetListener<User>() {
-//            public void onSuccess(User object) {
-//                selectedUser = object;
-//                Message msg = new Message();
-//                msg.what = 1;
-//                getUiHandler().sendMessage(msg);
-//                // TODO Auto-generated method stub
-//                Log.i("bmob", "query user successfully");
-//            }
-//
-//            @Override
-//            public void onFailure(int code, String arg0) {
-//                Log.e("bmob", "query user error");
-//                Toast toast = Toast.makeText(mContext, arg0, Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 10); //设置文本的位置，使文本显示靠下一些
-//                toast.show();
-//            }
-//        });
-//    }
-
+    /**
+     * 检测是否超过热点接入上限
+     */
     private void isExceedingConnLimit(WiFi wifi, final Handler handler){
         BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
         query.addWhereEqualTo("WiFi", wifi);
@@ -119,6 +99,10 @@ public class WiFiDetailsManager {
         });
     }
 
+
+    /**
+     * 获取热点信号强度
+     */
     public int getWiFiLevel(WiFi wifi){
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> results = wifiManager.getScanResults();
@@ -131,7 +115,9 @@ public class WiFiDetailsManager {
     }
 
 
-
+    /**
+     * 连接热点
+     */
     public void connectWiFi(final WiFi wifi){
         Handler connLimitHandler = new Handler(){
             @Override
@@ -149,6 +135,9 @@ public class WiFiDetailsManager {
         isExceedingConnLimit(wifi,connLimitHandler);
     }
 
+    /**
+     * 执行连接
+     */
     private boolean doConnect(WiFi wifi){
         String BSSID = wifi.getBSSID();
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
@@ -170,7 +159,6 @@ public class WiFiDetailsManager {
                 return false;
             }
         }
-
 
         //删除之前添加的conf
         List<WifiConfiguration> existingConfigs = wifiManager.getConfiguredNetworks();
@@ -215,31 +203,9 @@ public class WiFiDetailsManager {
         }
     };
 
-
-
     /**
-     * 修改已接入人数
+     * 检测wifi是否开启并开启
      */
-    private void updateConnectionNumInfo(WiFi wifi){
-        BmobQuery<ConnectionPool> query = new BmobQuery<ConnectionPool>();
-        query.addWhereEqualTo("WiFi", wifi);    //
-        query.findObjects(mContext, new FindListener<ConnectionPool>() {
-            @Override
-            public void onSuccess(List<ConnectionPool> object) {
-                ConnectionPool conn = object.get(0);
-                conn.setCurConnect(1);
-                Log.i("bomb", "写入curConnt ");
-            }
-            @Override
-            public void onError(int code, String msg) {
-                Log.e("bomb","查询connection失败");
-                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-    //检测wifi是否开启并开启
     private void enableWiFi(){
         WifiManager wifiManager = (WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
         if (!wifiManager.isWifiEnabled())
@@ -260,6 +226,9 @@ public class WiFiDetailsManager {
         }
     }
 
+    /**
+     * 检测wifi是否成功连接
+     */
     private boolean isWiFiActive() {
         ConnectivityManager connManager = (ConnectivityManager)mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -269,6 +238,9 @@ public class WiFiDetailsManager {
             return false;
     }
 
+    /**
+     * 将wifi信息写入本地缓存
+     */
     public void writeWiFitoCache(WiFi wifi, Context context){
         SharedPreferences sp = context.getApplicationContext().getSharedPreferences("WiFiInfo", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
